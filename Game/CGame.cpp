@@ -38,7 +38,7 @@ void CGame::OnInit(AEngine* engine)
         m_crate = engine->CreateEntity("PhysicsCrate");
         m_crate->position = glm::vec3(0, 5.0f, 0);
         m_crate->AddComponent(new MeshComponent(modelMesh));
-        m_crate->AddComponent(new RigidBodyComponent(glm::vec3(1, 1, 1), 15.0f, false));
+        m_crate->AddComponent(new RigidBodyComponent(glm::vec3(1, 1, 1), 60.0f, false));
         m_crate->GetComponent<RigidBodyComponent>()->SetBouciness(0.01f);
     }
 

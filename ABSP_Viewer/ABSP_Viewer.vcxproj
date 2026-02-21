@@ -71,7 +71,13 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Users\Azure\Desktop\DevHub\Experiments\Anvil Engine\Anvil_SDK;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Anvil_SDK;$(VC_IncludePath);$(WindowsSDK_IncludePath); </IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(SolutionDir)Anvil_SDK</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(SolutionDir)Anvil_SDK;$(VC_IncludePath);$(WindowsSDK_IncludePath); </IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
