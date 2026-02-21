@@ -1,0 +1,1077 @@
+
+---- FILENAME: ACamera.cpp ----
+
+#include "AnvilCamera.h"
+
+ACamera::ACamera(glm::vec3 position) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), Yaw(-90.0f), Pitch(0.0f)
+{
+    Position = position;
+    WorldUp  = glm::vec3(0.0f, 1.0f, 0.0f);
+    updateCameraVectors();
+}
+
+glm::mat4 ACamera::GetViewMatrix()
+{
+    return glm::lookAt(Position, Position + Front, Up);
+}
+
+void ACamera::ProcessKeyboard(Camera_Movement direction, float deltaTime)
+{
+    float velocity = MovementSpeed * deltaTime;
+    if (direction == FORWARD)
+        Position += Front * velocity;
+    if (direction == BACKWARD)
+        Position -= Front * velocity;
+    if (direction == LEFT)
+        Position -= Right * velocity;
+    if (direction == RIGHT)
+        Position += Right * velocity;
+}
+
+void ACamera::ProcessMouseMovement(float xoffset, float yoffset)
+{
+    xoffset *= MouseSensitivity;
+    yoffset *= MouseSensitivity;
+
+    Yaw += xoffset;
+    Pitch += yoffset;
+
+    if (Pitch > 89.0f)
+        Pitch = 89.0f;
+    if (Pitch < -89.0f)
+        Pitch = -89.0f;
+
+    updateCameraVectors();
+}
+
+void ACamera::updateCameraVectors()
+{
+    glm::vec3 front;
+    front.x = cos(glm::radians(Yaw)) * cos(glm::radians(Pitch));
+    front.y = sin(glm::radians(Pitch));
+    front.z = sin(glm::radians(Yaw)) * cos(glm::radians(Pitch));
+    Front   = glm::normalize(front);
+    Right   = glm::normalize(glm::cross(Front, WorldUp));
+    Up      = glm::normalize(glm::cross(Right, Front));
+}
+
+---- FILENAME: ACore.h ----
+
+#pragma once
+// ACore.h
+#ifdef ANVIL_SDK
+#define ANVIL_API __declspec(dllexport)
+#else
+#define ANVIL_API __declspec(dllimport)
+#endif
+
+---- FILENAME: AEngine.cpp ----
+
+#include "AEngine.h"
+#include "IGame.h"
+#include "resource.h"
+#include <fstream>
+#include <iostream>
+
+AEngine* AEngine::s_Instance = nullptr;
+
+AEngine::AEngine()
+{
+    s_Instance = this;
+    glfwInit();
+    m_window = glfwCreateWindow(1280, 720, "Anvil Engine", NULL, NULL);
+    glfwMakeContextCurrent(m_window);
+    gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
+    glEnable(GL_DEPTH_TEST);
+
+    m_physicsWorld = new AnvilPhysics();
+    m_mainShader   = new AShader(IDR_BASE_VERT, IDR_BASE_FRAG);
+    m_resourceManager = new AResourceManager();
+    m_gameLib = LoadLibraryA("Game.dll");
+    if (m_gameLib)
+    {
+        typedef IGame* (*CreateGameFn)();
+        CreateGameFn createGame = (CreateGameFn) GetProcAddress(m_gameLib, "CreateGame");
+        if (createGame)
+        {
+            m_game = createGame();
+            m_game->OnInit(this);
+        }
+    }
+}
+
+void AEngine::LoadMap(const char* mapName)
+{
+    std::string   path = std::string(mapName) + ".absp";
+    std::ifstream is(path, std::ios::binary);
+    if (!is)
+        return;
+
+    if (m_worldVAO)
+    {
+        glDeleteVertexArrays(1, &m_worldVAO);
+        glDeleteBuffers(1, &m_worldVBO);
+    }
+
+    ABSPHeader h;
+    is.read((char*) &h, sizeof(h));
+    m_worldVerts.resize(h.numVertices);
+    m_worldFaces.resize(h.numFaces);
+    is.read((char*) m_worldVerts.data(), h.numVertices * sizeof(AVertex));
+    is.read((char*) m_worldFaces.data(), h.numFaces * sizeof(AFace));
+
+    m_physicsWorld->SetWorldData(m_worldVerts, m_worldFaces);
+
+    glGenVertexArrays(1, &m_worldVAO);
+    glGenBuffers(1, &m_worldVBO);
+    glBindVertexArray(m_worldVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, m_worldVBO);
+    glBufferData(GL_ARRAY_BUFFER, m_worldVerts.size() * sizeof(AVertex), m_worldVerts.data(),
+                 GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(AVertex), (void*) 0);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(AVertex), (void*) offsetof(AVertex, uv));
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(AVertex),
+                          (void*) offsetof(AVertex, normal));
+    glEnableVertexAttribArray(2);
+}
+
+AEntity* AEngine::CreateEntity(std::string name)
+{
+    AEntity* ent = new AEntity();
+    ent->name    = name;
+    m_entities.push_back(ent);
+    return ent;
+}
+
+void AEngine::Run()
+{
+    while (!glfwWindowShouldClose(m_window))
+    {
+        float currentFrame = (float) glfwGetTime();
+        m_deltaTime        = currentFrame - m_lastFrameTime;
+        m_lastFrameTime    = currentFrame;
+
+        m_physicsWorld->Update(m_deltaTime);
+        if (m_game)
+            m_game->OnUpdate(m_deltaTime);
+
+        for (auto* e : m_entities)
+            e->Update(m_deltaTime);
+
+        glClearColor(0.1f, 0.1f, 0.12f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        if (m_game)
+        {
+            m_mainShader->Use();
+            glm::mat4 projection =
+                glm::perspective(glm::radians(45.0f), 1280.0f / 720.0f, 0.1f, 1000.0f);
+            glm::mat4 view = m_game->GetViewMatrix();
+
+            glUniformMatrix4fv(glGetUniformLocation(m_mainShader->GetID(), "projection"), 1,
+                               GL_FALSE, glm::value_ptr(projection));
+            glUniformMatrix4fv(glGetUniformLocation(m_mainShader->GetID(), "view"), 1, GL_FALSE,
+                               glm::value_ptr(view));
+            if (m_worldVAO)
+            {
+                glUniformMatrix4fv(glGetUniformLocation(m_mainShader->GetID(), "model"), 1,
+                                   GL_FALSE, glm::value_ptr(glm::mat4(1.0f)));
+
+                glBindVertexArray(m_worldVAO);
+                for (auto& f : m_worldFaces)
+                    glDrawArrays(GL_TRIANGLE_FAN, f.firstVertex, f.numVertices);
+            }
+            for (auto* e : m_entities)
+            {
+                for (auto* c : e->GetComponents())
+					c->OnRender(m_mainShader);
+            }
+        }
+
+        glfwSwapBuffers(m_window);
+        glfwPollEvents();
+    }
+}
+
+AEngine::~AEngine()
+{
+    for (auto* e : m_entities)
+        delete e;
+    m_entities.clear();
+    if (m_game)
+    {
+        m_game->OnShutdown();
+        delete m_game;
+    }
+    if (m_worldVAO)
+    {
+        glDeleteVertexArrays(1, &m_worldVAO);
+        glDeleteBuffers(1, &m_worldVBO);
+    }
+    delete m_resourceManager;
+    delete m_physicsWorld;
+    delete m_mainShader;
+    glfwDestroyWindow(m_window);
+    glfwTerminate();
+}
+
+---- FILENAME: AEngine.h ----
+
+#pragma once
+#include "ACore.h"
+#include "AMath.h"
+#include "AShader.h"
+#include "AnvilBSPFormat.h"
+#include "AnvilPhysics.h"
+#include "AResourceManager.h"
+#include <Windows.h>
+#include <glad/glad.h>
+#include <glfw/glfw3.h>
+#include <string>
+#include <vector>
+#include "AEntity.h"
+
+class IGame;
+
+class ANVIL_API AEngine
+{
+  public:
+    AEngine();
+    virtual ~AEngine();
+
+    void            Run();
+    void            LoadMap(const char* mapName);
+    AEntity*        CreateEntity(std::string name);
+    static AEngine* Get()
+    {
+        return s_Instance;
+    }
+    AnvilPhysics* GetPhysics()
+    {
+        return m_physicsWorld;
+    }
+
+  private:
+    static AEngine* s_Instance;
+
+    AnvilPhysics* m_physicsWorld = nullptr;
+    AShader*      m_mainShader   = nullptr;
+    IGame*        m_game         = nullptr;
+    HMODULE       m_gameLib      = nullptr;
+    GLFWwindow*   m_window       = nullptr;
+    AResourceManager* m_resourceManager = nullptr;
+    std::vector<AEntity*> m_entities;
+    std::vector<AVertex> m_worldVerts;
+    std::vector<AFace>   m_worldFaces;
+    uint32_t             m_worldVAO = 0, m_worldVBO = 0;
+
+    float m_lastFrameTime = 0.0f;
+    float m_deltaTime     = 0.0f;
+};
+
+---- FILENAME: AEntity.h ----
+
+#pragma once
+#include "AMath.h"
+#include "IComponent.h"
+#include <string>
+#include <vector>
+
+class ANVIL_API AEntity
+{
+  public:
+    std::string name;
+    glm::vec3   position = glm::vec3(0.0f);
+    glm::vec3   rotation = glm::vec3(0.0f);
+    glm::vec3   scale    = glm::vec3(1.0f);
+
+    void AddComponent(IComponent* comp)
+    {
+        comp->OnInit(this);
+        m_components.push_back(comp);
+    }
+
+    template <typename T> T* GetComponent()
+    {
+        for (auto* c : m_components)
+        {
+            T* target = dynamic_cast<T*>(c);
+            if (target)
+                return target;
+        }
+        return nullptr;
+    }
+
+    const std::vector<IComponent*>& GetComponents() const
+    {
+        return m_components;
+    }
+
+    void Update(float dt)
+    {
+        for (auto* c : m_components)
+            c->OnUpdate(dt);
+    }
+
+    ~AEntity()
+    {
+        for (auto* c : m_components)
+            delete c;
+    }
+
+  private:
+    std::vector<IComponent*> m_components;
+};
+
+---- FILENAME: AMath.h ----
+
+#pragma once
+// AMath.h
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
+---- FILENAME: AMesh.cpp ----
+
+#include "AMesh.h"
+#include <glad/glad.h>
+
+AMesh::AMesh(std::vector<MVertex> verts, std::vector<uint32_t> indices)
+{
+    indexCount = (uint32_t) indices.size();
+    glGenVertexArrays(1, &VAO);
+    glGenBuffers(1, &VBO);
+    glGenBuffers(1, &EBO);
+
+    glBindVertexArray(VAO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, verts.size() * sizeof(MVertex), verts.data(), GL_STATIC_DRAW);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(uint32_t), indices.data(),
+                 GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(MVertex), (void*) 0);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(MVertex), (void*) offsetof(MVertex, uv));
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(MVertex),
+                          (void*) offsetof(MVertex, normal));
+    glEnableVertexAttribArray(2);
+}
+
+void AMesh::Draw()
+{
+    glBindVertexArray(VAO);
+    glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, 0);
+}
+
+AMesh::~AMesh()
+{
+    glDeleteVertexArrays(1, &VAO);
+    glDeleteBuffers(1, &VBO);
+    glDeleteBuffers(1, &EBO);
+}
+
+---- FILENAME: AMesh.h ----
+
+#pragma once
+#include "ACore.h"
+#include "AMath.h"
+#include <vector>
+
+struct MVertex
+{
+    glm::vec3 pos;
+    glm::vec2 uv;
+    glm::vec3 normal;
+};
+
+class ANVIL_API AMesh
+{
+  public:
+    AMesh(std::vector<MVertex> verts, std::vector<uint32_t> indices);
+    ~AMesh();
+    void Draw();
+
+  private:
+    uint32_t VAO, VBO, EBO;
+    uint32_t indexCount;
+};
+
+---- FILENAME: AMeshLoader.cpp ----
+
+#include "AMeshLoader.h"
+#include <assimp/Importer.hpp>
+#include <assimp/postprocess.h>
+#include <assimp/scene.h>
+#include <fstream>
+
+void AMeshLoader::ExportToAnvMesh(const std::string& input, const std::string& output)
+{
+    Assimp::Importer importer;
+    const aiScene*   scene =
+        importer.ReadFile(input, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenNormals);
+
+    if (!scene || !scene->mRootNode || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE)
+        return;
+
+    aiMesh*               mesh = scene->mMeshes[0];
+    std::vector<MVertex>  vertices;
+    std::vector<uint32_t> indices;
+
+    for (uint32_t i = 0; i < mesh->mNumVertices; i++)
+    {
+        MVertex v;
+        v.pos    = {mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z};
+        v.normal = {mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z};
+        v.uv     = mesh->mTextureCoords[0]
+                       ? glm::vec2(mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y)
+                       : glm::vec2(0);
+        vertices.push_back(v);
+    }
+
+    for (uint32_t i = 0; i < mesh->mNumFaces; i++)
+    {
+        for (uint32_t j = 0; j < mesh->mFaces[i].mNumIndices; j++)
+            indices.push_back(mesh->mFaces[i].mIndices[j]);
+    }
+
+    std::ofstream os(output, std::ios::binary);
+    AMeshHeader   header = {(uint32_t) vertices.size(), (uint32_t) indices.size()};
+    os.write((char*) &header, sizeof(header));
+    os.write((char*) vertices.data(), vertices.size() * sizeof(MVertex));
+    os.write((char*) indices.data(), indices.size() * sizeof(uint32_t));
+}
+
+AMesh* AMeshLoader::LoadAnvMesh(const std::string& path)
+{
+    std::ifstream is(path, std::ios::binary);
+    if (!is)
+        return nullptr;
+
+    AMeshHeader h;
+    is.read((char*) &h, sizeof(h));
+
+    std::vector<MVertex>  verts(h.numVertices);
+    std::vector<uint32_t> inds(h.numIndices);
+
+    is.read((char*) verts.data(), h.numVertices * sizeof(MVertex));
+    is.read((char*) inds.data(), h.numIndices * sizeof(uint32_t));
+
+    return new AMesh(verts, inds);
+}
+
+---- FILENAME: AMeshLoader.h ----
+
+#pragma once
+#include "AMesh.h"
+#include <string>
+#include <vector>
+
+// mesh.anvmesh
+struct AMeshHeader
+{
+    uint32_t numVertices;
+    uint32_t numIndices;
+};
+
+class ANVIL_API AMeshLoader
+{
+  public:
+    static void ExportToAnvMesh(const std::string& inputPath, const std::string& outputPath);
+
+    static AMesh* LoadAnvMesh(const std::string& path);
+};
+
+---- FILENAME: AnvilBSPFormat.h ----
+
+#pragma once
+// AnvilBSPFormat.h
+#include <glm/glm.hpp>
+#include <vector>
+
+struct ABSPHeader {
+    char magic[4];    // "ABSP"
+    uint32_t version; // 1
+    uint32_t numVertices;
+    uint32_t numFaces;
+    uint32_t entSize;
+};
+
+struct AVertex {
+    glm::vec3 position;
+    glm::vec2 uv;
+    glm::vec3 normal;
+};
+
+struct AFace {
+    uint32_t firstVertex;
+    uint32_t numVertices;
+    uint32_t textureID;
+};
+
+---- FILENAME: AnvilCamera.h ----
+
+#pragma once
+// AnvilCamera.h
+#include "ACore.h"
+#include "AMath.h"
+
+enum Camera_Movement
+{
+    FORWARD,
+    BACKWARD,
+    LEFT,
+    RIGHT
+};
+
+class ANVIL_API ACamera
+{
+  public:
+    glm::vec3 Position;
+    glm::vec3 Front;
+    glm::vec3 Up;
+    glm::vec3 Right;
+    glm::vec3 WorldUp;
+
+    float Yaw;
+    float Pitch;
+    float MovementSpeed    = 5.0f;
+    float MouseSensitivity = 0.1f;
+
+    ACamera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f));
+
+    glm::mat4 GetViewMatrix();
+    void      ProcessKeyboard(Camera_Movement direction, float deltaTime);
+    void      ProcessMouseMovement(float xoffset, float yoffset);
+
+  private:
+    void updateCameraVectors();
+};
+
+---- FILENAME: AnvilInput.h ----
+
+#pragma once
+// AnvilInput.h
+// nothing here yet
+
+---- FILENAME: AnvilPhysics.cpp ----
+
+#include "AnvilPhysics.h"
+#include <algorithm>
+
+AnvilPhysics::AnvilPhysics()
+{
+}
+
+AnvilPhysics::~AnvilPhysics()
+{
+    for (auto b : m_bodies)
+        delete b;
+}
+
+void AnvilPhysics::SetWorldData(const std::vector<AVertex>& verts, const std::vector<AFace>& faces)
+{
+    m_worldVerts = verts;
+    m_worldFaces = faces;
+}
+
+ABody* AnvilPhysics::CreateBody(glm::vec3 pos, glm::vec3 size, float mass, bool isStatic)
+{
+    ABody* b = new ABody{pos, glm::vec3(0), size * 0.5f, mass, isStatic, false};
+    m_bodies.push_back(b);
+    return b;
+}
+
+void AnvilPhysics::ClipVelocity(glm::vec3 in, glm::vec3 normal, glm::vec3& out, float overbounce)
+{
+    float backoff = glm::dot(in, normal) * overbounce;
+    for (int i = 0; i < 3; i++)
+    {
+        float change = normal[i] * backoff;
+        out[i]       = in[i] - change;
+    }
+}
+
+bool AnvilPhysics::CheckAABB(glm::vec3 posA, glm::vec3 sizeA, glm::vec3 posB, glm::vec3 sizeB)
+{
+    glm::vec3 hA = sizeA * 0.5f;
+    glm::vec3 hB = sizeB * 0.5f;
+    return (glm::abs(posA.x - posB.x) < (hA.x + hB.x)) &&
+           (glm::abs(posA.y - posB.y) < (hA.y + hB.y)) &&
+           (glm::abs(posA.z - posB.z) < (hA.z + hB.z));
+}
+
+ATrace AnvilPhysics::TraceBox(glm::vec3 start, glm::vec3 end, glm::vec3 halfSize, ABody* skipBody)
+{
+    ATrace bestTrace;
+    bestTrace.endPos   = end;
+    bestTrace.fraction = 1.0f;
+
+    // 1. Static BSP Plane Collision
+    for (const auto& f : m_worldFaces)
+    {
+        glm::vec3 pNormal = m_worldVerts[f.firstVertex].normal;
+        glm::vec3 pPoint  = m_worldVerts[f.firstVertex].position;
+        float     pDist   = glm::dot(pNormal, pPoint);
+
+        float boxRadius = glm::abs(halfSize.x * pNormal.x) + glm::abs(halfSize.y * pNormal.y) +
+                          glm::abs(halfSize.z * pNormal.z);
+
+        float d1 = glm::dot(start, pNormal) - pDist;
+        float d2 = glm::dot(end, pNormal) - pDist;
+
+        if (d1 >= boxRadius && d2 < boxRadius)
+        {
+            float f_ratio = (d1 - boxRadius) / (d1 - d2);
+            if (f_ratio < bestTrace.fraction)
+            {
+                bestTrace.hit      = true;
+                bestTrace.fraction = glm::max(0.0f, f_ratio);
+                bestTrace.normal   = pNormal;
+            }
+        }
+    }
+
+    // 2. Dynamic AABB Collision (Slab Casting)
+    for (auto* other : m_bodies)
+    {
+        if (other == skipBody || !other->isStatic)
+            continue;
+
+        glm::vec3 targetMin = other->position - other->halfSize - halfSize;
+        glm::vec3 targetMax = other->position + other->halfSize + halfSize;
+
+        glm::vec3 dir    = end - start;
+        glm::vec3 invDir = 1.0f / dir;
+
+        glm::vec3 t0 = (targetMin - start) * invDir;
+        glm::vec3 t1 = (targetMax - start) * invDir;
+
+        glm::vec3 tMin = glm::min(t0, t1);
+        glm::vec3 tMax = glm::max(t0, t1);
+
+        float enter = glm::max(glm::max(tMin.x, tMin.y), tMin.z);
+        float exit  = glm::min(glm::min(tMax.x, tMax.y), tMax.z);
+
+        if (enter < exit && enter >= 0.0f && enter < bestTrace.fraction)
+        {
+            bestTrace.hit      = true;
+            bestTrace.fraction = enter;
+            if (tMin.x > tMin.y && tMin.x > tMin.z)
+                bestTrace.normal = glm::vec3(invDir.x < 0 ? 1 : -1, 0, 0);
+            else if (tMin.y > tMin.z)
+                bestTrace.normal = glm::vec3(0, invDir.y < 0 ? 1 : -1, 0);
+            else
+                bestTrace.normal = glm::vec3(0, 0, invDir.z < 0 ? 1 : -1);
+        }
+    }
+
+    bestTrace.endPos = start + (end - start) * bestTrace.fraction;
+    if (bestTrace.hit)
+        bestTrace.endPos += bestTrace.normal * 0.001f;
+
+    return bestTrace;
+}
+
+void AnvilPhysics::Update(float dt)
+{
+    for (auto* b : m_bodies)
+    {
+        if (b->isStatic)
+            continue;
+
+        b->velocity += m_gravity * dt;
+        glm::vec3 destination = b->position + b->velocity * dt;
+
+        // Perfomr move with collision
+        ATrace moveTrace = TraceBox(b->position, destination, b->halfSize, b);
+
+        if (moveTrace.hit)
+        {
+            b->position = moveTrace.endPos;
+            ClipVelocity(b->velocity, moveTrace.normal, b->velocity, 1.0f);
+
+            if (moveTrace.normal.y > 0.7f)
+                b->onGround = true;
+        }
+        else
+        {
+            b->position = destination;
+            b->onGround = false;
+        }
+
+        b->velocity *= 0.99f;
+    }
+}
+
+---- FILENAME: AnvilPhysics.h ----
+
+#pragma once
+#include "ACore.h"
+#include "AMath.h"
+#include "AnvilBSPFormat.h"
+#include <vector>
+
+struct ANVIL_API ATrace
+{
+    bool      hit      = false;
+    float     fraction = 1.0f;
+    glm::vec3 endPos;
+    glm::vec3 normal;
+};
+
+struct ANVIL_API ABody
+{
+    glm::vec3 position;
+    glm::vec3 velocity;
+    glm::vec3 halfSize;
+    float     mass;
+    bool      isStatic;
+    bool      onGround;
+};
+
+class ANVIL_API AnvilPhysics
+{
+  public:
+    AnvilPhysics();
+    ~AnvilPhysics();
+
+    void   Update(float dt);
+    ABody* CreateBody(glm::vec3 pos, glm::vec3 size, float mass, bool isStatic);
+    ATrace TraceBox(glm::vec3 start, glm::vec3 end, glm::vec3 halfSize, ABody* skipBody);
+    void   SetWorldData(const std::vector<AVertex>& verts, const std::vector<AFace>& faces);
+
+  private:
+    std::vector<ABody*>  m_bodies;
+    std::vector<AVertex> m_worldVerts;
+    std::vector<AFace>   m_worldFaces;
+
+    glm::vec3 m_gravity = glm::vec3(0.0f, -15.0f, 0.0f);
+
+    bool CheckAABB(glm::vec3 posA, glm::vec3 sizeA, glm::vec3 posB, glm::vec3 sizeB);
+    void ClipVelocity(glm::vec3 in, glm::vec3 normal, glm::vec3& out, float overbounce);
+};
+
+---- FILENAME: APhysicsWorld.cpp ----
+
+// APhysicsWorld.cpp
+#include "APhysicsWorld.h"
+#include <reactphysics3d/reactphysics3d.h>
+
+struct APhysicsWorld::PhysicsData
+{
+    rp3d::PhysicsCommon physicsCommon;
+	rp3d::PhysicsWorld* world;
+};
+APhysicsWorld::APhysicsWorld()
+{
+    m_data = new PhysicsData();
+    m_data->world = m_data->physicsCommon.createPhysicsWorld();
+}
+
+APhysicsWorld::~APhysicsWorld()
+{
+    m_data->physicsCommon.destroyPhysicsWorld(m_data->world);
+    delete m_data;
+}
+
+void APhysicsWorld::Update(float deltaTime)
+{
+    m_data->world->update(deltaTime);
+}
+
+void* APhysicsWorld::CreateBox(glm::vec3 pos, glm::vec3 halfExtents, bool isStatic)
+{
+    rp3d::Vector3    position(pos.x, pos.y, pos.z);
+    rp3d::Quaternion orientation = rp3d::Quaternion::identity();
+    rp3d::Transform  transform(position, orientation);
+
+    rp3d::RigidBody* body = m_data->world->createRigidBody(transform);
+    body->setType(isStatic ? rp3d::BodyType::STATIC : rp3d::BodyType::DYNAMIC);
+
+    const rp3d::Vector3 extent(halfExtents.x, halfExtents.y, halfExtents.z);
+    rp3d::BoxShape*     shape = m_data->physicsCommon.createBoxShape(extent);
+
+    body->addCollider(shape, rp3d::Transform::identity());
+
+    return static_cast<void*>(body);
+}
+
+---- FILENAME: APhysicsWorld.h ----
+
+#pragma once
+// APhysicsWorld.h
+#include "ACore.h"
+#include "AMath.h"
+
+
+class ANVIL_API APhysicsWorld
+{
+  public:
+    APhysicsWorld();
+    ~APhysicsWorld();
+
+    void             Update(float deltaTime);
+    void* CreateBox(glm::vec3 pos, glm::vec3 halfExtents, bool isStatic = false);
+
+  private:
+    struct PhysicsData;
+    PhysicsData* m_data;
+};
+
+---- FILENAME: AResourceManager.cpp ----
+
+#include "AResourceManager.h"
+
+AMesh* AResourceManager::LoadMesh(const std::string& name, const std::string& path)
+{
+    if (m_meshes.count(name))
+        return m_meshes[name];
+
+    AMesh* mesh = AMeshLoader::LoadAnvMesh(path);
+    if (mesh)
+        m_meshes[name] = mesh;
+    return mesh;
+}
+
+---- FILENAME: AResourceManager.h ----
+
+#pragma once
+#include "AMesh.h"
+#include <map>
+#include <string>
+#include "AMeshLoader.h"
+
+class ANVIL_API AResourceManager
+{
+  public:
+    ~AResourceManager()
+    {
+        for (auto& p : m_meshes)
+            delete p.second;
+    }
+    void RegisterMesh(const std::string& name, AMesh* mesh)
+    {
+        m_meshes[name] = mesh;
+    }
+    AMesh* GetMesh(const std::string& name)
+    {
+        return m_meshes[name];
+    }
+
+    AMesh* LoadMesh(const std::string& name, const std::string& path);
+
+  private:
+    std::map<std::string, AMesh*> m_meshes;
+};
+
+---- FILENAME: AShader.cpp ----
+
+#include "AShader.h"
+#include "resource.h"
+#include <glad/glad.h>
+#include <Windows.h>
+#include <iostream>
+#include <fstream>
+#include <sstream>
+
+std::string AShader::LoadFromResource(int resID)
+{
+    HMODULE hMod = GetModuleHandleA("Anvil_SDK.dll");
+    HRSRC   hRes = FindResourceA(hMod, (LPCSTR) MAKEINTRESOURCE(resID), "SHADER");
+    if (!hRes)
+        return "";
+    HGLOBAL hData = LoadResource(hMod, hRes);
+    DWORD   size  = SizeofResource(hMod, hRes);
+    return std::string((const char*) LockResource(hData), size);
+}
+
+AShader::AShader(int vertResID, int fragResID)
+{
+    std::string v = LoadFromResource(vertResID);
+    std::string f = LoadFromResource(fragResID);
+    Compile(v.c_str(), f.c_str());
+}
+
+void AShader::Compile(const char* vCode, const char* fCode)
+{
+    uint32_t v, f;
+    v = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(v, 1, &vCode, NULL);
+    glCompileShader(v);
+
+    f = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(f, 1, &fCode, NULL);
+    glCompileShader(f);
+
+    m_ID = glCreateProgram();
+    glAttachShader(m_ID, v);
+    glAttachShader(m_ID, f);
+    glLinkProgram(m_ID);
+    glDeleteShader(v);
+    glDeleteShader(f);
+}
+
+void AShader::Use()
+{
+    glUseProgram(m_ID);
+}
+AShader::~AShader()
+{
+    glDeleteProgram(m_ID);
+}
+
+---- FILENAME: AShader.h ----
+
+#pragma once
+// AShader.h
+#include "ACore.h"
+#include <sstream>
+#include <string_view>
+
+class ANVIL_API AShader {
+public:
+    AShader(int vertResID, int fragResID);
+    AShader(std::string_view vPath, std::string_view fPath);
+    ~AShader();
+
+    void Use();
+    uint32_t GetID() const { return m_ID; }
+
+private:
+    uint32_t m_ID;
+    void Compile(const char* vCode, const char* fCode);
+    std::string LoadFromResource(int resID);
+};
+
+---- FILENAME: IComponent.h ----
+
+#pragma once
+#include "ACore.h"
+
+class AEntity;
+class AShader;
+
+class ANVIL_API IComponent
+{
+  public:
+    virtual ~IComponent()
+    {
+    }
+    virtual void OnInit(AEntity* owner)    = 0;
+    virtual void OnUpdate(float dt)        = 0;
+    virtual void OnRender(AShader* shader) = 0;
+
+  protected:
+    AEntity* m_owner = nullptr;
+};
+
+---- FILENAME: IGame.h ----
+
+#pragma once
+#include "ACore.h"
+#include "AMath.h"
+
+class AEngine;
+
+class IGame
+{
+  public:
+    virtual ~IGame()
+    {
+    }
+
+    virtual void OnInit(AEngine* engine) = 0;
+
+    virtual void OnUpdate(float dt) = 0;
+
+    virtual void OnShutdown() = 0;
+
+    virtual glm::mat4 GetViewMatrix() = 0;
+};
+
+// Function pointer type for the DLL export
+typedef IGame* (*CreateGameFn)();
+
+---- FILENAME: MeshComponent.h ----
+
+#pragma once
+#include <glad/glad.h>
+#include "AEntity.h"
+#include "AMesh.h"
+#include "AShader.h"
+#include "IComponent.h"
+#include "AMath.h"
+
+class ANVIL_API MeshComponent : public IComponent
+{
+  public:
+    MeshComponent(AMesh* mesh) : m_mesh(mesh)
+    {
+    }
+    void OnInit(AEntity* owner) override
+    {
+        m_owner = owner;
+    }
+    void OnUpdate(float dt) override
+    {
+    }
+    void OnRender(AShader* shader) override
+    {
+        if (!m_mesh || !m_owner)
+            return;
+        glm::mat4 model = glm::mat4(1.0f);
+        model           = glm::translate(model, m_owner->position);
+        model           = glm::rotate(model, glm::radians(m_owner->rotation.y), {0, 1, 0});
+        model           = glm::scale(model, m_owner->scale);
+
+        glUniformMatrix4fv(glGetUniformLocation(shader->GetID(), "model"), 1, GL_FALSE,
+                           glm::value_ptr(model));
+        m_mesh->Draw();
+    }
+
+  private:
+    AMesh* m_mesh;
+};
+
+---- FILENAME: resource.h ----
+
+//{{NO_DEPENDENCIES}}
+// Microsoft Visual C++ generated include file.
+// Used by AnvilSDK.rc
+//
+#define IDR_BASE_VERT                  101
+#define IDR_BASE_FRAG                  102
+
+// Next default values for new objects
+// 
+#ifdef APSTUDIO_INVOKED
+#ifndef APSTUDIO_READONLY_SYMBOLS
+#define _APS_NEXT_RESOURCE_VALUE        102
+#define _APS_NEXT_COMMAND_VALUE         40002
+#define _APS_NEXT_CONTROL_VALUE         1001
+#define _APS_NEXT_SYMED_VALUE           101
+#endif
+#endif
+
+---- FILENAME: resource1.h ----
+
+//{{NO_DEPENDENCIES}}
+// Microsoft Visual C++ generated include file.
+// Used by Anvil_SDK.rc
+
+// Next default values for new objects
+// 
+#ifdef APSTUDIO_INVOKED
+#ifndef APSTUDIO_READONLY_SYMBOLS
+#define _APS_NEXT_RESOURCE_VALUE        101
+#define _APS_NEXT_COMMAND_VALUE         40001
+#define _APS_NEXT_CONTROL_VALUE         1001
+#define _APS_NEXT_SYMED_VALUE           101
+#endif
+#endif

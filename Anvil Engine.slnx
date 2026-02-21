@@ -1,0 +1,13 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="ABSP_Viewer/ABSP_Viewer.vcxproj" Id="d84cdd57-7d26-41d2-8aa1-2052797b0d9d" />
+  <Project Path="Anvil_Compile/Anvil_Compile.vcxproj" Id="a396d5fc-b96c-4173-bbc4-59f3684cca7c" />
+  <Project Path="Anvil_Engine/Anvil_Engine.vcxproj" Id="d2deb05f-9427-4106-94fb-78906379b3dc">
+    <BuildDependency Project="Anvil_SDK/Anvil_SDK.vcxproj" />
+  </Project>
+  <Project Path="Anvil_SDK/Anvil_SDK.vcxproj" Id="14b75eee-aee6-4eea-834a-c1cc4338404e" />
+  <Project Path="Game/Game.vcxproj" Id="90a6a144-dd04-410c-b2c8-e4f215e632e6" />
+</Solution>
