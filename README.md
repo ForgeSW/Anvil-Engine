@@ -21,7 +21,7 @@ Anvil is built on top of the following technologies:
 * Open the terminal and run ```.\vcpkg\bootstrap-vcpkg.bat```
 * Run ```.\vcpkg install glad glm glfw reactphysics3d assimp stb_image```
 * Run ``` .\vcpkg integrate install```
-* Open the ```Anvil Engine.slnx``` solution file and hit CTRL+B
+* Open the ```Anvil Engine.slnx``` solution file and hit CTRL+SHIFT+B
 * Go to the SampleModels folder and copy the files to the build directory
 * Open the terminal and run ```.\Anvil_Compile mesh YOURMESHNAME.glb``` or any other model extention you'd like, you can also run ```.\Anvil_Compile map MAPNAME.map```, the map should be only in the Quake Standard format
 * Run the ```Anvil_Engine.exe``` file
