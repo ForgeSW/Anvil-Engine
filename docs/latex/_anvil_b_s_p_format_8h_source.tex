@@ -1,0 +1,54 @@
+\doxysection{Anvil\+BSPFormat.\+h}
+\hypertarget{_anvil_b_s_p_format_8h_source}{}\label{_anvil_b_s_p_format_8h_source}\index{Anvil\_SDK/AnvilBSPFormat.h@{Anvil\_SDK/AnvilBSPFormat.h}}
+\doxymbox{\hyperlink{_anvil_b_s_p_format_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_a_math_8h}{AMath.h}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_a_b_s_p_brush}{ABSPBrush}}}
+\DoxyCodeLine{00012\ \{}
+\DoxyCodeLine{00013\ \ \ \ \ uint32\_t\ \doxymbox{\hyperlink{struct_a_b_s_p_brush_a445b97772028193565c7044884e6612a}{firstPlane}};}
+\DoxyCodeLine{00014\ \ \ \ \ uint32\_t\ \doxymbox{\hyperlink{struct_a_b_s_p_brush_a2d9ace6c0aa44a6ada08a029e3ad0364}{numPlanes}};}
+\DoxyCodeLine{00015\ \};}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_a_bsp_entity}{ABspEntity}}}
+\DoxyCodeLine{00018\ \{}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{char}\ \doxymbox{\hyperlink{struct_a_bsp_entity_a1ffa5bd1636be9c158561962ccb557a0}{name}}[64];}
+\DoxyCodeLine{00020\ \ \ \ \ glm::vec3\ \doxymbox{\hyperlink{struct_a_bsp_entity_a73211bb2d8ec0f8be8fbbf8c008cfc53}{position}};}
+\DoxyCodeLine{00021\ \ \ \ \ glm::vec3\ \doxymbox{\hyperlink{struct_a_bsp_entity_a117568395632cf9968220c83c811025f}{size}};}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \};}
+\DoxyCodeLine{00024\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_a_b_s_p_header}{ABSPHeader}}}
+\DoxyCodeLine{00025\ \{}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{char}\ \ \ \ \ \doxymbox{\hyperlink{struct_a_b_s_p_header_ac941b6051e1d96083ed600281e0eeb1f}{magic}}[4];\ \textcolor{comment}{//\ "{}ABSP"{}}}
+\DoxyCodeLine{00027\ \ \ \ \ uint32\_t\ \doxymbox{\hyperlink{struct_a_b_s_p_header_a43d1ba19f9eb9a14559bc1acbd081241}{version}};\ \ \textcolor{comment}{//\ 1}}
+\DoxyCodeLine{00028\ \ \ \ \ uint32\_t\ \doxymbox{\hyperlink{struct_a_b_s_p_header_adfb74b3917ec0aca17483ae38b380947}{numVertices}};}
+\DoxyCodeLine{00029\ \ \ \ \ uint32\_t\ \doxymbox{\hyperlink{struct_a_b_s_p_header_ae4d007277f93b4a2862264c2266ae6b6}{numFaces}};}
+\DoxyCodeLine{00030\ \ \ \ \ uint32\_t\ \doxymbox{\hyperlink{struct_a_b_s_p_header_a59b2d1faa35f8fd53e579e25cc565bbc}{numEntities}};}
+\DoxyCodeLine{00031\ \ \ \ \ uint32\_t\ \doxymbox{\hyperlink{struct_a_b_s_p_header_afec7884581c31b367d135d8f9700dd0d}{numPlanes}};}
+\DoxyCodeLine{00032\ \ \ \ \ uint32\_t\ \doxymbox{\hyperlink{struct_a_b_s_p_header_a53862e7694262a7a5b275ad742081dd3}{numBrushes}};}
+\DoxyCodeLine{00033\ \};}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_a_vertex}{AVertex}}}
+\DoxyCodeLine{00036\ \{}
+\DoxyCodeLine{00037\ \ \ \ \ glm::vec3\ \doxymbox{\hyperlink{struct_a_vertex_a4e43a96da334b5d4c0877b91ea86b130}{position}};}
+\DoxyCodeLine{00038\ \ \ \ \ glm::vec2\ \doxymbox{\hyperlink{struct_a_vertex_acc7303aca9f6b9b897e1172846153d72}{uv}};}
+\DoxyCodeLine{00039\ \ \ \ \ glm::vec3\ \doxymbox{\hyperlink{struct_a_vertex_afae85fcb1d0545e80c896b3c9c6de003}{normal}};}
+\DoxyCodeLine{00040\ \};}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_a_face}{AFace}}}
+\DoxyCodeLine{00043\ \{}
+\DoxyCodeLine{00044\ \ \ \ \ uint32\_t\ \doxymbox{\hyperlink{struct_a_face_a626dc108d4501cf0930dd774781897d9}{firstVertex}};}
+\DoxyCodeLine{00045\ \ \ \ \ uint32\_t\ \doxymbox{\hyperlink{struct_a_face_a6b20d3f6aa361276578fc7b723bb71f6}{numVertices}};}
+\DoxyCodeLine{00046\ \ \ \ \ uint32\_t\ \doxymbox{\hyperlink{struct_a_face_af0819f8fc36e6af92cbc668066b50680}{textureID}};}
+\DoxyCodeLine{00047\ \};}
+\DoxyCodeLine{00048\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_a_plane}{APlane}}}
+\DoxyCodeLine{00049\ \{}
+\DoxyCodeLine{00050\ \ \ \ \ glm::vec3\ \doxymbox{\hyperlink{struct_a_plane_a48b3574200c7c1c2ced5a7ec310dfb5e}{normal}};}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \ \ \doxymbox{\hyperlink{struct_a_plane_a63c007bfc09bebdc2454b5a4ffe343ea}{distance}};}
+\DoxyCodeLine{00052\ \};}
+
+\end{DoxyCode}

@@ -1,0 +1,53 @@
+\doxysection{Mesh\+Component.\+h}
+\hypertarget{_mesh_component_8h_source}{}\label{_mesh_component_8h_source}\index{Anvil\_SDK/MeshComponent.h@{Anvil\_SDK/MeshComponent.h}}
+\doxymbox{\hyperlink{_mesh_component_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <glad/glad.h>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_a_entity_8h}{AEntity.h}}"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_a_mesh_8h}{AMesh.h}}"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_a_shader_8h}{AShader.h}}"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_i_component_8h}{IComponent.h}}"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_a_math_8h}{AMath.h}}"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{_a_core_8h_a15b0cb9c27faaa9a6433e2a530ddad12}{ANVIL\_API}}\ \doxymbox{\hyperlink{class_mesh_component_afb39bb912e7443f36b7583cb191ca270}{MeshComponent}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_i_component}{IComponent}}}
+\DoxyCodeLine{00010\ \{}
+\DoxyCodeLine{00011\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00012\ \ \ \ \ \doxymbox{\hyperlink{class_mesh_component_afb39bb912e7443f36b7583cb191ca270}{MeshComponent}}(\doxymbox{\hyperlink{class_a_mesh}{AMesh}}*\ mesh)\ :\ m\_mesh(mesh)}
+\DoxyCodeLine{00013\ \ \ \ \ \{}
+\DoxyCodeLine{00014\ \ \ \ \ \}}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_mesh_component_a1abc0e0ff4db776335b96d4268294eaf}{OnInit}}(\doxymbox{\hyperlink{class_a_entity}{AEntity}}*\ owner)\textcolor{keyword}{\ override}}
+\DoxyCodeLine{00020\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_i_component_a1874da8596f16cb6693d2431fe710e38}{m\_owner}}\ =\ owner;\ \textcolor{comment}{//\ Store\ the\ owner\ entity\ pointer}}
+\DoxyCodeLine{00022\ \ \ \ \ \}}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_mesh_component_a709c62bf54fc2954cab6b250cf773871}{OnUpdate}}(\textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{_a_b_s_p___viewer_2_main_8cpp_a778e38aa889751afffa2dea6b803e67a}{dt}})\textcolor{keyword}{\ override}}
+\DoxyCodeLine{00028\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ This\ is\ a\ placeholder\ implementation}}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ The\ actual\ update\ logic\ should\ be\ implemented\ in\ derived\ classes}}
+\DoxyCodeLine{00031\ \ \ \ \ \}}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_mesh_component_a04cb8134505888e116aea0d7ef82197d}{OnRender}}(\doxymbox{\hyperlink{class_a_shader}{AShader}}*\ shader)\textcolor{keyword}{\ override}}
+\DoxyCodeLine{00037\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{comment}{//\ Early\ return\ if\ mesh\ or\ owner\ is\ not\ valid}}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!m\_mesh\ ||\ !\doxymbox{\hyperlink{class_i_component_a1874da8596f16cb6693d2431fe710e38}{m\_owner}})}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{comment}{//\ Initialize\ model\ matrix\ as\ identity\ matrix}}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ glm::mat4\ model\ =\ glm::mat4(1.0f);}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ }
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{comment}{//\ Apply\ transformations\ in\ order:\ translation,\ rotation,\ scaling}}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ model\ \ \ \ \ \ \ \ \ \ \ =\ glm::translate(model,\ \doxymbox{\hyperlink{class_i_component_a1874da8596f16cb6693d2431fe710e38}{m\_owner}}-\/>position);\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Move\ to\ owner's\ position}}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ model\ \ \ \ \ \ \ \ \ \ \ =\ glm::rotate(model,\ glm::radians(\doxymbox{\hyperlink{class_i_component_a1874da8596f16cb6693d2431fe710e38}{m\_owner}}-\/>rotation.y),\ \{0,\ 1,\ 0\});\ \textcolor{comment}{//\ Rotate\ around\ Y-\/axis}}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ model\ \ \ \ \ \ \ \ \ \ \ =\ glm::scale(model,\ \doxymbox{\hyperlink{class_i_component_a1874da8596f16cb6693d2431fe710e38}{m\_owner}}-\/>scale);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Apply\ scaling}}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{comment}{//\ Set\ the\ model\ matrix\ uniform\ in\ the\ shader}}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ glUniformMatrix4fv(glGetUniformLocation(shader-\/>\doxymbox{\hyperlink{class_a_shader_a838aacac6b2bfc4bb05535f704edb2f2}{GetID}}(),\ \textcolor{stringliteral}{"{}model"{}}),\ 1,\ GL\_FALSE,}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{comment}{//\ Draw\ the\ mesh}}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ glm::value\_ptr(model));}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ m\_mesh-\/>Draw();}
+\DoxyCodeLine{00055\ \ \ \ \ \}}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00058\ \ \ \ \ \doxymbox{\hyperlink{class_a_mesh}{AMesh}}*\ m\_mesh;}
+\DoxyCodeLine{00059\ \};}
+
+\end{DoxyCode}

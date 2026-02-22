@@ -1,0 +1,26 @@
+\doxysection{AMesh\+Loader.\+h}
+\hypertarget{_a_mesh_loader_8h_source}{}\label{_a_mesh_loader_8h_source}\index{Anvil\_SDK/AMeshLoader.h@{Anvil\_SDK/AMeshLoader.h}}
+\doxymbox{\hyperlink{_a_mesh_loader_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_a_mesh_8h}{AMesh.h}}"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{comment}{//\ mesh.anvmesh}}
+\DoxyCodeLine{00007\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_a_mesh_header}{AMeshHeader}}}
+\DoxyCodeLine{00008\ \{}
+\DoxyCodeLine{00009\ \ \ \ \ uint32\_t\ \doxymbox{\hyperlink{struct_a_mesh_header_a9fef198a98e8c71e6d7653864d4968e2}{numVertices}}\ =\ 0;}
+\DoxyCodeLine{00010\ \ \ \ \ uint32\_t\ \doxymbox{\hyperlink{struct_a_mesh_header_aa07f275ccdf9e7dd821d4549effd7121}{numIndices}}\ =\ 0;}
+\DoxyCodeLine{00011\ \ \ \ \ uint32\_t\ \doxymbox{\hyperlink{struct_a_mesh_header_a8784f479ee880305c048e7a0931220fa}{pathLength}}\ =\ 0;}
+\DoxyCodeLine{00012\ \};}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{_a_core_8h_a15b0cb9c27faaa9a6433e2a530ddad12}{ANVIL\_API}}\ \doxymbox{\hyperlink{class_a_mesh_loader}{AMeshLoader}}}
+\DoxyCodeLine{00015\ \{}
+\DoxyCodeLine{00016\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_a_mesh_loader_a38c0af2d3b5f342467d2314cadec37e2}{ExportToAnvMesh}}(\textcolor{keyword}{const}\ std::string\&\ inputPath,\ \textcolor{keyword}{const}\ std::string\&\ outputPath);}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{class_a_mesh}{AMesh}}*\ \doxymbox{\hyperlink{class_a_mesh_loader_a9102ed0d4539b6cc2e143c694664c681}{LoadAnvMesh}}(\textcolor{keyword}{const}\ std::string\&\ path);}
+\DoxyCodeLine{00020\ \};}
+
+\end{DoxyCode}

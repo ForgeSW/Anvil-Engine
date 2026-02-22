@@ -1,0 +1,43 @@
+\doxysection{CGame.\+h}
+\hypertarget{_c_game_8h_source}{}\label{_c_game_8h_source}\index{Game/CGame.h@{Game/CGame.h}}
+\doxymbox{\hyperlink{_c_game_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_i_game_8h}{IGame.h}}"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_a_math_8h}{AMath.h}}"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_anvil_camera_8h}{AnvilCamera.h}}"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_a_entity}{AEntity}};}
+\DoxyCodeLine{00008\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_rigid_body_component}{RigidBodyComponent}};}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_c_game_ab60843d081ca905dcdf6c8251cf188b4}{CGame}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_i_game}{IGame}}}
+\DoxyCodeLine{00011\ \{}
+\DoxyCodeLine{00012\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00013\ \ \ \ \ \doxymbox{\hyperlink{class_c_game_ab60843d081ca905dcdf6c8251cf188b4}{CGame}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{class_c_game_ab3271392bf956759e760b56771f313b8}{\string~CGame}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_c_game_ad7e644dbf53a831b1c3a95c3ec25585a}{OnInit}}(\doxymbox{\hyperlink{class_a_engine}{AEngine}}*\ engine)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_c_game_a93d0464380d61b3c868d2816b0459c74}{OnUpdate}}(\textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{_a_b_s_p___viewer_2_main_8cpp_a778e38aa889751afffa2dea6b803e67a}{dt}})\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_c_game_a9f16d69beba225e8e2c4e6b710f17c81}{OnShutdown}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{virtual}\ glm::mat4\ \doxymbox{\hyperlink{class_c_game_a6b792a77e1cecf33efd077f969839f76}{GetViewMatrix}}()\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_camera\ ?\ m\_camera-\/>GetViewMatrix()\ :\ glm::mat4(1.0f);}
+\DoxyCodeLine{00022\ \ \ \ \ \}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00025\ \ \ \ \ \doxymbox{\hyperlink{class_a_entity}{AEntity}}*\ m\_playerEntity\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00026\ \ \ \ \ \doxymbox{\hyperlink{class_a_entity}{AEntity}}*\ m\_crate\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \doxymbox{\hyperlink{class_rigid_body_component}{RigidBodyComponent}}*\ m\_playerRB\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00029\ \ \ \ \ \doxymbox{\hyperlink{class_a_camera}{ACamera}}*\ m\_camera\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ m\_firstMouse\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{float}\ m\_lastX\ =\ 400.0f;}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{float}\ m\_lastY\ =\ 300.0f;}
+\DoxyCodeLine{00034\ \};}
+\DoxyCodeLine{00035\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \doxymbox{\hyperlink{_c_game_8h_a293044cf12ae15f738f375434cac82fa}{\_\_declspec}}(dllexport)\ \doxymbox{\hyperlink{class_i_game}{IGame}}*\ CreateGame()\ \{}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{new}\ \doxymbox{\hyperlink{class_c_game}{CGame}}();}
+\DoxyCodeLine{00037\ \}}
+
+\end{DoxyCode}

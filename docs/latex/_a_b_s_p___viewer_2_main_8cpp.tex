@@ -1,0 +1,105 @@
+\doxysection{ABSP\+\_\+\+Viewer/\+\+Main.cpp File Reference}
+\hypertarget{_a_b_s_p___viewer_2_main_8cpp}{}\label{_a_b_s_p___viewer_2_main_8cpp}\index{ABSP\_Viewer/Main.cpp@{ABSP\_Viewer/Main.cpp}}
+{\ttfamily \+\#include "{}Anvil\+BSPFormat.\+h"{}}\newline
+{\ttfamily \+\#include $<$glad/\+glad.\+h$>$}\newline
+{\ttfamily \+\#include $<$glfw/\+glfw3.\+h$>$}\newline
+{\ttfamily \+\#include $<$glm/\+gtc/\+matrix\+\_\+transform.\+hpp$>$}\newline
+{\ttfamily \+\#include $<$glm/\+gtc/\+type\+\_\+ptr.\+hpp$>$}\newline
+{\ttfamily \+\#include $<$iostream$>$}\newline
+{\ttfamily \+\#include $<$fstream$>$}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+glm::\+vec3 \doxymbox{\hyperlink{_a_b_s_p___viewer_2_main_8cpp_ad181b3a55eb278c0143275a9dabf7483}{c\+Pos}} (0, 10, 30)
+\item 
+glm::\+vec3 \doxymbox{\hyperlink{_a_b_s_p___viewer_2_main_8cpp_a4b64beeeeb01096bcfbc67fe9b232a59}{c\+Front}} (0, 0, -\/1)
+\item 
+void \doxymbox{\hyperlink{_a_b_s_p___viewer_2_main_8cpp_ae6d64c67dd9612b42863791be1c18cf9}{mouse\+\_\+cb}} (GLFWwindow \texorpdfstring{$\ast$}{*}w, double x, double y)
+\item 
+int \doxymbox{\hyperlink{_a_b_s_p___viewer_2_main_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+float \doxymbox{\hyperlink{_a_b_s_p___viewer_2_main_8cpp_a7efc219781df4a1e281cb5d348b7fbf9}{yaw}} = -\/90.f
+\item 
+float \doxymbox{\hyperlink{_a_b_s_p___viewer_2_main_8cpp_a282e7d4378d4a18a805b8980295ac86c}{pitch}} = 0.f
+\item 
+float \doxymbox{\hyperlink{_a_b_s_p___viewer_2_main_8cpp_a778e38aa889751afffa2dea6b803e67a}{dt}} = 0
+\item 
+float \doxymbox{\hyperlink{_a_b_s_p___viewer_2_main_8cpp_ae49e8fd9ac142c86974c320b70faa769}{lastF}} = 0
+\item 
+const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{_a_b_s_p___viewer_2_main_8cpp_a86b64a460069f0da14bfcce7f4024601}{vS}} = "{}\+\#version 440 core \textbackslash{}nlayout(location=0) in vec3 p; layout(location=2) in vec3 n; out vec3 N; uniform mat4 pj,v; void \doxymbox{\hyperlink{_a_b_s_p___viewer_2_main_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}}()\{ N=n; gl\+\_\+\+Position=pj\texorpdfstring{$\ast$}{*}v\texorpdfstring{$\ast$}{*}vec4(p,1.\+0); \}"{}
+\item 
+const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{_a_b_s_p___viewer_2_main_8cpp_a193d12fcdc81ccb6aed4bde7b8c518ad}{fS}} = "{}\+\#version 440 core\textbackslash{}nin vec3 N; out vec4 C; void \doxymbox{\hyperlink{_a_b_s_p___viewer_2_main_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}}()\{ vec3 light = normalize(vec3(0.\+5, 1.\+0, 0.\+3)); float d = max(dot(normalize(N), light), 0.\+2); C=vec4(vec3(0.\+7, 0.\+65, 0.\+6) \texorpdfstring{$\ast$}{*} d, 1.\+0); \}"{}
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{_a_b_s_p___viewer_2_main_8cpp_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{_a_b_s_p___viewer_2_main_8cpp_a4b64beeeeb01096bcfbc67fe9b232a59}\index{Main.cpp@{Main.cpp}!cFront@{cFront}}
+\index{cFront@{cFront}!Main.cpp@{Main.cpp}}
+\doxysubsubsection{\texorpdfstring{cFront()}{cFront()}}
+{\footnotesize\ttfamily \label{_a_b_s_p___viewer_2_main_8cpp_a4b64beeeeb01096bcfbc67fe9b232a59} 
+glm::\+vec3 c\+Front (\begin{DoxyParamCaption}\item[{0}]{}{, }\item[{0}]{}{, }\item[{-\/}]{1}{}\end{DoxyParamCaption})}
+
+\Hypertarget{_a_b_s_p___viewer_2_main_8cpp_ad181b3a55eb278c0143275a9dabf7483}\index{Main.cpp@{Main.cpp}!cPos@{cPos}}
+\index{cPos@{cPos}!Main.cpp@{Main.cpp}}
+\doxysubsubsection{\texorpdfstring{cPos()}{cPos()}}
+{\footnotesize\ttfamily \label{_a_b_s_p___viewer_2_main_8cpp_ad181b3a55eb278c0143275a9dabf7483} 
+glm::\+vec3 c\+Pos (\begin{DoxyParamCaption}\item[{0}]{}{, }\item[{10}]{}{, }\item[{30}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{_a_b_s_p___viewer_2_main_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}\index{Main.cpp@{Main.cpp}!main@{main}}
+\index{main@{main}!Main.cpp@{Main.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily \label{_a_b_s_p___viewer_2_main_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4} 
+int main (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{_a_b_s_p___viewer_2_main_8cpp_ae6d64c67dd9612b42863791be1c18cf9}\index{Main.cpp@{Main.cpp}!mouse\_cb@{mouse\_cb}}
+\index{mouse\_cb@{mouse\_cb}!Main.cpp@{Main.cpp}}
+\doxysubsubsection{\texorpdfstring{mouse\_cb()}{mouse\_cb()}}
+{\footnotesize\ttfamily \label{_a_b_s_p___viewer_2_main_8cpp_ae6d64c67dd9612b42863791be1c18cf9} 
+void mouse\+\_\+cb (\begin{DoxyParamCaption}\item[{GLFWwindow \texorpdfstring{$\ast$}{*}}]{w}{, }\item[{double}]{x}{, }\item[{double}]{y}{}\end{DoxyParamCaption})}
+
+
+
+\label{doc-var-members}
+\Hypertarget{_a_b_s_p___viewer_2_main_8cpp_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{_a_b_s_p___viewer_2_main_8cpp_a778e38aa889751afffa2dea6b803e67a}\index{Main.cpp@{Main.cpp}!dt@{dt}}
+\index{dt@{dt}!Main.cpp@{Main.cpp}}
+\doxysubsubsection{\texorpdfstring{dt}{dt}}
+{\footnotesize\ttfamily \label{_a_b_s_p___viewer_2_main_8cpp_a778e38aa889751afffa2dea6b803e67a} 
+float dt = 0}
+
+\Hypertarget{_a_b_s_p___viewer_2_main_8cpp_a193d12fcdc81ccb6aed4bde7b8c518ad}\index{Main.cpp@{Main.cpp}!fS@{fS}}
+\index{fS@{fS}!Main.cpp@{Main.cpp}}
+\doxysubsubsection{\texorpdfstring{fS}{fS}}
+{\footnotesize\ttfamily \label{_a_b_s_p___viewer_2_main_8cpp_a193d12fcdc81ccb6aed4bde7b8c518ad} 
+const char\texorpdfstring{$\ast$}{*} fS = "{}\+\#version 440 core\textbackslash{}nin vec3 N; out vec4 C; void \doxymbox{\hyperlink{_a_b_s_p___viewer_2_main_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}}()\{ vec3 light = normalize(vec3(0.\+5, 1.\+0, 0.\+3)); float d = max(dot(normalize(N), light), 0.\+2); C=vec4(vec3(0.\+7, 0.\+65, 0.\+6) \texorpdfstring{$\ast$}{*} d, 1.\+0); \}"{}}
+
+\Hypertarget{_a_b_s_p___viewer_2_main_8cpp_ae49e8fd9ac142c86974c320b70faa769}\index{Main.cpp@{Main.cpp}!lastF@{lastF}}
+\index{lastF@{lastF}!Main.cpp@{Main.cpp}}
+\doxysubsubsection{\texorpdfstring{lastF}{lastF}}
+{\footnotesize\ttfamily \label{_a_b_s_p___viewer_2_main_8cpp_ae49e8fd9ac142c86974c320b70faa769} 
+float lastF = 0}
+
+\Hypertarget{_a_b_s_p___viewer_2_main_8cpp_a282e7d4378d4a18a805b8980295ac86c}\index{Main.cpp@{Main.cpp}!pitch@{pitch}}
+\index{pitch@{pitch}!Main.cpp@{Main.cpp}}
+\doxysubsubsection{\texorpdfstring{pitch}{pitch}}
+{\footnotesize\ttfamily \label{_a_b_s_p___viewer_2_main_8cpp_a282e7d4378d4a18a805b8980295ac86c} 
+float pitch = 0.f}
+
+\Hypertarget{_a_b_s_p___viewer_2_main_8cpp_a86b64a460069f0da14bfcce7f4024601}\index{Main.cpp@{Main.cpp}!vS@{vS}}
+\index{vS@{vS}!Main.cpp@{Main.cpp}}
+\doxysubsubsection{\texorpdfstring{vS}{vS}}
+{\footnotesize\ttfamily \label{_a_b_s_p___viewer_2_main_8cpp_a86b64a460069f0da14bfcce7f4024601} 
+const char\texorpdfstring{$\ast$}{*} vS = "{}\+\#version 440 core \textbackslash{}nlayout(location=0) in vec3 p; layout(location=2) in vec3 n; out vec3 N; uniform mat4 pj,v; void \doxymbox{\hyperlink{_a_b_s_p___viewer_2_main_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}}()\{ N=n; gl\+\_\+\+Position=pj\texorpdfstring{$\ast$}{*}v\texorpdfstring{$\ast$}{*}vec4(p,1.\+0); \}"{}}
+
+\Hypertarget{_a_b_s_p___viewer_2_main_8cpp_a7efc219781df4a1e281cb5d348b7fbf9}\index{Main.cpp@{Main.cpp}!yaw@{yaw}}
+\index{yaw@{yaw}!Main.cpp@{Main.cpp}}
+\doxysubsubsection{\texorpdfstring{yaw}{yaw}}
+{\footnotesize\ttfamily \label{_a_b_s_p___viewer_2_main_8cpp_a7efc219781df4a1e281cb5d348b7fbf9} 
+float yaw = -\/90.f}
+

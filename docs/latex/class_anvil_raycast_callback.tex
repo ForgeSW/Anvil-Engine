@@ -1,0 +1,92 @@
+\doxysection{Anvil\+Raycast\+Callback Class Reference}
+\hypertarget{class_anvil_raycast_callback}{}\label{class_anvil_raycast_callback}\index{AnvilRaycastCallback@{AnvilRaycastCallback}}
+Inheritance diagram for Anvil\+Raycast\+Callback:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_anvil_raycast_callback}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual decimal \doxymbox{\hyperlink{class_anvil_raycast_callback_a30eaf3198f1ea1503b6a012bf8c31a81}{notify\+Raycast\+Hit}} (const Raycast\+Info \&info) override
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\>bool \doxymbox{\hyperlink{class_anvil_raycast_callback_af4bde9af1180ee6cf29e549573cc8a94}{hit}} = false\\
+\>glm::vec3 \doxymbox{\hyperlink{class_anvil_raycast_callback_adfffa8f2640bd0cd94f9eef215eb3d9d}{point}}\\
+\>glm::vec3 \doxymbox{\hyperlink{class_anvil_raycast_callback_abe382c617b1654af6100ba5e895c0d2f}{normal}}\\
+\>float \doxymbox{\hyperlink{class_anvil_raycast_callback_a0839d36746dd971642d768b1efdf5a70}{fraction}} = 1.0f\\
+\>Collider \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_anvil_raycast_callback_a32b534fa8c89be210370c8575078971b}{collider}} = nullptr\\
+\} \doxymbox{\hyperlink{class_anvil_raycast_callback_aaad3b4c8379b7293b3198458fafb9fbd}{result}}\\
+
+\end{tabbing}\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{class_anvil_raycast_callback_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_anvil_raycast_callback_a30eaf3198f1ea1503b6a012bf8c31a81}\index{AnvilRaycastCallback@{AnvilRaycastCallback}!notifyRaycastHit@{notifyRaycastHit}}
+\index{notifyRaycastHit@{notifyRaycastHit}!AnvilRaycastCallback@{AnvilRaycastCallback}}
+\doxysubsubsection{\texorpdfstring{notifyRaycastHit()}{notifyRaycastHit()}}
+{\footnotesize\ttfamily \label{class_anvil_raycast_callback_a30eaf3198f1ea1503b6a012bf8c31a81} 
+virtual decimal Anvil\+Raycast\+Callback::\+notify\+Raycast\+Hit (\begin{DoxyParamCaption}\item[{const Raycast\+Info \&}]{info}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Handles notification of a ray hit event 
+\begin{DoxyParams}{Parameters}
+{\em info} & Contains detailed information about the raycast hit \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The hit fraction of the raycast 
+\end{DoxyReturn}
+
+
+\label{doc-variable-members}
+\Hypertarget{class_anvil_raycast_callback_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_anvil_raycast_callback_a32b534fa8c89be210370c8575078971b}\index{AnvilRaycastCallback@{AnvilRaycastCallback}!collider@{collider}}
+\index{collider@{collider}!AnvilRaycastCallback@{AnvilRaycastCallback}}
+\doxysubsubsection{\texorpdfstring{collider}{collider}}
+{\footnotesize\ttfamily \label{class_anvil_raycast_callback_a32b534fa8c89be210370c8575078971b} 
+Collider\texorpdfstring{$\ast$}{*} Anvil\+Raycast\+Callback::\+collider = nullptr}
+
+\Hypertarget{class_anvil_raycast_callback_a0839d36746dd971642d768b1efdf5a70}\index{AnvilRaycastCallback@{AnvilRaycastCallback}!fraction@{fraction}}
+\index{fraction@{fraction}!AnvilRaycastCallback@{AnvilRaycastCallback}}
+\doxysubsubsection{\texorpdfstring{fraction}{fraction}}
+{\footnotesize\ttfamily \label{class_anvil_raycast_callback_a0839d36746dd971642d768b1efdf5a70} 
+float Anvil\+Raycast\+Callback::\+fraction = 1.\+0f}
+
+\Hypertarget{class_anvil_raycast_callback_af4bde9af1180ee6cf29e549573cc8a94}\index{AnvilRaycastCallback@{AnvilRaycastCallback}!hit@{hit}}
+\index{hit@{hit}!AnvilRaycastCallback@{AnvilRaycastCallback}}
+\doxysubsubsection{\texorpdfstring{hit}{hit}}
+{\footnotesize\ttfamily \label{class_anvil_raycast_callback_af4bde9af1180ee6cf29e549573cc8a94} 
+bool Anvil\+Raycast\+Callback::\+hit = false}
+
+\Hypertarget{class_anvil_raycast_callback_abe382c617b1654af6100ba5e895c0d2f}\index{AnvilRaycastCallback@{AnvilRaycastCallback}!normal@{normal}}
+\index{normal@{normal}!AnvilRaycastCallback@{AnvilRaycastCallback}}
+\doxysubsubsection{\texorpdfstring{normal}{normal}}
+{\footnotesize\ttfamily \label{class_anvil_raycast_callback_abe382c617b1654af6100ba5e895c0d2f} 
+glm::\+vec3 Anvil\+Raycast\+Callback::\+normal}
+
+\Hypertarget{class_anvil_raycast_callback_adfffa8f2640bd0cd94f9eef215eb3d9d}\index{AnvilRaycastCallback@{AnvilRaycastCallback}!point@{point}}
+\index{point@{point}!AnvilRaycastCallback@{AnvilRaycastCallback}}
+\doxysubsubsection{\texorpdfstring{point}{point}}
+{\footnotesize\ttfamily \label{class_anvil_raycast_callback_adfffa8f2640bd0cd94f9eef215eb3d9d} 
+glm::\+vec3 Anvil\+Raycast\+Callback::\+point}
+
+\Hypertarget{class_anvil_raycast_callback_aaad3b4c8379b7293b3198458fafb9fbd}\index{AnvilRaycastCallback@{AnvilRaycastCallback}!result@{result}}
+\index{result@{result}!AnvilRaycastCallback@{AnvilRaycastCallback}}
+\doxysubsubsection{\texorpdfstring{[struct]}{[struct]}}
+{\footnotesize\ttfamily \label{class_anvil_raycast_callback_aaad3b4c8379b7293b3198458fafb9fbd} 
+struct  \{ ... \}  Anvil\+Raycast\+Callback::\+result}
+
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+Anvil\+\_\+\+SDK/\+\doxymbox{\hyperlink{_anvil_physics_8cpp}{Anvil\+Physics.\+cpp}}\end{DoxyCompactItemize}

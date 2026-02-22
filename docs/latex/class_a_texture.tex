@@ -1,0 +1,82 @@
+\doxysection{ATexture Class Reference}
+\hypertarget{class_a_texture}{}\label{class_a_texture}\index{ATexture@{ATexture}}
+
+
+{\ttfamily \+\#include $<$ATexture.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_a_texture_a1ae7d3ecaecd8b71b52649d711e2a964}{ATexture}} (const char \texorpdfstring{$\ast$}{*}\doxymbox{\hyperlink{class_a_texture_ad484d8314ab5e1b6e6987d7a58071d7d}{path}})
+\item 
+void \doxymbox{\hyperlink{class_a_texture_acd0484049c77bbb931ded4e43c9621b6}{Bind}} (unsigned int unit=0)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+unsigned int \doxymbox{\hyperlink{class_a_texture_a3180a69f373f8c8a72ba3fdee0bfac13}{ID}}
+\item 
+std::\+string \doxymbox{\hyperlink{class_a_texture_a968fde947bdd778c9df8f54f68b8cf2b}{type}}
+\item 
+std::\+string \doxymbox{\hyperlink{class_a_texture_ad484d8314ab5e1b6e6987d7a58071d7d}{path}}
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_a_texture_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_a_texture_a1ae7d3ecaecd8b71b52649d711e2a964}\index{ATexture@{ATexture}!ATexture@{ATexture}}
+\index{ATexture@{ATexture}!ATexture@{ATexture}}
+\doxysubsubsection{\texorpdfstring{ATexture()}{ATexture()}}
+{\footnotesize\ttfamily \label{class_a_texture_a1ae7d3ecaecd8b71b52649d711e2a964} 
+ATexture::\+\+ATexture (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{path}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Constructor for \doxylink{class_a_texture}{ATexture} class that loads an image from a file path and creates an Open\+GL texture 
+\begin{DoxyParams}{Parameters}
+{\em \doxylink{class_a_texture_ad484d8314ab5e1b6e6987d7a58071d7d}{path}} & The file path to the image texture \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{class_a_texture_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_a_texture_acd0484049c77bbb931ded4e43c9621b6}\index{ATexture@{ATexture}!Bind@{Bind}}
+\index{Bind@{Bind}!ATexture@{ATexture}}
+\doxysubsubsection{\texorpdfstring{Bind()}{Bind()}}
+{\footnotesize\ttfamily \label{class_a_texture_acd0484049c77bbb931ded4e43c9621b6} 
+void ATexture::\+\+Bind (\begin{DoxyParamCaption}\item[{unsigned int}]{unit}{ = {\ttfamily 0}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Binds the texture to a specific texture unit for rendering 
+\begin{DoxyParams}{Parameters}
+{\em unit} & The texture unit to bind to (default is 0) \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-variable-members}
+\Hypertarget{class_a_texture_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_a_texture_a3180a69f373f8c8a72ba3fdee0bfac13}\index{ATexture@{ATexture}!ID@{ID}}
+\index{ID@{ID}!ATexture@{ATexture}}
+\doxysubsubsection{\texorpdfstring{ID}{ID}}
+{\footnotesize\ttfamily \label{class_a_texture_a3180a69f373f8c8a72ba3fdee0bfac13} 
+unsigned int ATexture::\+\+ID}
+
+\Hypertarget{class_a_texture_ad484d8314ab5e1b6e6987d7a58071d7d}\index{ATexture@{ATexture}!path@{path}}
+\index{path@{path}!ATexture@{ATexture}}
+\doxysubsubsection{\texorpdfstring{path}{path}}
+{\footnotesize\ttfamily \label{class_a_texture_ad484d8314ab5e1b6e6987d7a58071d7d} 
+std::\+string ATexture::\+path}
+
+\Hypertarget{class_a_texture_a968fde947bdd778c9df8f54f68b8cf2b}\index{ATexture@{ATexture}!type@{type}}
+\index{type@{type}!ATexture@{ATexture}}
+\doxysubsubsection{\texorpdfstring{type}{type}}
+{\footnotesize\ttfamily \label{class_a_texture_a968fde947bdd778c9df8f54f68b8cf2b} 
+std::\+string ATexture::\+type}
+
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+Anvil\+\_\+\+SDK/\+\doxymbox{\hyperlink{_a_texture_8h}{ATexture.\+h}}\end{DoxyCompactItemize}

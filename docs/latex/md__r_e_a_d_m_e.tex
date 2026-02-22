@@ -1,0 +1,31 @@
+\chapter{Anvil Engine }
+\hypertarget{md__r_e_a_d_m_e}{}\label{md__r_e_a_d_m_e}\index{Anvil Engine@{Anvil Engine}}
+\label{md__r_e_a_d_m_e_autotoc_md0}%
+\Hypertarget{md__r_e_a_d_m_e_autotoc_md0}%
+\hypertarget{md__r_e_a_d_m_e_autotoc_md1}{}\doxysubsubsection{\texorpdfstring{A lightweight 3D game engine made in C++}{A lightweight 3D game engine made in C++}}\label{md__r_e_a_d_m_e_autotoc_md1}
+ Anvil is a custom game engine built in C++ focusing on BSP (Binary space partition) or in this case ABSP (Anvil Binary Space Partition). It is designed for developers who prefer controlling everything from code instead of an editor\hypertarget{md__r_e_a_d_m_e_autotoc_md2}{}\doxysection{\texorpdfstring{Tech Stack}{Tech Stack}}\label{md__r_e_a_d_m_e_autotoc_md2}
+Anvil is built on top of the following technologies:\+
+\begin{DoxyItemize}
+\item Rendering:\+ Glad and GLFW
+\item Math:\+ GLM (Open\+GL mathematics)
+\item Physics:\+ React\+Physics3d
+\item Assets:\+ Assimp (models) stb\+\_\+image (textures)
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md3}{}\doxysection{\texorpdfstring{Getting Started}{Getting Started}}\label{md__r_e_a_d_m_e_autotoc_md3}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md4}{}\doxysubsection{\texorpdfstring{Prerequisites}{Prerequisites}}\label{md__r_e_a_d_m_e_autotoc_md4}
+
+\begin{DoxyItemize}
+\item C++20 Standard
+\item Visual Studio 2022/\+2026 (for .slnx support)
+\item Git
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md5}{}\doxysubsection{\texorpdfstring{Installation}{Installation}}\label{md__r_e_a_d_m_e_autotoc_md5}
+
+\begin{DoxyItemize}
+\item Clone the {\ttfamily \href{https://github.com/microsoft/vcpkg.git}{\texttt{https:\+/\+/\+github.\+com/\+microsoft/\+vcpkg.\+git}}} repository to a path like {\ttfamily C:\+\textbackslash{}dev\textbackslash{}vcpkg}
+\item Open the terminal and run {\ttfamily .\textbackslash{}vcpkg\textbackslash{}bootstrap-\/vcpkg.\+bat}
+\item Run {\ttfamily .\textbackslash{}vcpkg install glad glm glfw \doxylink{namespacereactphysics3d}{reactphysics3d} assimp stb\+\_\+image}
+\item Run {\ttfamily  .\textbackslash{}vcpkg integrate install}
+\item Open the {\ttfamily Anvil Engine.\+slnx} solution file and hit CTRL+B
+\item Go to the Sample\+Models folder and copy the files to the build directory
+\item Open the terminal and run {\ttfamily .\textbackslash{}Anvil\+\_\+\+Compile mesh YOURMESHNAME.\+glb} or any other model extention you\textquotesingle{}d like, you can also run {\ttfamily .\textbackslash{}Anvil\+\_\+\+Compile map MAPNAME.\+map}, the map should be only in the Quake Standard format
+\item Run the {\ttfamily Anvil\+\_\+\+Engine.\+exe} file 
+\end{DoxyItemize}

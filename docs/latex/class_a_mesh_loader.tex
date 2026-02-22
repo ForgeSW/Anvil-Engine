@@ -1,0 +1,55 @@
+\doxysection{AMesh\+Loader Class Reference}
+\hypertarget{class_a_mesh_loader}{}\label{class_a_mesh_loader}\index{AMeshLoader@{AMeshLoader}}
+
+
+{\ttfamily \+\#include $<$AMesh\+Loader.\+h$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \doxymbox{\hyperlink{class_a_mesh_loader_a38c0af2d3b5f342467d2314cadec37e2}{Export\+To\+Anv\+Mesh}} (const std::\+string \&input\+Path, const std::\+string \&output\+Path)
+\begin{DoxyCompactList}\small\item\em Exports a 3D mesh to Anv\+Mesh format. \end{DoxyCompactList}\item 
+static \doxymbox{\hyperlink{class_a_mesh}{AMesh}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_a_mesh_loader_a9102ed0d4539b6cc2e143c694664c681}{Load\+Anv\+Mesh}} (const std::\+string \&path)
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{class_a_mesh_loader_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_a_mesh_loader_a38c0af2d3b5f342467d2314cadec37e2}\index{AMeshLoader@{AMeshLoader}!ExportToAnvMesh@{ExportToAnvMesh}}
+\index{ExportToAnvMesh@{ExportToAnvMesh}!AMeshLoader@{AMeshLoader}}
+\doxysubsubsection{\texorpdfstring{ExportToAnvMesh()}{ExportToAnvMesh()}}
+{\footnotesize\ttfamily \label{class_a_mesh_loader_a38c0af2d3b5f342467d2314cadec37e2} 
+void AMesh\+Loader::\+\+Export\+To\+Anv\+Mesh (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{input}{, }\item[{const std::\+string \&}]{output}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Exports a 3D mesh to Anv\+Mesh format. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em input} & Path to the input mesh file \\
+\hline
+{\em output} & Path to the output Anv\+Mesh file \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_a_mesh_loader_a9102ed0d4539b6cc2e143c694664c681}\index{AMeshLoader@{AMeshLoader}!LoadAnvMesh@{LoadAnvMesh}}
+\index{LoadAnvMesh@{LoadAnvMesh}!AMeshLoader@{AMeshLoader}}
+\doxysubsubsection{\texorpdfstring{LoadAnvMesh()}{LoadAnvMesh()}}
+{\footnotesize\ttfamily \label{class_a_mesh_loader_a9102ed0d4539b6cc2e143c694664c681} 
+\doxymbox{\hyperlink{class_a_mesh}{AMesh}} \texorpdfstring{$\ast$}{*} AMesh\+Loader::\+\+Load\+Anv\+Mesh (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{path}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Loads a mesh from a file in the Anvil Engine mesh format. 
+\begin{DoxyParams}{Parameters}
+{\em path} & The path to the mesh file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A pointer to the loaded \doxylink{class_a_mesh}{AMesh} object, or nullptr if loading failed. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Anvil\+\_\+\+SDK/\+\doxymbox{\hyperlink{_a_mesh_loader_8h}{AMesh\+Loader.\+h}}\item 
+Anvil\+\_\+\+SDK/\+\doxymbox{\hyperlink{_a_mesh_loader_8cpp}{AMesh\+Loader.\+cpp}}\end{DoxyCompactItemize}

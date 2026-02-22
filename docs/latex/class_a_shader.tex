@@ -1,0 +1,80 @@
+\doxysection{AShader Class Reference}
+\hypertarget{class_a_shader}{}\label{class_a_shader}\index{AShader@{AShader}}
+
+
+{\ttfamily \+\#include $<$AShader.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_a_shader_ac50b123caae905651b904e7e1604a425}{AShader}} (int vert\+Res\+ID, int frag\+Res\+ID)
+\item 
+\doxymbox{\hyperlink{class_a_shader_ad671a1f77d99852cd76567adc56cb377}{AShader}} (std::\+string\+\_\+view v\+Path, std::\+string\+\_\+view f\+Path)
+\item 
+\doxymbox{\hyperlink{class_a_shader_a5f2ee7b3a0c212a38c58c250aedf20de}{\texorpdfstring{$\sim$}{\string~}\+AShader}} ()
+\item 
+void \doxymbox{\hyperlink{class_a_shader_a1a95e24bc33d4a640e1139c53c33d653}{Check\+Compile\+Errors}} (uint32\+\_\+t shader, std::\+string type)
+\item 
+void \doxymbox{\hyperlink{class_a_shader_a509cf7ef5394f54a0607736141c09e8d}{Use}} ()
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{class_a_shader_a838aacac6b2bfc4bb05535f704edb2f2}{Get\+ID}} () const
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_a_shader_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_a_shader_ac50b123caae905651b904e7e1604a425}\index{AShader@{AShader}!AShader@{AShader}}
+\index{AShader@{AShader}!AShader@{AShader}}
+\doxysubsubsection{\texorpdfstring{AShader()}{AShader()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_a_shader_ac50b123caae905651b904e7e1604a425} 
+AShader::\+\+AShader (\begin{DoxyParamCaption}\item[{int}]{vert\+Res\+ID}{, }\item[{int}]{frag\+Res\+ID}{}\end{DoxyParamCaption})}
+
+Constructor for \doxylink{class_a_shader}{AShader} class that initializes a shader program by loading vertex and fragment shaders from resources. 
+\begin{DoxyParams}{Parameters}
+{\em vert\+Res\+ID} & Resource ID for the vertex shader \\
+\hline
+{\em frag\+Res\+ID} & Resource ID for the fragment shader \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_a_shader_ad671a1f77d99852cd76567adc56cb377}\index{AShader@{AShader}!AShader@{AShader}}
+\index{AShader@{AShader}!AShader@{AShader}}
+\doxysubsubsection{\texorpdfstring{AShader()}{AShader()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_a_shader_ad671a1f77d99852cd76567adc56cb377} 
+AShader::\+\+AShader (\begin{DoxyParamCaption}\item[{std::\+string\+\_\+view}]{v\+Path}{, }\item[{std::\+string\+\_\+view}]{f\+Path}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_a_shader_a5f2ee7b3a0c212a38c58c250aedf20de}\index{AShader@{AShader}!````~AShader@{\texorpdfstring{$\sim$}{\string~}AShader}}
+\index{````~AShader@{\texorpdfstring{$\sim$}{\string~}AShader}!AShader@{AShader}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}AShader()}{\string~AShader()}}
+{\footnotesize\ttfamily \label{class_a_shader_a5f2ee7b3a0c212a38c58c250aedf20de} 
+AShader::\+\texorpdfstring{$\sim$}{\string~}\+AShader (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Destructor for \doxylink{class_a_shader}{AShader} class Cleans up the shader program by deleting it from Open\+GL 
+
+\label{doc-func-members}
+\Hypertarget{class_a_shader_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_a_shader_a1a95e24bc33d4a640e1139c53c33d653}\index{AShader@{AShader}!CheckCompileErrors@{CheckCompileErrors}}
+\index{CheckCompileErrors@{CheckCompileErrors}!AShader@{AShader}}
+\doxysubsubsection{\texorpdfstring{CheckCompileErrors()}{CheckCompileErrors()}}
+{\footnotesize\ttfamily \label{class_a_shader_a1a95e24bc33d4a640e1139c53c33d653} 
+void AShader::\+\+Check\+Compile\+Errors (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{shader}{, }\item[{std::\+string}]{type}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_a_shader_a838aacac6b2bfc4bb05535f704edb2f2}\index{AShader@{AShader}!GetID@{GetID}}
+\index{GetID@{GetID}!AShader@{AShader}}
+\doxysubsubsection{\texorpdfstring{GetID()}{GetID()}}
+{\footnotesize\ttfamily \label{class_a_shader_a838aacac6b2bfc4bb05535f704edb2f2} 
+uint32\+\_\+t AShader::\+\+Get\+ID (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_a_shader_a509cf7ef5394f54a0607736141c09e8d}\index{AShader@{AShader}!Use@{Use}}
+\index{Use@{Use}!AShader@{AShader}}
+\doxysubsubsection{\texorpdfstring{Use()}{Use()}}
+{\footnotesize\ttfamily \label{class_a_shader_a509cf7ef5394f54a0607736141c09e8d} 
+void AShader::\+\+Use (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Activates the shader program This function makes the shader program the active one for rendering operations 
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Anvil\+\_\+\+SDK/\+\doxymbox{\hyperlink{_a_shader_8h}{AShader.\+h}}\item 
+Anvil\+\_\+\+SDK/\+\doxymbox{\hyperlink{_a_shader_8cpp}{AShader.\+cpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,60 @@
+\doxysection{AEntity.\+h}
+\hypertarget{_a_entity_8h_source}{}\label{_a_entity_8h_source}\index{Anvil\_SDK/AEntity.h@{Anvil\_SDK/AEntity.h}}
+\doxymbox{\hyperlink{_a_entity_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_a_math_8h}{AMath.h}}"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_i_component_8h}{IComponent.h}}"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{_a_core_8h_a15b0cb9c27faaa9a6433e2a530ddad12}{ANVIL\_API}}\ \doxymbox{\hyperlink{class_a_entity}{AEntity}}}
+\DoxyCodeLine{00016\ \{}
+\DoxyCodeLine{00017\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{comment}{//\ Basic\ transform\ properties\ of\ the\ entity}}
+\DoxyCodeLine{00020\ \ \ \ \ std::string\ \doxymbox{\hyperlink{class_a_entity_a9ebdf8322a0017ff6063f180ef9f037a}{name}};\ \ \ \ \ \ \textcolor{comment}{//\ Name\ of\ the\ entity}}
+\DoxyCodeLine{00021\ \ \ \ \ glm::vec3\ \ \ \doxymbox{\hyperlink{class_a_entity_acc4f7ad8936089f64c706aa15e86bcea}{position}}\ =\ glm::vec3(0.0f);\ \textcolor{comment}{//\ Position\ in\ 3D\ space}}
+\DoxyCodeLine{00022\ \ \ \ \ glm::vec3\ \ \ \doxymbox{\hyperlink{class_a_entity_a93911a92188cdc5ee9df110807d031bb}{rotation}}\ =\ glm::vec3(0.0f);\ \textcolor{comment}{//\ Rotation\ in\ Euler\ angles}}
+\DoxyCodeLine{00023\ \ \ \ \ glm::vec3\ \ \ \doxymbox{\hyperlink{class_a_entity_a0f484fbeaafc89ea7a261c92aedc85c8}{scale}}\ \ \ \ =\ glm::vec3(1.0f);\ \textcolor{comment}{//\ Scale\ factor\ in\ each\ axis}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_a_entity_aef3d86c43fe9206f3e897da02b24b860}{AddComponent}}(\doxymbox{\hyperlink{class_i_component}{IComponent}}*\ comp)}
+\DoxyCodeLine{00030\ \ \ \ \ \{}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ comp-\/>\doxymbox{\hyperlink{class_i_component_a3fc15d76fc736471bfacd987b09d62f9}{OnInit}}(\textcolor{keyword}{this});\ \textcolor{comment}{//\ Initialize\ the\ component\ with\ this\ entity}}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ m\_components.push\_back(comp);\ \textcolor{comment}{//\ Add\ component\ to\ the\ component\ list}}
+\DoxyCodeLine{00034\ \ \ \ \ \}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>\ T*\ \doxymbox{\hyperlink{class_a_entity_abbdd78aa0b01fe836aca9714b792a23a}{GetComponent}}()}
+\DoxyCodeLine{00042\ \ \ \ \ \{}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}*\ c\ :\ m\_components)}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ T*\ target\ =\ \textcolor{keyword}{dynamic\_cast<}T*\textcolor{keyword}{>}(c);\ \textcolor{comment}{//\ Try\ to\ cast\ component\ to\ desired\ type}}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (target)}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ target;\ \textcolor{comment}{//\ Return\ component\ if\ cast\ was\ successful}}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};\ \textcolor{comment}{//\ Return\ nullptr\ if\ component\ of\ desired\ type\ not\ found}}
+\DoxyCodeLine{00050\ \ \ \ \ \}}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keyword}{const}\ std::vector<IComponent*>\&\ \doxymbox{\hyperlink{class_a_entity_abbf4f54d76a6d274c0993f518d5cd1ac}{GetComponents}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00057\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_components;}
+\DoxyCodeLine{00059\ \ \ \ \ \}}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_a_entity_a07db809b8e678a0d8997bd5107167adc}{Update}}(\textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{_a_b_s_p___viewer_2_main_8cpp_a778e38aa889751afffa2dea6b803e67a}{dt}})}
+\DoxyCodeLine{00066\ \ \ \ \ \{}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}*\ c\ :\ m\_components)}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>OnUpdate(\doxymbox{\hyperlink{_a_b_s_p___viewer_2_main_8cpp_a778e38aa889751afffa2dea6b803e67a}{dt}});\ \textcolor{comment}{//\ Update\ each\ component\ with\ delta\ time}}
+\DoxyCodeLine{00069\ \ \ \ \ \}}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00074\ \ \ \ \ \doxymbox{\hyperlink{class_a_entity_a1680c558ae2cb0d2d65f19147ac857c8}{\string~AEntity}}()}
+\DoxyCodeLine{00075\ \ \ \ \ \{}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}*\ c\ :\ m\_components)}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ c;\ \textcolor{comment}{//\ Delete\ each\ component\ to\ prevent\ memory\ leaks}}
+\DoxyCodeLine{00078\ \ \ \ \ \}}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00081\ \ \ \ \ std::vector<IComponent*>\ m\_components;\ \textcolor{comment}{//\ Container\ for\ all\ attached\ components}}
+\DoxyCodeLine{00082\ \};}
+
+\end{DoxyCode}

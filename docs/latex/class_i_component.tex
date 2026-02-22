@@ -1,0 +1,133 @@
+\doxysection{IComponent Class Reference}
+\hypertarget{class_i_component}{}\label{class_i_component}\index{IComponent@{IComponent}}
+
+
+The \doxylink{class_i_component}{IComponent} class is an abstract base class that defines the interface for all components in the ANVIL engine. Components are modular parts that can be attached to entities to give them specific functionality.  
+
+
+
+
+{\ttfamily \+\#include $<$IComponent.\+h$>$}
+
+Inheritance diagram for IComponent:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_i_component}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \doxymbox{\hyperlink{class_i_component_a65d1d85605d3689b4b1ee985667245ac}{\texorpdfstring{$\sim$}{\string~}\+IComponent}} ()
+\begin{DoxyCompactList}\small\item\em Virtual destructor for the \doxylink{class_i_component}{IComponent} class. Ensures proper cleanup of derived class objects when deleted through a base class pointer. \end{DoxyCompactList}\item 
+virtual void \doxymbox{\hyperlink{class_i_component_a3fc15d76fc736471bfacd987b09d62f9}{On\+Init}} (\doxymbox{\hyperlink{class_a_entity}{AEntity}} \texorpdfstring{$\ast$}{*}owner)=0
+\begin{DoxyCompactList}\small\item\em Called when the component is initialized. \end{DoxyCompactList}\item 
+virtual void \doxymbox{\hyperlink{class_i_component_a18fbb8d05d6e86eb7883b45096080193}{On\+Update}} (float \doxymbox{\hyperlink{_a_b_s_p___viewer_2_main_8cpp_a778e38aa889751afffa2dea6b803e67a}{dt}})=0
+\begin{DoxyCompactList}\small\item\em Called once per frame to update the component\textquotesingle{}s state. \end{DoxyCompactList}\item 
+virtual void \doxymbox{\hyperlink{class_i_component_af4daf51a689c9d9c782b39a67fd927ab}{On\+Render}} (\doxymbox{\hyperlink{class_a_shader}{AShader}} \texorpdfstring{$\ast$}{*}shader)=0
+\begin{DoxyCompactList}\small\item\em Called to render the component. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_a_entity}{AEntity}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_i_component_a1874da8596f16cb6693d2431fe710e38}{m\+\_\+owner}} = nullptr
+\begin{DoxyCompactList}\small\item\em Pointer to the entity that owns this component. This allows the component to access its parent entity and other components attached to it. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The \doxylink{class_i_component}{IComponent} class is an abstract base class that defines the interface for all components in the ANVIL engine. Components are modular parts that can be attached to entities to give them specific functionality. 
+
+\label{doc-constructors}
+\Hypertarget{class_i_component_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_i_component_a65d1d85605d3689b4b1ee985667245ac}\index{IComponent@{IComponent}!````~IComponent@{\texorpdfstring{$\sim$}{\string~}IComponent}}
+\index{````~IComponent@{\texorpdfstring{$\sim$}{\string~}IComponent}!IComponent@{IComponent}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}IComponent()}{\string~IComponent()}}
+{\footnotesize\ttfamily \label{class_i_component_a65d1d85605d3689b4b1ee985667245ac} 
+virtual IComponent::\+\texorpdfstring{$\sim$}{\string~}\+IComponent (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Virtual destructor for the \doxylink{class_i_component}{IComponent} class. Ensures proper cleanup of derived class objects when deleted through a base class pointer. 
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_i_component_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_i_component_a3fc15d76fc736471bfacd987b09d62f9}\index{IComponent@{IComponent}!OnInit@{OnInit}}
+\index{OnInit@{OnInit}!IComponent@{IComponent}}
+\doxysubsubsection{\texorpdfstring{OnInit()}{OnInit()}}
+{\footnotesize\ttfamily \label{class_i_component_a3fc15d76fc736471bfacd987b09d62f9} 
+virtual void IComponent::\+\+On\+Init (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_a_entity}{AEntity}} \texorpdfstring{$\ast$}{*}}]{owner}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Called when the component is initialized. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em owner} & A pointer to the \doxylink{class_a_entity}{AEntity} that owns this component. \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \doxymbox{\hyperlink{class_mesh_component_a1abc0e0ff4db776335b96d4268294eaf}{Mesh\+Component}}, and \doxymbox{\hyperlink{class_rigid_body_component_a9d2df12b36e2a4dd3b41c7a15d6464f3}{Rigid\+Body\+Component}}.
+
+\Hypertarget{class_i_component_af4daf51a689c9d9c782b39a67fd927ab}\index{IComponent@{IComponent}!OnRender@{OnRender}}
+\index{OnRender@{OnRender}!IComponent@{IComponent}}
+\doxysubsubsection{\texorpdfstring{OnRender()}{OnRender()}}
+{\footnotesize\ttfamily \label{class_i_component_af4daf51a689c9d9c782b39a67fd927ab} 
+virtual void IComponent::\+\+On\+Render (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_a_shader}{AShader}} \texorpdfstring{$\ast$}{*}}]{shader}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Called to render the component. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em shader} & The shader program to use for rendering. \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \doxymbox{\hyperlink{class_mesh_component_a04cb8134505888e116aea0d7ef82197d}{Mesh\+Component}}, and \doxymbox{\hyperlink{class_rigid_body_component_a6a3e32fc1d365f27121fd11649a0c1fc}{Rigid\+Body\+Component}}.
+
+\Hypertarget{class_i_component_a18fbb8d05d6e86eb7883b45096080193}\index{IComponent@{IComponent}!OnUpdate@{OnUpdate}}
+\index{OnUpdate@{OnUpdate}!IComponent@{IComponent}}
+\doxysubsubsection{\texorpdfstring{OnUpdate()}{OnUpdate()}}
+{\footnotesize\ttfamily \label{class_i_component_a18fbb8d05d6e86eb7883b45096080193} 
+virtual void IComponent::\+\+On\+Update (\begin{DoxyParamCaption}\item[{float}]{dt}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Called once per frame to update the component\textquotesingle{}s state. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \doxylink{_a_b_s_p___viewer_2_main_8cpp_a778e38aa889751afffa2dea6b803e67a}{dt}} & The time elapsed since the last frame, in seconds. \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \doxymbox{\hyperlink{class_mesh_component_a709c62bf54fc2954cab6b250cf773871}{Mesh\+Component}}, and \doxymbox{\hyperlink{class_rigid_body_component_ac8d31b1e1047cda3a2255fa8553a5d7d}{Rigid\+Body\+Component}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_i_component_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_i_component_a1874da8596f16cb6693d2431fe710e38}\index{IComponent@{IComponent}!m\_owner@{m\_owner}}
+\index{m\_owner@{m\_owner}!IComponent@{IComponent}}
+\doxysubsubsection{\texorpdfstring{m\_owner}{m\_owner}}
+{\footnotesize\ttfamily \label{class_i_component_a1874da8596f16cb6693d2431fe710e38} 
+\doxymbox{\hyperlink{class_a_entity}{AEntity}}\texorpdfstring{$\ast$}{*} IComponent::\+m\+\_\+owner = nullptr}
+
+
+
+Pointer to the entity that owns this component. This allows the component to access its parent entity and other components attached to it. 
+
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+Anvil\+\_\+\+SDK/\+\doxymbox{\hyperlink{_i_component_8h}{IComponent.\+h}}\end{DoxyCompactItemize}

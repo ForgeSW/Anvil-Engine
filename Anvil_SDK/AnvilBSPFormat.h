@@ -1,3 +1,8 @@
+/**
+ * @file AnvilBSPFormat.h
+ * @brief Defines the structure for the ABSP (Anvil Binary Space Partition) format.
+ * @author ForgeSoftWare
+ */
 #pragma once
 #include "AMath.h"
 #include <vector>

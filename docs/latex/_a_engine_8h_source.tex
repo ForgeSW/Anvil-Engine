@@ -1,0 +1,70 @@
+\doxysection{AEngine.\+h}
+\hypertarget{_a_engine_8h_source}{}\label{_a_engine_8h_source}\index{Anvil\_SDK/AEngine.h@{Anvil\_SDK/AEngine.h}}
+\doxymbox{\hyperlink{_a_engine_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ NOMINMAX}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_a_core_8h}{ACore.h}}"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_a_math_8h}{AMath.h}}"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_a_shader_8h}{AShader.h}}"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_anvil_b_s_p_format_8h}{AnvilBSPFormat.h}}"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_anvil_physics_8h}{AnvilPhysics.h}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_a_resource_manager_8h}{AResourceManager.h}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <Windows.h>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <glad/glad.h>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <glfw/glfw3.h>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_a_entity_8h}{AEntity.h}}"{}}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_i_game}{IGame}};}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00024\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{_a_core_8h_a15b0cb9c27faaa9a6433e2a530ddad12}{ANVIL\_API}}\ \doxymbox{\hyperlink{class_a_engine_a1589cd360614fd990dcdef605c3a667d}{AEngine}}}
+\DoxyCodeLine{00025\ \{}
+\DoxyCodeLine{00026\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00030\ \ \ \ \ \doxymbox{\hyperlink{class_a_engine_a1589cd360614fd990dcdef605c3a667d}{AEngine}}();}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{class_a_engine_a1589cd360614fd990dcdef605c3a667d}{\string~AEngine}}();}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \doxymbox{\hyperlink{class_a_engine_aaecefcf1ab8466009d32eea45dad66dd}{Run}}();}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \doxymbox{\hyperlink{class_a_engine_a78994bb28fd811539ad322633a8235ee}{LoadMap}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ mapName);}
+\DoxyCodeLine{00050\ \ \ \ \ \doxymbox{\hyperlink{class_a_entity}{AEntity}}*\ \doxymbox{\hyperlink{class_a_engine_afe1043d400d4719a7bb678e8add1359c}{CreateEntity}}(std::string\ name);}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \doxymbox{\hyperlink{class_a_engine_ae4a673b91d3ba29691f075953d1fa7e8}{BindAction}}(std::string\ name,\ std::function<\textcolor{keywordtype}{void}()>\ action)}
+\DoxyCodeLine{00057\ \ \ \ \ \{}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ m\_triggerCallbacks[name]\ =\ action;}
+\DoxyCodeLine{00059\ \ \ \ \ \}}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_a_engine_a36fb641b095ed5c5544101de8d523220}{OnTrigger}}(std::string\ name)}
+\DoxyCodeLine{00065\ \ \ \ \ \{}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_triggerCallbacks.count(name))}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ m\_triggerCallbacks[name]();}
+\DoxyCodeLine{00068\ \ \ \ \ \}}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{class_a_engine_a1589cd360614fd990dcdef605c3a667d}{AEngine}}*\ \doxymbox{\hyperlink{class_a_engine_a9af017202ad11db791652d770fd09455}{Get}}()}
+\DoxyCodeLine{00074\ \ \ \ \ \{}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ s\_Instance;}
+\DoxyCodeLine{00076\ \ \ \ \ \}}
+\DoxyCodeLine{00081\ \ \ \ \ \doxymbox{\hyperlink{class_anvil_physics}{AnvilPhysics}}*\ \doxymbox{\hyperlink{class_a_engine_a3638c607620f8ac797f35f66730d1401}{GetPhysics}}()}
+\DoxyCodeLine{00082\ \ \ \ \ \{}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_physicsWorld;}
+\DoxyCodeLine{00084\ \ \ \ \ \}}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{class_a_engine}{AEngine}}*\ s\_Instance;\ \ \textcolor{comment}{//\ Singleton\ instance\ of\ the\ engine}}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \ \ \ \ \doxymbox{\hyperlink{class_anvil_physics}{AnvilPhysics}}*\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_physicsWorld\ \ \ \ =\ \textcolor{keyword}{nullptr};\ \ \textcolor{comment}{//\ Physics\ world\ instance}}
+\DoxyCodeLine{00090\ \ \ \ \ \doxymbox{\hyperlink{class_a_shader}{AShader}}*\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_mainShader\ \ \ \ \ \ =\ \textcolor{keyword}{nullptr};\ \ \textcolor{comment}{//\ Main\ shader\ program}}
+\DoxyCodeLine{00091\ \ \ \ \ \doxymbox{\hyperlink{class_i_game}{IGame}}*\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_game\ \ \ \ \ \ \ \ \ \ \ \ =\ \textcolor{keyword}{nullptr};\ \ \textcolor{comment}{//\ Game\ interface\ implementation}}
+\DoxyCodeLine{00092\ \ \ \ \ HMODULE\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_gameLib\ \ \ \ \ \ \ \ \ =\ \textcolor{keyword}{nullptr};\ \ \textcolor{comment}{//\ Game\ library\ module\ handle}}
+\DoxyCodeLine{00093\ \ \ \ \ GLFWwindow*\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_window\ \ \ \ \ \ \ \ \ \ =\ \textcolor{keyword}{nullptr};\ \ \textcolor{comment}{//\ GLFW\ window\ instance}}
+\DoxyCodeLine{00094\ \ \ \ \ \doxymbox{\hyperlink{class_a_resource_manager}{AResourceManager}}*\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_resourceManager\ =\ \textcolor{keyword}{nullptr};\ \ \textcolor{comment}{//\ Resource\ manager\ for\ assets}}
+\DoxyCodeLine{00095\ \ \ \ \ std::vector<AEntity*>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_entities;\ \ \ \ \ \ \ \textcolor{comment}{//\ Collection\ of\ all\ entities\ in\ the\ scene}}
+\DoxyCodeLine{00096\ \ \ \ \ std::vector<AVertex>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_worldVerts;\ \ \ \ \ \textcolor{comment}{//\ Vertices\ for\ the\ world\ geometry}}
+\DoxyCodeLine{00097\ \ \ \ \ std::vector<AFace>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_worldFaces;\ \ \ \ \ \textcolor{comment}{//\ Faces\ for\ the\ world\ geometry}}
+\DoxyCodeLine{00098\ \ \ \ \ uint32\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_worldVAO\ =\ 0,\ m\_worldVBO\ =\ 0,\ m\_worldEBO\ =\ 0;\ \ \textcolor{comment}{//\ VAO,\ VBO,\ and\ EBO\ for\ world\ geometry}}
+\DoxyCodeLine{00099\ \ \ \ \ uint32\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_worldIndexCount\ =\ 0;\ \ \textcolor{comment}{//\ Number\ of\ indices\ in\ the\ world\ geometry}}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_lastFrameTime\ \ \ =\ 0.0f;\ \ \textcolor{comment}{//\ Time\ of\ the\ last\ frame\ for\ delta\ time\ calculation}}
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_deltaTime\ \ \ \ \ \ \ =\ 0.0f;}
+\DoxyCodeLine{00102\ \ \ \ \ std::map<std::string,\ std::function<void()>>\ m\_triggerCallbacks;\ \ \textcolor{comment}{//\ Map\ of\ trigger\ names\ to\ callback\ functions}}
+\DoxyCodeLine{00103\ \};}
+
+\end{DoxyCode}

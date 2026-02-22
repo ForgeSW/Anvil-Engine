@@ -1,0 +1,156 @@
+\doxysection{AEntity Class Reference}
+\hypertarget{class_a_entity}{}\label{class_a_entity}\index{AEntity@{AEntity}}
+
+
+Represents an entity in the game engine with position, rotation, scale and components.  
+
+
+
+
+{\ttfamily \+\#include $<$AEntity.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{class_a_entity_aef3d86c43fe9206f3e897da02b24b860}{Add\+Component}} (\doxymbox{\hyperlink{class_i_component}{IComponent}} \texorpdfstring{$\ast$}{*}comp)
+\begin{DoxyCompactList}\small\item\em Adds a component to the entity and initializes it. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T$>$ }\\T \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_a_entity_abbdd78aa0b01fe836aca9714b792a23a}{Get\+Component}} ()
+\begin{DoxyCompactList}\small\item\em Gets a specific component by type. \end{DoxyCompactList}\item 
+const std::\+vector$<$ \doxymbox{\hyperlink{class_i_component}{IComponent}} \texorpdfstring{$\ast$}{*} $>$ \& \doxymbox{\hyperlink{class_a_entity_abbf4f54d76a6d274c0993f518d5cd1ac}{Get\+Components}} () const
+\begin{DoxyCompactList}\small\item\em Gets all components attached to this entity. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_a_entity_a07db809b8e678a0d8997bd5107167adc}{Update}} (float \doxymbox{\hyperlink{_a_b_s_p___viewer_2_main_8cpp_a778e38aa889751afffa2dea6b803e67a}{dt}})
+\begin{DoxyCompactList}\small\item\em Updates all components attached to this entity. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_a_entity_a1680c558ae2cb0d2d65f19147ac857c8}{\texorpdfstring{$\sim$}{\string~}\+AEntity}} ()
+\begin{DoxyCompactList}\small\item\em Destructor that cleans up all attached components. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{class_a_entity_a9ebdf8322a0017ff6063f180ef9f037a}{name}}
+\item 
+glm::\+vec3 \doxymbox{\hyperlink{class_a_entity_acc4f7ad8936089f64c706aa15e86bcea}{position}} = glm::\+vec3(0.\+0f)
+\item 
+glm::\+vec3 \doxymbox{\hyperlink{class_a_entity_a93911a92188cdc5ee9df110807d031bb}{rotation}} = glm::\+vec3(0.\+0f)
+\item 
+glm::\+vec3 \doxymbox{\hyperlink{class_a_entity_a0f484fbeaafc89ea7a261c92aedc85c8}{scale}} = glm::\+vec3(1.\+0f)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents an entity in the game engine with position, rotation, scale and components. 
+
+Represents a basic entity in the game engine, which can hold components and has transform properties. 
+
+\label{doc-constructors}
+\Hypertarget{class_a_entity_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_a_entity_a1680c558ae2cb0d2d65f19147ac857c8}\index{AEntity@{AEntity}!````~AEntity@{\texorpdfstring{$\sim$}{\string~}AEntity}}
+\index{````~AEntity@{\texorpdfstring{$\sim$}{\string~}AEntity}!AEntity@{AEntity}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}AEntity()}{\string~AEntity()}}
+{\footnotesize\ttfamily \label{class_a_entity_a1680c558ae2cb0d2d65f19147ac857c8} 
+AEntity::\+\texorpdfstring{$\sim$}{\string~}\+AEntity (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Destructor that cleans up all attached components. 
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_a_entity_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_a_entity_aef3d86c43fe9206f3e897da02b24b860}\index{AEntity@{AEntity}!AddComponent@{AddComponent}}
+\index{AddComponent@{AddComponent}!AEntity@{AEntity}}
+\doxysubsubsection{\texorpdfstring{AddComponent()}{AddComponent()}}
+{\footnotesize\ttfamily \label{class_a_entity_aef3d86c43fe9206f3e897da02b24b860} 
+void AEntity::\+\+Add\+Component (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_i_component}{IComponent}} \texorpdfstring{$\ast$}{*}}]{comp}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Adds a component to the entity and initializes it. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em comp} & Pointer to the component to be added \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_a_entity_abbdd78aa0b01fe836aca9714b792a23a}\index{AEntity@{AEntity}!GetComponent@{GetComponent}}
+\index{GetComponent@{GetComponent}!AEntity@{AEntity}}
+\doxysubsubsection{\texorpdfstring{GetComponent()}{GetComponent()}}
+{\footnotesize\ttfamily \label{class_a_entity_abbdd78aa0b01fe836aca9714b792a23a} 
+template$<$typename T$>$ \\
+T \texorpdfstring{$\ast$}{*} AEntity::\+\+Get\+Component (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets a specific component by type. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & Type of the component to retrieve \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the component if found, nullptr otherwise 
+\end{DoxyReturn}
+\Hypertarget{class_a_entity_abbf4f54d76a6d274c0993f518d5cd1ac}\index{AEntity@{AEntity}!GetComponents@{GetComponents}}
+\index{GetComponents@{GetComponents}!AEntity@{AEntity}}
+\doxysubsubsection{\texorpdfstring{GetComponents()}{GetComponents()}}
+{\footnotesize\ttfamily \label{class_a_entity_abbf4f54d76a6d274c0993f518d5cd1ac} 
+const std::\+vector$<$ \doxymbox{\hyperlink{class_i_component}{IComponent}} \texorpdfstring{$\ast$}{*} $>$ \& AEntity::\+\+Get\+Components (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets all components attached to this entity. 
+
+\begin{DoxyReturn}{Returns}
+Constant reference to the vector of components 
+\end{DoxyReturn}
+\Hypertarget{class_a_entity_a07db809b8e678a0d8997bd5107167adc}\index{AEntity@{AEntity}!Update@{Update}}
+\index{Update@{Update}!AEntity@{AEntity}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily \label{class_a_entity_a07db809b8e678a0d8997bd5107167adc} 
+void AEntity::\+\+Update (\begin{DoxyParamCaption}\item[{float}]{dt}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Updates all components attached to this entity. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \doxylink{_a_b_s_p___viewer_2_main_8cpp_a778e38aa889751afffa2dea6b803e67a}{dt}} & Delta time for frame-\/independent updates \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-variable-members}
+\Hypertarget{class_a_entity_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_a_entity_a9ebdf8322a0017ff6063f180ef9f037a}\index{AEntity@{AEntity}!name@{name}}
+\index{name@{name}!AEntity@{AEntity}}
+\doxysubsubsection{\texorpdfstring{name}{name}}
+{\footnotesize\ttfamily \label{class_a_entity_a9ebdf8322a0017ff6063f180ef9f037a} 
+std::\+string AEntity::\+name}
+
+\Hypertarget{class_a_entity_acc4f7ad8936089f64c706aa15e86bcea}\index{AEntity@{AEntity}!position@{position}}
+\index{position@{position}!AEntity@{AEntity}}
+\doxysubsubsection{\texorpdfstring{position}{position}}
+{\footnotesize\ttfamily \label{class_a_entity_acc4f7ad8936089f64c706aa15e86bcea} 
+glm::\+vec3 AEntity::\+position = glm::\+vec3(0.\+0f)}
+
+\Hypertarget{class_a_entity_a93911a92188cdc5ee9df110807d031bb}\index{AEntity@{AEntity}!rotation@{rotation}}
+\index{rotation@{rotation}!AEntity@{AEntity}}
+\doxysubsubsection{\texorpdfstring{rotation}{rotation}}
+{\footnotesize\ttfamily \label{class_a_entity_a93911a92188cdc5ee9df110807d031bb} 
+glm::\+vec3 AEntity::\+rotation = glm::\+vec3(0.\+0f)}
+
+\Hypertarget{class_a_entity_a0f484fbeaafc89ea7a261c92aedc85c8}\index{AEntity@{AEntity}!scale@{scale}}
+\index{scale@{scale}!AEntity@{AEntity}}
+\doxysubsubsection{\texorpdfstring{scale}{scale}}
+{\footnotesize\ttfamily \label{class_a_entity_a0f484fbeaafc89ea7a261c92aedc85c8} 
+glm::\+vec3 AEntity::\+scale = glm::\+vec3(1.\+0f)}
+
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+Anvil\+\_\+\+SDK/\+\doxymbox{\hyperlink{_a_entity_8h}{AEntity.\+h}}\end{DoxyCompactItemize}

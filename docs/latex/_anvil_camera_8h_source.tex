@@ -1,0 +1,42 @@
+\doxysection{Anvil\+Camera.\+h}
+\hypertarget{_anvil_camera_8h_source}{}\label{_anvil_camera_8h_source}\index{Anvil\_SDK/AnvilCamera.h@{Anvil\_SDK/AnvilCamera.h}}
+\doxymbox{\hyperlink{_anvil_camera_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ AnvilCamera.h}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_a_core_8h}{ACore.h}}"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_a_math_8h}{AMath.h}}"{}}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{enum}\ \doxymbox{\hyperlink{_anvil_camera_8h_a605494501af59c9191e7e4d6f9a0ebcb}{Camera\_Movement}}}
+\DoxyCodeLine{00007\ \{}
+\DoxyCodeLine{00008\ \ \ \ \ \doxymbox{\hyperlink{_anvil_camera_8h_a605494501af59c9191e7e4d6f9a0ebcbaa26736999186daf8146f809e863712a1}{FORWARD}},}
+\DoxyCodeLine{00009\ \ \ \ \ \doxymbox{\hyperlink{_anvil_camera_8h_a605494501af59c9191e7e4d6f9a0ebcbafed2fca77e454294d6b8bda1bf2c9fd6}{BACKWARD}},}
+\DoxyCodeLine{00010\ \ \ \ \ \doxymbox{\hyperlink{_anvil_camera_8h_a605494501af59c9191e7e4d6f9a0ebcbadb45120aafd37a973140edee24708065}{LEFT}},}
+\DoxyCodeLine{00011\ \ \ \ \ \doxymbox{\hyperlink{_anvil_camera_8h_a605494501af59c9191e7e4d6f9a0ebcbaec8379af7490bb9eaaf579cf17876f38}{RIGHT}}}
+\DoxyCodeLine{00012\ \};}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{_a_core_8h_a15b0cb9c27faaa9a6433e2a530ddad12}{ANVIL\_API}}\ \doxymbox{\hyperlink{class_a_camera_afa560361ff4619e75a58a600e89302ef}{ACamera}}}
+\DoxyCodeLine{00015\ \{}
+\DoxyCodeLine{00016\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00017\ \ \ \ \ glm::vec3\ \doxymbox{\hyperlink{class_a_camera_a95309bd192432f0d35efba6c4a5ea513}{Position}};}
+\DoxyCodeLine{00018\ \ \ \ \ glm::vec3\ \doxymbox{\hyperlink{class_a_camera_acd98e94523b04703149bba8dd35bdd50}{Front}};}
+\DoxyCodeLine{00019\ \ \ \ \ glm::vec3\ \doxymbox{\hyperlink{class_a_camera_af6f691e6da949746c2a81ceedcacee3b}{Up}};}
+\DoxyCodeLine{00020\ \ \ \ \ glm::vec3\ \doxymbox{\hyperlink{class_a_camera_aa255ae2786c050dd3b79be54879cdce8}{Right}};}
+\DoxyCodeLine{00021\ \ \ \ \ glm::vec3\ \doxymbox{\hyperlink{class_a_camera_a481f029f127ea3880572a9ee6c2d6825}{WorldUp}};}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_a_camera_a704835c8579855faebee02718663e67e}{Yaw}};}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_a_camera_aa91ddef258b7550a3cd4e1681b257912}{Pitch}};}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_a_camera_aad38c161048568c71775ce8477ebc7bb}{MovementSpeed}}\ \ \ \ =\ 5.0f;}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_a_camera_a0d8312e7b72d4898275b568201085f28}{MouseSensitivity}}\ =\ 0.1f;}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \doxymbox{\hyperlink{class_a_camera_afa560361ff4619e75a58a600e89302ef}{ACamera}}(glm::vec3\ position\ =\ glm::vec3(0.0f,\ 0.0f,\ 0.0f));}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ glm::mat4\ \doxymbox{\hyperlink{class_a_camera_adcf479a3fdb6d5d50cb780472e39adfe}{GetViewMatrix}}();}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \doxymbox{\hyperlink{class_a_camera_a6fd6ec038e4cb0d3c06f2c68998a66f6}{ProcessKeyboard}}(\doxymbox{\hyperlink{_anvil_camera_8h_a605494501af59c9191e7e4d6f9a0ebcb}{Camera\_Movement}}\ direction,\ \textcolor{keywordtype}{float}\ deltaTime);}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \doxymbox{\hyperlink{class_a_camera_a67df1256572038147e2039e9a9306ca8}{ProcessMouseMovement}}(\textcolor{keywordtype}{float}\ xoffset,\ \textcolor{keywordtype}{float}\ yoffset);}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{void}\ updateCameraVectors();}
+\DoxyCodeLine{00036\ \};}
+
+\end{DoxyCode}

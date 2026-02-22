@@ -1,0 +1,30 @@
+\doxysection{AShader.\+h}
+\hypertarget{_a_shader_8h_source}{}\label{_a_shader_8h_source}\index{Anvil\_SDK/AShader.h@{Anvil\_SDK/AShader.h}}
+\doxymbox{\hyperlink{_a_shader_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ AShader.h}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_a_core_8h}{ACore.h}}"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <string\_view>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{_a_core_8h_a15b0cb9c27faaa9a6433e2a530ddad12}{ANVIL\_API}}\ \doxymbox{\hyperlink{class_a_shader_ac50b123caae905651b904e7e1604a425}{AShader}}}
+\DoxyCodeLine{00008\ \{}
+\DoxyCodeLine{00009\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00010\ \ \ \ \ \doxymbox{\hyperlink{class_a_shader_ac50b123caae905651b904e7e1604a425}{AShader}}(\textcolor{keywordtype}{int}\ vertResID,\ \textcolor{keywordtype}{int}\ fragResID);}
+\DoxyCodeLine{00011\ \ \ \ \ \doxymbox{\hyperlink{class_a_shader_ad671a1f77d99852cd76567adc56cb377}{AShader}}(std::string\_view\ vPath,\ std::string\_view\ fPath);}
+\DoxyCodeLine{00012\ \ \ \ \ \doxymbox{\hyperlink{class_a_shader_ac50b123caae905651b904e7e1604a425}{\string~AShader}}();}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \doxymbox{\hyperlink{class_a_shader_a1a95e24bc33d4a640e1139c53c33d653}{CheckCompileErrors}}(uint32\_t\ shader,\ std::string\ type);}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \doxymbox{\hyperlink{class_a_shader_a509cf7ef5394f54a0607736141c09e8d}{Use}}();}
+\DoxyCodeLine{00015\ \ \ \ \ uint32\_t\ \doxymbox{\hyperlink{class_a_shader_a838aacac6b2bfc4bb05535f704edb2f2}{GetID}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00016\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_ID;}
+\DoxyCodeLine{00018\ \ \ \ \ \}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00021\ \ \ \ \ uint32\_t\ \ \ \ m\_ID;}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ Compile(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ vCode,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ fCode);}
+\DoxyCodeLine{00023\ \ \ \ \ std::string\ LoadFromResource(\textcolor{keywordtype}{int}\ resID);}
+\DoxyCodeLine{00024\ \};}
+
+\end{DoxyCode}

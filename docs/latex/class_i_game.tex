@@ -1,0 +1,99 @@
+\doxysection{IGame Class Reference}
+\hypertarget{class_i_game}{}\label{class_i_game}\index{IGame@{IGame}}
+
+
+{\ttfamily \+\#include $<$IGame.\+h$>$}
+
+Inheritance diagram for IGame:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_i_game}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \doxymbox{\hyperlink{class_i_game_ab09af95521c3a0ce1a5a806d65370443}{\texorpdfstring{$\sim$}{\string~}\+IGame}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_i_game_a9e43c308f14bc5a2612226e15eac426b}{On\+Init}} (\doxymbox{\hyperlink{class_a_engine}{AEngine}} \texorpdfstring{$\ast$}{*}engine)=0
+\item 
+virtual void \doxymbox{\hyperlink{class_i_game_a9dfaaa6fc816ef4491c8b2866a606b94}{On\+Update}} (float \doxymbox{\hyperlink{_a_b_s_p___viewer_2_main_8cpp_a778e38aa889751afffa2dea6b803e67a}{dt}})=0
+\item 
+virtual void \doxymbox{\hyperlink{class_i_game_ab9fc2bb0d8b1872a87f01bfb00f2695f}{On\+Shutdown}} ()=0
+\item 
+virtual glm::\+mat4 \doxymbox{\hyperlink{class_i_game_a19c720ea92e90216d5026a2589a4c887}{Get\+View\+Matrix}} ()=0
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_i_game_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_i_game_ab09af95521c3a0ce1a5a806d65370443}\index{IGame@{IGame}!````~IGame@{\texorpdfstring{$\sim$}{\string~}IGame}}
+\index{````~IGame@{\texorpdfstring{$\sim$}{\string~}IGame}!IGame@{IGame}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}IGame()}{\string~IGame()}}
+{\footnotesize\ttfamily \label{class_i_game_ab09af95521c3a0ce1a5a806d65370443} 
+virtual IGame::\+\texorpdfstring{$\sim$}{\string~}\+IGame (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Virtual destructor for the \doxylink{class_i_game}{IGame} interface class. This ensures proper cleanup of derived class objects when deleted through a base class pointer. Virtual destructors are essential in polymorphic classes to prevent resource leaks. 
+
+\label{doc-func-members}
+\Hypertarget{class_i_game_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_i_game_a19c720ea92e90216d5026a2589a4c887}\index{IGame@{IGame}!GetViewMatrix@{GetViewMatrix}}
+\index{GetViewMatrix@{GetViewMatrix}!IGame@{IGame}}
+\doxysubsubsection{\texorpdfstring{GetViewMatrix()}{GetViewMatrix()}}
+{\footnotesize\ttfamily \label{class_i_game_a19c720ea92e90216d5026a2589a4c887} 
+virtual glm::\+mat4 IGame::\+\+Get\+View\+Matrix (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+Get the current view matrix for rendering. \begin{DoxyReturn}{Returns}
+glm::\+mat4 representing the current view transformation matrix 
+\end{DoxyReturn}
+
+
+Implemented in \doxymbox{\hyperlink{class_c_game_a6b792a77e1cecf33efd077f969839f76}{CGame}}.
+
+\Hypertarget{class_i_game_a9e43c308f14bc5a2612226e15eac426b}\index{IGame@{IGame}!OnInit@{OnInit}}
+\index{OnInit@{OnInit}!IGame@{IGame}}
+\doxysubsubsection{\texorpdfstring{OnInit()}{OnInit()}}
+{\footnotesize\ttfamily \label{class_i_game_a9e43c308f14bc5a2612226e15eac426b} 
+virtual void IGame::\+\+On\+Init (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_a_engine}{AEngine}} \texorpdfstring{$\ast$}{*}}]{engine}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+Initialize the game with the provided engine instance. 
+\begin{DoxyParams}{Parameters}
+{\em engine} & Pointer to the engine instance that the game will use for initialization \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \doxymbox{\hyperlink{class_c_game_ad7e644dbf53a831b1c3a95c3ec25585a}{CGame}}.
+
+\Hypertarget{class_i_game_ab9fc2bb0d8b1872a87f01bfb00f2695f}\index{IGame@{IGame}!OnShutdown@{OnShutdown}}
+\index{OnShutdown@{OnShutdown}!IGame@{IGame}}
+\doxysubsubsection{\texorpdfstring{OnShutdown()}{OnShutdown()}}
+{\footnotesize\ttfamily \label{class_i_game_ab9fc2bb0d8b1872a87f01bfb00f2695f} 
+virtual void IGame::\+\+On\+Shutdown (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+Perform cleanup and shutdown operations for the game. This method is called when the game is being terminated. 
+
+Implemented in \doxymbox{\hyperlink{class_c_game_a9f16d69beba225e8e2c4e6b710f17c81}{CGame}}.
+
+\Hypertarget{class_i_game_a9dfaaa6fc816ef4491c8b2866a606b94}\index{IGame@{IGame}!OnUpdate@{OnUpdate}}
+\index{OnUpdate@{OnUpdate}!IGame@{IGame}}
+\doxysubsubsection{\texorpdfstring{OnUpdate()}{OnUpdate()}}
+{\footnotesize\ttfamily \label{class_i_game_a9dfaaa6fc816ef4491c8b2866a606b94} 
+virtual void IGame::\+\+On\+Update (\begin{DoxyParamCaption}\item[{float}]{dt}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+Update the game state with the time elapsed since the last frame. 
+\begin{DoxyParams}{Parameters}
+{\em \doxylink{_a_b_s_p___viewer_2_main_8cpp_a778e38aa889751afffa2dea6b803e67a}{dt}} & Time delta in seconds since the last update \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \doxymbox{\hyperlink{class_c_game_a93d0464380d61b3c868d2816b0459c74}{CGame}}.
+
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+Anvil\+\_\+\+SDK/\+\doxymbox{\hyperlink{_i_game_8h}{IGame.\+h}}\end{DoxyCompactItemize}

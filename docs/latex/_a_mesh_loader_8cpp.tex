@@ -1,0 +1,57 @@
+\doxysection{Anvil\+\_\+\+SDK/\+\+AMesh\+Loader.cpp File Reference}
+\hypertarget{_a_mesh_loader_8cpp}{}\label{_a_mesh_loader_8cpp}\index{Anvil\_SDK/AMeshLoader.cpp@{Anvil\_SDK/AMeshLoader.cpp}}
+{\ttfamily \+\#include "{}AMesh\+Loader.\+h"{}}\newline
+{\ttfamily \+\#include $<$assimp/\+\+Importer.\+hpp$>$}\newline
+{\ttfamily \+\#include $<$assimp/\+postprocess.\+h$>$}\newline
+{\ttfamily \+\#include $<$assimp/\+scene.\+h$>$}\newline
+{\ttfamily \+\#include $<$fstream$>$}\newline
+{\ttfamily \+\#include $<$glad/\+glad.\+h$>$}\newline
+{\ttfamily \+\#include $<$iostream$>$}\newline
+{\ttfamily \+\#include $<$stb\+\_\+image.\+h$>$}\newline
+{\ttfamily \+\#include $<$string$>$}\newline
+{\ttfamily \+\#include $<$vector$>$}\newline
+{\ttfamily \+\#include $<$filesystem$>$}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\+\#define \doxymbox{\hyperlink{_a_mesh_loader_8cpp_a18372412ad2fc3ce1e3240b3cf0efe78}{STB\+\_\+\+IMAGE\+\_\+\+IMPLEMENTATION}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{_a_mesh_loader_8cpp_ae58f9d8ddd0e3268d353dea51ad28586}{Load\+Texture\+Auto}} (const std::\+string \&texture\+Path)
+\begin{DoxyCompactList}\small\item\em Loads a texture from file and creates an Open\+GL texture object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{_a_mesh_loader_8cpp_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{_a_mesh_loader_8cpp_a18372412ad2fc3ce1e3240b3cf0efe78}\index{AMeshLoader.cpp@{AMeshLoader.cpp}!STB\_IMAGE\_IMPLEMENTATION@{STB\_IMAGE\_IMPLEMENTATION}}
+\index{STB\_IMAGE\_IMPLEMENTATION@{STB\_IMAGE\_IMPLEMENTATION}!AMeshLoader.cpp@{AMeshLoader.cpp}}
+\doxysubsubsection{\texorpdfstring{STB\_IMAGE\_IMPLEMENTATION}{STB\_IMAGE\_IMPLEMENTATION}}
+{\footnotesize\ttfamily \label{_a_mesh_loader_8cpp_a18372412ad2fc3ce1e3240b3cf0efe78} 
+\+\#define STB\+\_\+\+IMAGE\+\_\+\+IMPLEMENTATION}
+
+
+
+\label{doc-func-members}
+\Hypertarget{_a_mesh_loader_8cpp_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{_a_mesh_loader_8cpp_ae58f9d8ddd0e3268d353dea51ad28586}\index{AMeshLoader.cpp@{AMeshLoader.cpp}!LoadTextureAuto@{LoadTextureAuto}}
+\index{LoadTextureAuto@{LoadTextureAuto}!AMeshLoader.cpp@{AMeshLoader.cpp}}
+\doxysubsubsection{\texorpdfstring{LoadTextureAuto()}{LoadTextureAuto()}}
+{\footnotesize\ttfamily \label{_a_mesh_loader_8cpp_ae58f9d8ddd0e3268d353dea51ad28586} 
+uint32\+\_\+t Load\+Texture\+Auto (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{texture\+Path}{}\end{DoxyParamCaption})}
+
+
+
+Loads a texture from file and creates an Open\+GL texture object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em texture\+Path} & Path to the texture file \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Open\+GL texture ID (0 if loading failed) 
+\end{DoxyReturn}

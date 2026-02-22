@@ -1,0 +1,31 @@
+\doxysection{AMesh.\+h}
+\hypertarget{_a_mesh_8h_source}{}\label{_a_mesh_8h_source}\index{Anvil\_SDK/AMesh.h@{Anvil\_SDK/AMesh.h}}
+\doxymbox{\hyperlink{_a_mesh_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_a_core_8h}{ACore.h}}"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_a_math_8h}{AMath.h}}"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_m_vertex}{MVertex}}}
+\DoxyCodeLine{00008\ \{}
+\DoxyCodeLine{00009\ \ \ \ \ glm::vec3\ \doxymbox{\hyperlink{struct_m_vertex_af62ce1e51ab056ddae8a997a2d0f4136}{pos}};}
+\DoxyCodeLine{00010\ \ \ \ \ glm::vec2\ \doxymbox{\hyperlink{struct_m_vertex_af247bce70aceb54455895b3756ff87d4}{uv}};}
+\DoxyCodeLine{00011\ \ \ \ \ glm::vec3\ \doxymbox{\hyperlink{struct_m_vertex_afaa9daeabad74d4d6bbf445a1407d068}{normal}};}
+\DoxyCodeLine{00012\ \};}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{_a_core_8h_a15b0cb9c27faaa9a6433e2a530ddad12}{ANVIL\_API}}\ \doxymbox{\hyperlink{class_a_mesh_aa2cfa15b28e75c2136844cda9e252c9c}{AMesh}}}
+\DoxyCodeLine{00019\ \{}
+\DoxyCodeLine{00020\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00021\ \ \ \ \ \doxymbox{\hyperlink{class_a_mesh_aa2cfa15b28e75c2136844cda9e252c9c}{AMesh}}(std::vector<MVertex>\ verts,\ std::vector<uint32\_t>\ indices,\ uint32\_t\ texID\ =\ 0);}
+\DoxyCodeLine{00022\ \ \ \ \ \doxymbox{\hyperlink{class_a_mesh_aa2cfa15b28e75c2136844cda9e252c9c}{\string~AMesh}}();}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_a_mesh_a62204df95adc896cdf1f0181da6467be}{Draw}}();}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00026\ \ \ \ \ uint32\_t\ VAO,\ VBO,\ EBO;}
+\DoxyCodeLine{00027\ \ \ \ \ uint32\_t\ indexCount;}
+\DoxyCodeLine{00028\ \ \ \ \ uint32\_t\ m\_textureID;}
+\DoxyCodeLine{00029\ \};}
+
+\end{DoxyCode}

@@ -1,0 +1,156 @@
+\doxysection{ACamera Class Reference}
+\hypertarget{class_a_camera}{}\label{class_a_camera}\index{ACamera@{ACamera}}
+
+
+{\ttfamily \+\#include $<$Anvil\+Camera.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_a_camera_afa560361ff4619e75a58a600e89302ef}{ACamera}} (glm::\+vec3 position=glm::\+vec3(0.\+0f, 0.\+0f, 0.\+0f))
+\item 
+glm::\+mat4 \doxymbox{\hyperlink{class_a_camera_adcf479a3fdb6d5d50cb780472e39adfe}{Get\+View\+Matrix}} ()
+\item 
+void \doxymbox{\hyperlink{class_a_camera_a6fd6ec038e4cb0d3c06f2c68998a66f6}{Process\+Keyboard}} (\doxymbox{\hyperlink{_anvil_camera_8h_a605494501af59c9191e7e4d6f9a0ebcb}{Camera\+\_\+\+Movement}} direction, float delta\+Time)
+\item 
+void \doxymbox{\hyperlink{class_a_camera_a67df1256572038147e2039e9a9306ca8}{Process\+Mouse\+Movement}} (float xoffset, float yoffset)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+glm::\+vec3 \doxymbox{\hyperlink{class_a_camera_a95309bd192432f0d35efba6c4a5ea513}{Position}}
+\item 
+glm::\+vec3 \doxymbox{\hyperlink{class_a_camera_acd98e94523b04703149bba8dd35bdd50}{Front}}
+\item 
+glm::\+vec3 \doxymbox{\hyperlink{class_a_camera_af6f691e6da949746c2a81ceedcacee3b}{Up}}
+\item 
+glm::\+vec3 \doxymbox{\hyperlink{class_a_camera_aa255ae2786c050dd3b79be54879cdce8}{Right}}
+\item 
+glm::\+vec3 \doxymbox{\hyperlink{class_a_camera_a481f029f127ea3880572a9ee6c2d6825}{World\+Up}}
+\item 
+float \doxymbox{\hyperlink{class_a_camera_a704835c8579855faebee02718663e67e}{Yaw}}
+\item 
+float \doxymbox{\hyperlink{class_a_camera_aa91ddef258b7550a3cd4e1681b257912}{Pitch}}
+\item 
+float \doxymbox{\hyperlink{class_a_camera_aad38c161048568c71775ce8477ebc7bb}{Movement\+Speed}} = 5.\+0f
+\item 
+float \doxymbox{\hyperlink{class_a_camera_a0d8312e7b72d4898275b568201085f28}{Mouse\+Sensitivity}} = 0.\+1f
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_a_camera_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_a_camera_afa560361ff4619e75a58a600e89302ef}\index{ACamera@{ACamera}!ACamera@{ACamera}}
+\index{ACamera@{ACamera}!ACamera@{ACamera}}
+\doxysubsubsection{\texorpdfstring{ACamera()}{ACamera()}}
+{\footnotesize\ttfamily \label{class_a_camera_afa560361ff4619e75a58a600e89302ef} 
+ACamera::\+\+ACamera (\begin{DoxyParamCaption}\item[{glm::\+vec3}]{position}{ = {\ttfamily glm:\+:\+vec3(0.0f,~0.0f,~0.0f)}}\end{DoxyParamCaption})}
+
+Constructor for \doxylink{class_a_camera}{ACamera} class Initializes camera with position and default vectors 
+\begin{DoxyParams}{Parameters}
+{\em position} & The initial position of the camera in 3D space \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{class_a_camera_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_a_camera_adcf479a3fdb6d5d50cb780472e39adfe}\index{ACamera@{ACamera}!GetViewMatrix@{GetViewMatrix}}
+\index{GetViewMatrix@{GetViewMatrix}!ACamera@{ACamera}}
+\doxysubsubsection{\texorpdfstring{GetViewMatrix()}{GetViewMatrix()}}
+{\footnotesize\ttfamily \label{class_a_camera_adcf479a3fdb6d5d50cb780472e39adfe} 
+glm::\+mat4 ACamera::\+\+Get\+View\+Matrix (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_a_camera_a6fd6ec038e4cb0d3c06f2c68998a66f6}\index{ACamera@{ACamera}!ProcessKeyboard@{ProcessKeyboard}}
+\index{ProcessKeyboard@{ProcessKeyboard}!ACamera@{ACamera}}
+\doxysubsubsection{\texorpdfstring{ProcessKeyboard()}{ProcessKeyboard()}}
+{\footnotesize\ttfamily \label{class_a_camera_a6fd6ec038e4cb0d3c06f2c68998a66f6} 
+void ACamera::\+\+Process\+Keyboard (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{_anvil_camera_8h_a605494501af59c9191e7e4d6f9a0ebcb}{Camera\+\_\+\+Movement}}}]{direction}{, }\item[{float}]{delta\+Time}{}\end{DoxyParamCaption})}
+
+Processes keyboard input to move the camera in different directions 
+\begin{DoxyParams}{Parameters}
+{\em direction} & The direction of camera movement (FORWARD, BACKWARD, LEFT, RIGHT) \\
+\hline
+{\em delta\+Time} & The time elapsed since the last frame, used to calculate movement distance \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_a_camera_a67df1256572038147e2039e9a9306ca8}\index{ACamera@{ACamera}!ProcessMouseMovement@{ProcessMouseMovement}}
+\index{ProcessMouseMovement@{ProcessMouseMovement}!ACamera@{ACamera}}
+\doxysubsubsection{\texorpdfstring{ProcessMouseMovement()}{ProcessMouseMovement()}}
+{\footnotesize\ttfamily \label{class_a_camera_a67df1256572038147e2039e9a9306ca8} 
+void ACamera::\+\+Process\+Mouse\+Movement (\begin{DoxyParamCaption}\item[{float}]{xoffset}{, }\item[{float}]{yoffset}{}\end{DoxyParamCaption})}
+
+Processes mouse movement input and updates camera orientation 
+\begin{DoxyParams}{Parameters}
+{\em xoffset} & Horizontal offset of mouse movement \\
+\hline
+{\em yoffset} & Vertical offset of mouse movement \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-variable-members}
+\Hypertarget{class_a_camera_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_a_camera_acd98e94523b04703149bba8dd35bdd50}\index{ACamera@{ACamera}!Front@{Front}}
+\index{Front@{Front}!ACamera@{ACamera}}
+\doxysubsubsection{\texorpdfstring{Front}{Front}}
+{\footnotesize\ttfamily \label{class_a_camera_acd98e94523b04703149bba8dd35bdd50} 
+glm::\+vec3 ACamera::\+\+Front}
+
+\Hypertarget{class_a_camera_a0d8312e7b72d4898275b568201085f28}\index{ACamera@{ACamera}!MouseSensitivity@{MouseSensitivity}}
+\index{MouseSensitivity@{MouseSensitivity}!ACamera@{ACamera}}
+\doxysubsubsection{\texorpdfstring{MouseSensitivity}{MouseSensitivity}}
+{\footnotesize\ttfamily \label{class_a_camera_a0d8312e7b72d4898275b568201085f28} 
+float ACamera::\+\+Mouse\+Sensitivity = 0.\+1f}
+
+\Hypertarget{class_a_camera_aad38c161048568c71775ce8477ebc7bb}\index{ACamera@{ACamera}!MovementSpeed@{MovementSpeed}}
+\index{MovementSpeed@{MovementSpeed}!ACamera@{ACamera}}
+\doxysubsubsection{\texorpdfstring{MovementSpeed}{MovementSpeed}}
+{\footnotesize\ttfamily \label{class_a_camera_aad38c161048568c71775ce8477ebc7bb} 
+float ACamera::\+\+Movement\+Speed = 5.\+0f}
+
+\Hypertarget{class_a_camera_aa91ddef258b7550a3cd4e1681b257912}\index{ACamera@{ACamera}!Pitch@{Pitch}}
+\index{Pitch@{Pitch}!ACamera@{ACamera}}
+\doxysubsubsection{\texorpdfstring{Pitch}{Pitch}}
+{\footnotesize\ttfamily \label{class_a_camera_aa91ddef258b7550a3cd4e1681b257912} 
+float ACamera::\+\+Pitch}
+
+\Hypertarget{class_a_camera_a95309bd192432f0d35efba6c4a5ea513}\index{ACamera@{ACamera}!Position@{Position}}
+\index{Position@{Position}!ACamera@{ACamera}}
+\doxysubsubsection{\texorpdfstring{Position}{Position}}
+{\footnotesize\ttfamily \label{class_a_camera_a95309bd192432f0d35efba6c4a5ea513} 
+glm::\+vec3 ACamera::\+\+Position}
+
+\Hypertarget{class_a_camera_aa255ae2786c050dd3b79be54879cdce8}\index{ACamera@{ACamera}!Right@{Right}}
+\index{Right@{Right}!ACamera@{ACamera}}
+\doxysubsubsection{\texorpdfstring{Right}{Right}}
+{\footnotesize\ttfamily \label{class_a_camera_aa255ae2786c050dd3b79be54879cdce8} 
+glm::\+vec3 ACamera::\+\+Right}
+
+\Hypertarget{class_a_camera_af6f691e6da949746c2a81ceedcacee3b}\index{ACamera@{ACamera}!Up@{Up}}
+\index{Up@{Up}!ACamera@{ACamera}}
+\doxysubsubsection{\texorpdfstring{Up}{Up}}
+{\footnotesize\ttfamily \label{class_a_camera_af6f691e6da949746c2a81ceedcacee3b} 
+glm::\+vec3 ACamera::\+\+Up}
+
+\Hypertarget{class_a_camera_a481f029f127ea3880572a9ee6c2d6825}\index{ACamera@{ACamera}!WorldUp@{WorldUp}}
+\index{WorldUp@{WorldUp}!ACamera@{ACamera}}
+\doxysubsubsection{\texorpdfstring{WorldUp}{WorldUp}}
+{\footnotesize\ttfamily \label{class_a_camera_a481f029f127ea3880572a9ee6c2d6825} 
+glm::\+vec3 ACamera::\+\+World\+Up}
+
+\Hypertarget{class_a_camera_a704835c8579855faebee02718663e67e}\index{ACamera@{ACamera}!Yaw@{Yaw}}
+\index{Yaw@{Yaw}!ACamera@{ACamera}}
+\doxysubsubsection{\texorpdfstring{Yaw}{Yaw}}
+{\footnotesize\ttfamily \label{class_a_camera_a704835c8579855faebee02718663e67e} 
+float ACamera::\+\+Yaw}
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Anvil\+\_\+\+SDK/\+\doxymbox{\hyperlink{_anvil_camera_8h}{Anvil\+Camera.\+h}}\item 
+Anvil\+\_\+\+SDK/\+\doxymbox{\hyperlink{_a_camera_8cpp}{ACamera.\+cpp}}\end{DoxyCompactItemize}

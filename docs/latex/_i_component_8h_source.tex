@@ -1,0 +1,23 @@
+\doxysection{IComponent.\+h}
+\hypertarget{_i_component_8h_source}{}\label{_i_component_8h_source}\index{Anvil\_SDK/IComponent.h@{Anvil\_SDK/IComponent.h}}
+\doxymbox{\hyperlink{_i_component_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_a_core_8h}{ACore.h}}"{}}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_a_entity}{AEntity}};}
+\DoxyCodeLine{00005\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_a_shader}{AShader}};}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{_a_core_8h_a15b0cb9c27faaa9a6433e2a530ddad12}{ANVIL\_API}}\ \doxymbox{\hyperlink{class_i_component}{IComponent}}}
+\DoxyCodeLine{00012\ \{}
+\DoxyCodeLine{00013\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{class_i_component_a65d1d85605d3689b4b1ee985667245ac}{\string~IComponent}}()}
+\DoxyCodeLine{00019\ \ \ \ \ \{}
+\DoxyCodeLine{00020\ \ \ \ \ \}}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_i_component_a3fc15d76fc736471bfacd987b09d62f9}{OnInit}}(\doxymbox{\hyperlink{class_a_entity}{AEntity}}*\ owner)\ \ \ \ =\ 0;}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_i_component_a18fbb8d05d6e86eb7883b45096080193}{OnUpdate}}(\textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{_a_b_s_p___viewer_2_main_8cpp_a778e38aa889751afffa2dea6b803e67a}{dt}})\ \ \ \ \ \ \ \ =\ 0;}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_i_component_af4daf51a689c9d9c782b39a67fd927ab}{OnRender}}(\doxymbox{\hyperlink{class_a_shader}{AShader}}*\ shader)\ =\ 0;}
+\DoxyCodeLine{00040\ \ \ \ \ \doxymbox{\hyperlink{class_a_entity}{AEntity}}*\ \doxymbox{\hyperlink{class_i_component_a1874da8596f16cb6693d2431fe710e38}{m\_owner}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00041\ \};}
+
+\end{DoxyCode}

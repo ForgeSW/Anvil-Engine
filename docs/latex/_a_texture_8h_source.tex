@@ -1,0 +1,66 @@
+\doxysection{ATexture.\+h}
+\hypertarget{_a_texture_8h_source}{}\label{_a_texture_8h_source}\index{Anvil\_SDK/ATexture.h@{Anvil\_SDK/ATexture.h}}
+\doxymbox{\hyperlink{_a_texture_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <glad/glad.h>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <stb\_image.h>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_a_texture_a1ae7d3ecaecd8b71b52649d711e2a964}{ATexture}}}
+\DoxyCodeLine{00007\ \{}
+\DoxyCodeLine{00008\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00009\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_a_texture_a3180a69f373f8c8a72ba3fdee0bfac13}{ID}};}
+\DoxyCodeLine{00010\ \ \ \ \ std::string\ \ \doxymbox{\hyperlink{class_a_texture_a968fde947bdd778c9df8f54f68b8cf2b}{type}};}
+\DoxyCodeLine{00011\ \ \ \ \ std::string\ \ \doxymbox{\hyperlink{class_a_texture_ad484d8314ab5e1b6e6987d7a58071d7d}{path}};}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00017\ \ \ \ \ \doxymbox{\hyperlink{class_a_texture_a1ae7d3ecaecd8b71b52649d711e2a964}{ATexture}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \doxymbox{\hyperlink{class_a_texture_ad484d8314ab5e1b6e6987d7a58071d7d}{path}})}
+\DoxyCodeLine{00018\ \ \ \ \ \{}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{comment}{//\ Generate\ a\ texture\ name\ and\ store\ it\ in\ ID}}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ glGenTextures(1,\ \&\doxymbox{\hyperlink{class_a_texture_a3180a69f373f8c8a72ba3fdee0bfac13}{ID}});}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{comment}{//\ Load\ image\ data\ from\ file\ using\ stb\_image\ library}}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ width,\ height,\ nrComponents;\ \ \textcolor{comment}{//\ Variables\ to\ store\ image\ dimensions\ and\ components}}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}*\ data\ =\ stbi\_load(\doxymbox{\hyperlink{class_a_texture_ad484d8314ab5e1b6e6987d7a58071d7d}{path}},\ \&width,\ \&height,\ \&nrComponents,\ 0);}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (data)}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Determine\ texture\ format\ based\ on\ number\ of\ components\ (RGB\ or\ RGBA)}}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ \ \ GLenum\ format\ =\ (nrComponents\ ==\ 4)\ ?\ GL\_RGBA\ :\ GL\_RGB;}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Bind\ the\ texture\ to\ the\ GL\_TEXTURE\_2D\ target}}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \ \ \ glBindTexture(GL\_TEXTURE\_2D,\ \doxymbox{\hyperlink{class_a_texture_a3180a69f373f8c8a72ba3fdee0bfac13}{ID}});}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Create\ and\ initialize\ the\ texture\ image}}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ glTexImage2D(GL\_TEXTURE\_2D,\ 0,\ format,\ width,\ height,\ 0,\ format,\ GL\_UNSIGNED\_BYTE,}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ data);}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Generate\ mipmaps\ for\ the\ texture}}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ glGenerateMipmap(GL\_TEXTURE\_2D);}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Set\ texture\ wrapping\ parameters}}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ glTexParameteri(GL\_TEXTURE\_2D,\ GL\_TEXTURE\_WRAP\_S,\ GL\_REPEAT);\ \ \textcolor{comment}{//\ Set\ wrapping\ to\ repeat\ on\ the\ S\ axis}}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ glTexParameteri(GL\_TEXTURE\_2D,\ GL\_TEXTURE\_WRAP\_T,\ GL\_REPEAT);\ \ \textcolor{comment}{//\ Set\ wrapping\ to\ repeat\ on\ the\ T\ axis}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Set\ texture\ filtering\ parameters}}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ glTexParameteri(GL\_TEXTURE\_2D,\ GL\_TEXTURE\_MIN\_FILTER,\ GL\_LINEAR\_MIPMAP\_LINEAR);\ \ \textcolor{comment}{//\ Set\ minification\ filter}}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ glTexParameteri(GL\_TEXTURE\_2D,\ GL\_TEXTURE\_MAG\_FILTER,\ GL\_LINEAR);\ \ \textcolor{comment}{//\ Set\ magnification\ filter}}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Free\ the\ loaded\ image\ data}}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ stbi\_image\_free(data);}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00055\ \ \ \ \ \}}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_a_texture_acd0484049c77bbb931ded4e43c9621b6}{Bind}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ unit\ =\ 0)}
+\DoxyCodeLine{00062\ \ \ \ \ \{}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{comment}{//\ Activate\ the\ specified\ texture\ unit}}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ glActiveTexture(GL\_TEXTURE0\ +\ unit);}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{comment}{//\ Bind\ the\ texture\ to\ the\ currently\ active\ texture\ unit}}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ glBindTexture(GL\_TEXTURE\_2D,\ \doxymbox{\hyperlink{class_a_texture_a3180a69f373f8c8a72ba3fdee0bfac13}{ID}});}
+\DoxyCodeLine{00067\ \ \ \ \ \}}
+\DoxyCodeLine{00068\ \};}
+
+\end{DoxyCode}

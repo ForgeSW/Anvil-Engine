@@ -1,0 +1,31 @@
+\doxysection{IGame.\+h}
+\hypertarget{_i_game_8h_source}{}\label{_i_game_8h_source}\index{Anvil\_SDK/IGame.h@{Anvil\_SDK/IGame.h}}
+\doxymbox{\hyperlink{_i_game_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_a_core_8h}{ACore.h}}"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_a_math_8h}{AMath.h}}"{}}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_a_engine}{AEngine}};}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_i_game}{IGame}}}
+\DoxyCodeLine{00008\ \{}
+\DoxyCodeLine{00009\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{class_i_game_ab09af95521c3a0ce1a5a806d65370443}{\string~IGame}}()}
+\DoxyCodeLine{00016\ \ \ \ \ \{}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{comment}{//\ Empty\ destructor\ implementation\ as\ the\ interface\ doesn't\ own\ resources}}
+\DoxyCodeLine{00018\ \ \ \ \ \}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_i_game_a9e43c308f14bc5a2612226e15eac426b}{OnInit}}(\doxymbox{\hyperlink{class_a_engine}{AEngine}}*\ engine)\ =\ 0;}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_i_game_a9dfaaa6fc816ef4491c8b2866a606b94}{OnUpdate}}(\textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{_a_b_s_p___viewer_2_main_8cpp_a778e38aa889751afffa2dea6b803e67a}{dt}})\ =\ 0;}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_i_game_ab9fc2bb0d8b1872a87f01bfb00f2695f}{OnShutdown}}()\ =\ 0;}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keyword}{virtual}\ glm::mat4\ \doxymbox{\hyperlink{class_i_game_a19c720ea92e90216d5026a2589a4c887}{GetViewMatrix}}()\ =\ 0;}
+\DoxyCodeLine{00043\ \};}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \textcolor{comment}{//\ Function\ pointer\ type\ for\ the\ DLL\ export}}
+\DoxyCodeLine{00046\ \textcolor{keyword}{typedef}\ \doxymbox{\hyperlink{class_i_game}{IGame}}*\ (*CreateGameFn)();}
+
+\end{DoxyCode}

@@ -1,0 +1,54 @@
+\doxysection{My\+Contact\+Listener Class Reference}
+\hypertarget{class_my_contact_listener}{}\label{class_my_contact_listener}\index{MyContactListener@{MyContactListener}}
+Inheritance diagram for My\+Contact\+Listener:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_my_contact_listener}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_my_contact_listener_aba7a07d2ca990b45e131930374536073}{My\+Contact\+Listener}} (\doxymbox{\hyperlink{class_anvil_physics}{Anvil\+Physics}} \texorpdfstring{$\ast$}{*}physics, std::\+unordered\+\_\+map$<$ Rigid\+Body \texorpdfstring{$\ast$}{*}, std::\+string $>$ \&names)
+\item 
+virtual void \doxymbox{\hyperlink{class_my_contact_listener_a0d30fa217a4275df533612d738791c0c}{on\+Contact}} (const Callback\+Data \&callback\+Data) override
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_my_contact_listener_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_my_contact_listener_aba7a07d2ca990b45e131930374536073}\index{MyContactListener@{MyContactListener}!MyContactListener@{MyContactListener}}
+\index{MyContactListener@{MyContactListener}!MyContactListener@{MyContactListener}}
+\doxysubsubsection{\texorpdfstring{MyContactListener()}{MyContactListener()}}
+{\footnotesize\ttfamily \label{class_my_contact_listener_aba7a07d2ca990b45e131930374536073} 
+My\+Contact\+Listener::\+\+My\+Contact\+Listener (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_anvil_physics}{Anvil\+Physics}} \texorpdfstring{$\ast$}{*}}]{physics}{, }\item[{std::\+unordered\+\_\+map$<$ Rigid\+Body \texorpdfstring{$\ast$}{*}, std::\+string $>$ \&}]{names}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Constructor for \doxylink{class_my_contact_listener}{My\+Contact\+Listener} 
+\begin{DoxyParams}{Parameters}
+{\em physics} & Pointer to \doxylink{class_anvil_physics}{Anvil\+Physics} object \\
+\hline
+{\em names} & Reference to unordered\+\_\+map mapping Rigid\+Body pointers to their names \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{class_my_contact_listener_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_my_contact_listener_a0d30fa217a4275df533612d738791c0c}\index{MyContactListener@{MyContactListener}!onContact@{onContact}}
+\index{onContact@{onContact}!MyContactListener@{MyContactListener}}
+\doxysubsubsection{\texorpdfstring{onContact()}{onContact()}}
+{\footnotesize\ttfamily \label{class_my_contact_listener_a0d30fa217a4275df533612d738791c0c} 
+virtual void My\+Contact\+Listener::\+on\+Contact (\begin{DoxyParamCaption}\item[{const Callback\+Data \&}]{callback\+Data}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Handles contact events between colliders in the physics simulation This method is called whenever contact between colliders occurs 
+\begin{DoxyParams}{Parameters}
+{\em callback\+Data} & Contains information about the contact pairs \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+Anvil\+\_\+\+SDK/\+\doxymbox{\hyperlink{_anvil_physics_8cpp}{Anvil\+Physics.\+cpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,114 @@
+\doxysection{Anvil\+Physics.\+h}
+\hypertarget{_anvil_physics_8h_source}{}\label{_anvil_physics_8h_source}\index{Anvil\_SDK/AnvilPhysics.h@{Anvil\_SDK/AnvilPhysics.h}}
+\doxymbox{\hyperlink{_anvil_physics_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_a_core_8h}{ACore.h}}"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_a_entity_8h}{AEntity.h}}"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_a_math_8h}{AMath.h}}"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_anvil_b_s_p_format_8h}{AnvilBSPFormat.h}}"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespacereactphysics3d}{reactphysics3d}}}
+\DoxyCodeLine{00013\ \{}
+\DoxyCodeLine{00014\ \textcolor{keyword}{class\ }PhysicsCommon;}
+\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }PhysicsWorld;}
+\DoxyCodeLine{00016\ \textcolor{keyword}{class\ }RigidBody;}
+\DoxyCodeLine{00017\ \textcolor{keyword}{class\ }Collider;}
+\DoxyCodeLine{00018\ \textcolor{keyword}{class\ }BoxShape;}
+\DoxyCodeLine{00019\ \textcolor{keyword}{class\ }TriangleMesh;}
+\DoxyCodeLine{00020\ \textcolor{keyword}{class\ }ConcaveMeshShape;}
+\DoxyCodeLine{00021\ \textcolor{keyword}{class\ }ContactListener;}
+\DoxyCodeLine{00022\ \textcolor{keyword}{class\ }Vector3;}
+\DoxyCodeLine{00023\ \}\ \textcolor{comment}{//\ namespace\ reactphysics3d}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_a_engine}{AEngine}};}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{comment}{//\ Simple\ body\ structure\ that\ the\ game\ uses}}
+\DoxyCodeLine{00028\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{_a_core_8h_a15b0cb9c27faaa9a6433e2a530ddad12}{ANVIL\_API}}\ \doxymbox{\hyperlink{struct_a_body}{ABody}}}
+\DoxyCodeLine{00029\ \{}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{void}*\ \doxymbox{\hyperlink{struct_a_body_aa487ef9e3cfe0271e23199ab24f2a74e}{rp3dBody}};\ \textcolor{comment}{//\ Pointer\ to\ reactphysics3d::RigidBody\ \ \ \ }}
+\DoxyCodeLine{00031\ \ \ \ \ reactphysics3d::Collider*\ \doxymbox{\hyperlink{struct_a_body_a577adf963084466b0075d782da2edb85}{collider}};}
+\DoxyCodeLine{00032\ \ \ \ \ glm::quat\ \doxymbox{\hyperlink{struct_a_body_ace0369cb1623f638aa9e1be385a0e3ce}{orientation}}\ =\ glm::quat(1.0f,\ 0.0f,\ 0.0f,\ 0.0f);}
+\DoxyCodeLine{00033\ \ \ \ \ glm::vec3\ \doxymbox{\hyperlink{struct_a_body_a0cddcd4f30247567a1c99be5bda74589}{position}};\ \textcolor{comment}{//\ Updated\ each\ frame\ from\ rp3d}}
+\DoxyCodeLine{00034\ \ \ \ \ glm::vec3\ \doxymbox{\hyperlink{struct_a_body_a757b2a2aa6efcd96525f6fc3d5fb8167}{velocity}};\ \textcolor{comment}{//\ Updated\ each\ frame\ from\ rp3d}}
+\DoxyCodeLine{00035\ \ \ \ \ glm::vec3\ \doxymbox{\hyperlink{struct_a_body_a01a9a8837c4ed19fd597866e017d8392}{halfSize}};\ \textcolor{comment}{//\ Half\ extents\ (set\ at\ creation)}}
+\DoxyCodeLine{00036\ \ \ \ \ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \ \ \doxymbox{\hyperlink{struct_a_body_a1d78d81cbd0555b939a2b074bf61d658}{mass}};\ \ \ \ \ \textcolor{comment}{//\ Mass\ (set\ at\ creation)}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \doxymbox{\hyperlink{struct_a_body_a5d8d43a6dfe6f1d969d72045f5adaaeb}{isStatic}};\ \textcolor{comment}{//\ Static\ or\ dynamic}}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \doxymbox{\hyperlink{struct_a_body_ad328c6494dc9e5977bed91534dde0efe}{onGround}};\ \textcolor{comment}{//\ Computed\ in\ Update\ (via\ contact\ info)}}
+\DoxyCodeLine{00041\ \};}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{_a_core_8h_a15b0cb9c27faaa9a6433e2a530ddad12}{ANVIL\_API}}\ \doxymbox{\hyperlink{struct_raycast_hit}{RaycastHit}}}
+\DoxyCodeLine{00044\ \{}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \doxymbox{\hyperlink{struct_raycast_hit_ac31e461aad05ee1f155d2860ee7f775d}{hit}};}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \ \ \doxymbox{\hyperlink{struct_raycast_hit_a8657166e88eeb24b373fadd4fe5ccd68}{distance}};}
+\DoxyCodeLine{00047\ \ \ \ \ glm::vec3\ \doxymbox{\hyperlink{struct_raycast_hit_aa352dd18e23f0d82064f0ad239e152c6}{point}};}
+\DoxyCodeLine{00048\ \ \ \ \ \doxymbox{\hyperlink{class_a_entity}{AEntity}}*\ \ \doxymbox{\hyperlink{struct_raycast_hit_a040eda0e291badc180f06565578b7e8d}{entity}};}
+\DoxyCodeLine{00049\ \};}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \textcolor{comment}{//\ Trigger\ volume\ data\ (used\ for\ naming)}}
+\DoxyCodeLine{00052\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_a_trigger_volume}{ATriggerVolume}}}
+\DoxyCodeLine{00053\ \{}
+\DoxyCodeLine{00054\ \ \ \ \ glm::vec3\ \ \ \doxymbox{\hyperlink{struct_a_trigger_volume_ae594c1abb42103bf6272e3dd1ee356c6}{min}};}
+\DoxyCodeLine{00055\ \ \ \ \ glm::vec3\ \ \ \doxymbox{\hyperlink{struct_a_trigger_volume_a5c78a86633667d6319d46017632f77d3}{max}};}
+\DoxyCodeLine{00056\ \ \ \ \ std::string\ \doxymbox{\hyperlink{struct_a_trigger_volume_aad46a80da033f0f84f8cf30668f2beda}{name}};}
+\DoxyCodeLine{00057\ \};}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \textcolor{comment}{//\ Forward\ declare\ our\ contact\ listener\ (defined\ in\ .cpp)}}
+\DoxyCodeLine{00060\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_my_contact_listener}{MyContactListener}};}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00066\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{_a_core_8h_a15b0cb9c27faaa9a6433e2a530ddad12}{ANVIL\_API}}\ \doxymbox{\hyperlink{class_anvil_physics_ad7e8c2a73c744ccf5e93bba930a16a25}{AnvilPhysics}}}
+\DoxyCodeLine{00067\ \{}
+\DoxyCodeLine{00068\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00072\ \ \ \ \ \doxymbox{\hyperlink{class_anvil_physics_ad7e8c2a73c744ccf5e93bba930a16a25}{AnvilPhysics}}();}
+\DoxyCodeLine{00076\ \ \ \ \ \doxymbox{\hyperlink{class_anvil_physics_ad7e8c2a73c744ccf5e93bba930a16a25}{\string~AnvilPhysics}}();}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \doxymbox{\hyperlink{class_anvil_physics_ac197c87ba1543a95f25e7eadfc0e4b2c}{Update}}(\textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{_a_b_s_p___viewer_2_main_8cpp_a778e38aa889751afffa2dea6b803e67a}{dt}});}
+\DoxyCodeLine{00083\ \ \ \ \ \doxymbox{\hyperlink{struct_a_body}{ABody}}*\ \ \ \ \ \doxymbox{\hyperlink{class_anvil_physics_adb31a7f8a9caafc335e5579d7df5efda}{CreateBody}}(glm::vec3\ pos,\ glm::vec3\ size,\ \textcolor{keywordtype}{float}\ mass,\ \textcolor{keywordtype}{bool}\ isStatic);}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \doxymbox{\hyperlink{class_anvil_physics_a735d80988d15c768dca4344663731a1a}{SetWorldData}}(\textcolor{keyword}{const}\ std::vector<AVertex>\&\ verts,\ \textcolor{keyword}{const}\ std::vector<AFace>\&\ faces);}
+\DoxyCodeLine{00085\ \ \ \ \ \doxymbox{\hyperlink{struct_raycast_hit}{RaycastHit}}\ \doxymbox{\hyperlink{class_anvil_physics_aa254fc369482a55fba21d7542dc1b3a3}{CastRay}}(glm::vec3\ origin,\ glm::vec3\ direction,\ \textcolor{keywordtype}{float}\ maxDistance,}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<AEntity*>\&\ entities);}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \doxymbox{\hyperlink{class_anvil_physics_a0e8f2bf69ea1033c4c252d92f71123c6}{IsGrounded}}(\doxymbox{\hyperlink{struct_a_body}{ABody}}*\ body);}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \doxymbox{\hyperlink{class_anvil_physics_a0fe21accbb5379abdc1b1ec7ef6faff6}{AddTrigger}}(glm::vec3\ pos,\ glm::vec3\ size,\ std::string\ name);}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \doxymbox{\hyperlink{class_anvil_physics_ab7cfafa59d0cc15c75007812a5cc55fe}{SetWorldPlanes}}(\textcolor{keyword}{const}\ std::vector<APlane>\&\ planes)}
+\DoxyCodeLine{00090\ \ \ \ \ \{}
+\DoxyCodeLine{00091\ \ \ \ \ \}\ \textcolor{comment}{//\ Not\ needed}}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_anvil_physics_a6a48a658c2367407be6ed05cb83e9d48}{SetWorldBrushes}}(\textcolor{keyword}{const}\ std::vector<ABSPBrush>\&\ brushes)}
+\DoxyCodeLine{00093\ \ \ \ \ \{}
+\DoxyCodeLine{00094\ \ \ \ \ \}\ \textcolor{comment}{//\ Not\ needed}}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{comment}{//\ Called\ from\ contact\ listener\ when\ a\ trigger\ is\ entered}}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordtype}{void}\ OnTrigger(\textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordtype}{void}\ SetBodyMaterial(\doxymbox{\hyperlink{struct_a_body}{ABody}}*\ body,\ \textcolor{keywordtype}{float}\ bounciness,\ \textcolor{keywordtype}{float}\ friction);}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{comment}{//\ Conversion\ helpers}}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keyword}{static}\ reactphysics3d::Vector3\ toRP3D(\textcolor{keyword}{const}\ glm::vec3\&\ v);}
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keyword}{static}\ glm::vec3\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ toGlm(\textcolor{keyword}{const}\ reactphysics3d::Vector3\&\ v);}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00104\ \ \ \ \ reactphysics3d::PhysicsCommon*\ m\_physicsCommon\ \ \ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00105\ \ \ \ \ reactphysics3d::PhysicsWorld*\ \ m\_physicsWorld\ \ \ \ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00106\ \ \ \ \ \doxymbox{\hyperlink{class_my_contact_listener}{MyContactListener}}*\ \ \ \ \ \ \ \ \ \ \ \ \ m\_contactListener\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{comment}{//\ World\ static\ body\ (mesh)}}
+\DoxyCodeLine{00109\ \ \ \ \ reactphysics3d::RigidBody*\ \ \ \ \ \ \ \ m\_worldBody\ \ \ \ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00110\ \ \ \ \ reactphysics3d::TriangleMesh*\ \ \ \ \ m\_triangleMesh\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00111\ \ \ \ \ reactphysics3d::ConcaveMeshShape*\ m\_meshShape\ \ \ \ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{comment}{//\ All\ bodies\ created\ (for\ cleanup\ \&\ syncing)}}
+\DoxyCodeLine{00114\ \ \ \ \ std::vector<ABody*>\ m\_bodies;}
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{comment}{//\ Map\ rp3d\ body\ pointer\ to\ trigger\ name}}
+\DoxyCodeLine{00117\ \ \ \ \ std::unordered\_map<reactphysics3d::RigidBody*,\ std::string>\ m\_triggerNames;}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00119\ \ \ \ \ }
+\DoxyCodeLine{00120\ \ \ \ \ std::vector<float>\ \ \ \ \ \ \ \ \ \ \ \ \ m\_vbo;}
+\DoxyCodeLine{00121\ \ \ \ \ std::vector<int>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_ibo;}
+\DoxyCodeLine{00122\ \};}
+
+\end{DoxyCode}

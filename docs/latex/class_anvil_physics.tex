@@ -1,0 +1,180 @@
+\doxysection{Anvil\+Physics Class Reference}
+\hypertarget{class_anvil_physics}{}\label{class_anvil_physics}\index{AnvilPhysics@{AnvilPhysics}}
+
+
+A physics system class using React\+Physics3D engine for physics simulation.  
+
+
+
+
+{\ttfamily \+\#include $<$Anvil\+Physics.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_anvil_physics_ad7e8c2a73c744ccf5e93bba930a16a25}{Anvil\+Physics}} ()
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{class_anvil_physics}{Anvil\+Physics}. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_anvil_physics_af5480126d9ac902829a04c2d1faf1864}{\texorpdfstring{$\sim$}{\string~}\+Anvil\+Physics}} ()
+\begin{DoxyCompactList}\small\item\em Destructor for \doxylink{class_anvil_physics}{Anvil\+Physics}. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_anvil_physics_ac197c87ba1543a95f25e7eadfc0e4b2c}{Update}} (float \doxymbox{\hyperlink{_a_b_s_p___viewer_2_main_8cpp_a778e38aa889751afffa2dea6b803e67a}{dt}})
+\begin{DoxyCompactList}\small\item\em Update the physics simulation. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{struct_a_body}{ABody}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_anvil_physics_adb31a7f8a9caafc335e5579d7df5efda}{Create\+Body}} (glm::\+vec3 pos, glm::\+vec3 size, float mass, bool is\+Static)
+\item 
+void \doxymbox{\hyperlink{class_anvil_physics_a735d80988d15c768dca4344663731a1a}{Set\+World\+Data}} (const std::\+vector$<$ \doxymbox{\hyperlink{struct_a_vertex}{AVertex}} $>$ \&verts, const std::\+vector$<$ \doxymbox{\hyperlink{struct_a_face}{AFace}} $>$ \&faces)
+\item 
+\doxymbox{\hyperlink{struct_raycast_hit}{Raycast\+Hit}} \doxymbox{\hyperlink{class_anvil_physics_aa254fc369482a55fba21d7542dc1b3a3}{Cast\+Ray}} (glm::\+vec3 origin, glm::\+vec3 direction, float max\+Distance, const std::\+vector$<$ \doxymbox{\hyperlink{class_a_entity}{AEntity}} \texorpdfstring{$\ast$}{*} $>$ \&entities)
+\item 
+bool \doxymbox{\hyperlink{class_anvil_physics_a0e8f2bf69ea1033c4c252d92f71123c6}{Is\+Grounded}} (\doxymbox{\hyperlink{struct_a_body}{ABody}} \texorpdfstring{$\ast$}{*}body)
+\item 
+void \doxymbox{\hyperlink{class_anvil_physics_a0fe21accbb5379abdc1b1ec7ef6faff6}{Add\+Trigger}} (glm::\+vec3 pos, glm::\+vec3 size, std::\+string name)
+\item 
+void \doxymbox{\hyperlink{class_anvil_physics_ab7cfafa59d0cc15c75007812a5cc55fe}{Set\+World\+Planes}} (const std::\+vector$<$ \doxymbox{\hyperlink{struct_a_plane}{APlane}} $>$ \&planes)
+\item 
+void \doxymbox{\hyperlink{class_anvil_physics_a6a48a658c2367407be6ed05cb83e9d48}{Set\+World\+Brushes}} (const std::\+vector$<$ \doxymbox{\hyperlink{struct_a_b_s_p_brush}{ABSPBrush}} $>$ \&brushes)
+\item 
+void \doxymbox{\hyperlink{class_anvil_physics_ae5106f6399b486c541b8770c9c07a7eb}{On\+Trigger}} (const std::\+string \&name)
+\item 
+void \doxymbox{\hyperlink{class_anvil_physics_a88adc2f8b3643e7cd3711d1356b6b7d0}{Set\+Body\+Material}} (\doxymbox{\hyperlink{struct_a_body}{ABody}} \texorpdfstring{$\ast$}{*}body, float bounciness, float friction)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static reactphysics3d::\+\+Vector3 \doxymbox{\hyperlink{class_anvil_physics_ae52fe987a7c37617a8e7fe1d76638fc3}{to\+RP3D}} (const glm::\+vec3 \&v)
+\item 
+static glm::\+vec3 \doxymbox{\hyperlink{class_anvil_physics_abcda91f0bdb33447490a41290f64f86e}{to\+Glm}} (const reactphysics3d::\+\+Vector3 \&v)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A physics system class using React\+Physics3D engine for physics simulation. 
+
+\label{doc-constructors}
+\Hypertarget{class_anvil_physics_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_anvil_physics_ad7e8c2a73c744ccf5e93bba930a16a25}\index{AnvilPhysics@{AnvilPhysics}!AnvilPhysics@{AnvilPhysics}}
+\index{AnvilPhysics@{AnvilPhysics}!AnvilPhysics@{AnvilPhysics}}
+\doxysubsubsection{\texorpdfstring{AnvilPhysics()}{AnvilPhysics()}}
+{\footnotesize\ttfamily \label{class_anvil_physics_ad7e8c2a73c744ccf5e93bba930a16a25} 
+Anvil\+Physics::\+\+Anvil\+Physics (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{class_anvil_physics}{Anvil\+Physics}. 
+
+Constructor for \doxylink{class_anvil_physics}{Anvil\+Physics} class Initializes the physics engine and sets up the world with contact listener \Hypertarget{class_anvil_physics_af5480126d9ac902829a04c2d1faf1864}\index{AnvilPhysics@{AnvilPhysics}!````~AnvilPhysics@{\texorpdfstring{$\sim$}{\string~}AnvilPhysics}}
+\index{````~AnvilPhysics@{\texorpdfstring{$\sim$}{\string~}AnvilPhysics}!AnvilPhysics@{AnvilPhysics}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}AnvilPhysics()}{\string~AnvilPhysics()}}
+{\footnotesize\ttfamily \label{class_anvil_physics_af5480126d9ac902829a04c2d1faf1864} 
+Anvil\+Physics::\+\texorpdfstring{$\sim$}{\string~}\+Anvil\+Physics (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Destructor for \doxylink{class_anvil_physics}{Anvil\+Physics}. 
+
+Destructor for \doxylink{class_anvil_physics}{Anvil\+Physics} class Cleans up all physics-\/related resources including rigid bodies, triangle meshes, physics world, and contact listener 
+
+\label{doc-func-members}
+\Hypertarget{class_anvil_physics_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_anvil_physics_a0fe21accbb5379abdc1b1ec7ef6faff6}\index{AnvilPhysics@{AnvilPhysics}!AddTrigger@{AddTrigger}}
+\index{AddTrigger@{AddTrigger}!AnvilPhysics@{AnvilPhysics}}
+\doxysubsubsection{\texorpdfstring{AddTrigger()}{AddTrigger()}}
+{\footnotesize\ttfamily \label{class_anvil_physics_a0fe21accbb5379abdc1b1ec7ef6faff6} 
+void Anvil\+Physics::\+\+Add\+Trigger (\begin{DoxyParamCaption}\item[{glm::\+vec3}]{pos}{, }\item[{glm::\+vec3}]{size}{, }\item[{std::\+string}]{name}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_anvil_physics_aa254fc369482a55fba21d7542dc1b3a3}\index{AnvilPhysics@{AnvilPhysics}!CastRay@{CastRay}}
+\index{CastRay@{CastRay}!AnvilPhysics@{AnvilPhysics}}
+\doxysubsubsection{\texorpdfstring{CastRay()}{CastRay()}}
+{\footnotesize\ttfamily \label{class_anvil_physics_aa254fc369482a55fba21d7542dc1b3a3} 
+\doxymbox{\hyperlink{struct_raycast_hit}{Raycast\+Hit}} Anvil\+Physics::\+\+Cast\+Ray (\begin{DoxyParamCaption}\item[{glm::\+vec3}]{origin}{, }\item[{glm::\+vec3}]{direction}{, }\item[{float}]{max\+Distance}{, }\item[{const std::\+vector$<$ \doxymbox{\hyperlink{class_a_entity}{AEntity}} \texorpdfstring{$\ast$}{*} $>$ \&}]{entities}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_anvil_physics_adb31a7f8a9caafc335e5579d7df5efda}\index{AnvilPhysics@{AnvilPhysics}!CreateBody@{CreateBody}}
+\index{CreateBody@{CreateBody}!AnvilPhysics@{AnvilPhysics}}
+\doxysubsubsection{\texorpdfstring{CreateBody()}{CreateBody()}}
+{\footnotesize\ttfamily \label{class_anvil_physics_adb31a7f8a9caafc335e5579d7df5efda} 
+\doxymbox{\hyperlink{struct_a_body}{ABody}} \texorpdfstring{$\ast$}{*} Anvil\+Physics::\+\+Create\+Body (\begin{DoxyParamCaption}\item[{glm::\+vec3}]{pos}{, }\item[{glm::\+vec3}]{size}{, }\item[{float}]{mass}{, }\item[{bool}]{is\+Static}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_anvil_physics_a0e8f2bf69ea1033c4c252d92f71123c6}\index{AnvilPhysics@{AnvilPhysics}!IsGrounded@{IsGrounded}}
+\index{IsGrounded@{IsGrounded}!AnvilPhysics@{AnvilPhysics}}
+\doxysubsubsection{\texorpdfstring{IsGrounded()}{IsGrounded()}}
+{\footnotesize\ttfamily \label{class_anvil_physics_a0e8f2bf69ea1033c4c252d92f71123c6} 
+bool Anvil\+Physics::\+\+Is\+Grounded (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_a_body}{ABody}} \texorpdfstring{$\ast$}{*}}]{body}{}\end{DoxyParamCaption})}
+
+Checks if a given body is grounded by casting a ray downward from its position 
+\begin{DoxyParams}{Parameters}
+{\em body} & The body to check if it\textquotesingle{}s grounded \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if the body is grounded, false otherwise 
+\end{DoxyReturn}
+\Hypertarget{class_anvil_physics_ae5106f6399b486c541b8770c9c07a7eb}\index{AnvilPhysics@{AnvilPhysics}!OnTrigger@{OnTrigger}}
+\index{OnTrigger@{OnTrigger}!AnvilPhysics@{AnvilPhysics}}
+\doxysubsubsection{\texorpdfstring{OnTrigger()}{OnTrigger()}}
+{\footnotesize\ttfamily \label{class_anvil_physics_ae5106f6399b486c541b8770c9c07a7eb} 
+void Anvil\+Physics::\+\+On\+Trigger (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{name}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_anvil_physics_a88adc2f8b3643e7cd3711d1356b6b7d0}\index{AnvilPhysics@{AnvilPhysics}!SetBodyMaterial@{SetBodyMaterial}}
+\index{SetBodyMaterial@{SetBodyMaterial}!AnvilPhysics@{AnvilPhysics}}
+\doxysubsubsection{\texorpdfstring{SetBodyMaterial()}{SetBodyMaterial()}}
+{\footnotesize\ttfamily \label{class_anvil_physics_a88adc2f8b3643e7cd3711d1356b6b7d0} 
+void Anvil\+Physics::\+\+Set\+Body\+Material (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_a_body}{ABody}} \texorpdfstring{$\ast$}{*}}]{body}{, }\item[{float}]{bounciness}{, }\item[{float}]{friction}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_anvil_physics_a6a48a658c2367407be6ed05cb83e9d48}\index{AnvilPhysics@{AnvilPhysics}!SetWorldBrushes@{SetWorldBrushes}}
+\index{SetWorldBrushes@{SetWorldBrushes}!AnvilPhysics@{AnvilPhysics}}
+\doxysubsubsection{\texorpdfstring{SetWorldBrushes()}{SetWorldBrushes()}}
+{\footnotesize\ttfamily \label{class_anvil_physics_a6a48a658c2367407be6ed05cb83e9d48} 
+void Anvil\+Physics::\+\+Set\+World\+Brushes (\begin{DoxyParamCaption}\item[{const std::\+vector$<$ \doxymbox{\hyperlink{struct_a_b_s_p_brush}{ABSPBrush}} $>$ \&}]{brushes}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_anvil_physics_a735d80988d15c768dca4344663731a1a}\index{AnvilPhysics@{AnvilPhysics}!SetWorldData@{SetWorldData}}
+\index{SetWorldData@{SetWorldData}!AnvilPhysics@{AnvilPhysics}}
+\doxysubsubsection{\texorpdfstring{SetWorldData()}{SetWorldData()}}
+{\footnotesize\ttfamily \label{class_anvil_physics_a735d80988d15c768dca4344663731a1a} 
+void Anvil\+Physics::\+\+Set\+World\+Data (\begin{DoxyParamCaption}\item[{const std::\+vector$<$ \doxymbox{\hyperlink{struct_a_vertex}{AVertex}} $>$ \&}]{verts}{, }\item[{const std::\+vector$<$ \doxymbox{\hyperlink{struct_a_face}{AFace}} $>$ \&}]{faces}{}\end{DoxyParamCaption})}
+
+Sets up the physics world data from vertex and face information 
+\begin{DoxyParams}{Parameters}
+{\em verts} & Vector of vertices defining the mesh \\
+\hline
+{\em faces} & Vector of faces defining the mesh connectivity \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_anvil_physics_ab7cfafa59d0cc15c75007812a5cc55fe}\index{AnvilPhysics@{AnvilPhysics}!SetWorldPlanes@{SetWorldPlanes}}
+\index{SetWorldPlanes@{SetWorldPlanes}!AnvilPhysics@{AnvilPhysics}}
+\doxysubsubsection{\texorpdfstring{SetWorldPlanes()}{SetWorldPlanes()}}
+{\footnotesize\ttfamily \label{class_anvil_physics_ab7cfafa59d0cc15c75007812a5cc55fe} 
+void Anvil\+Physics::\+\+Set\+World\+Planes (\begin{DoxyParamCaption}\item[{const std::\+vector$<$ \doxymbox{\hyperlink{struct_a_plane}{APlane}} $>$ \&}]{planes}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_anvil_physics_abcda91f0bdb33447490a41290f64f86e}\index{AnvilPhysics@{AnvilPhysics}!toGlm@{toGlm}}
+\index{toGlm@{toGlm}!AnvilPhysics@{AnvilPhysics}}
+\doxysubsubsection{\texorpdfstring{toGlm()}{toGlm()}}
+{\footnotesize\ttfamily \label{class_anvil_physics_abcda91f0bdb33447490a41290f64f86e} 
+glm::\+vec3 Anvil\+Physics::\+to\+Glm (\begin{DoxyParamCaption}\item[{const reactphysics3d::\+\+Vector3 \&}]{v}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_anvil_physics_ae52fe987a7c37617a8e7fe1d76638fc3}\index{AnvilPhysics@{AnvilPhysics}!toRP3D@{toRP3D}}
+\index{toRP3D@{toRP3D}!AnvilPhysics@{AnvilPhysics}}
+\doxysubsubsection{\texorpdfstring{toRP3D()}{toRP3D()}}
+{\footnotesize\ttfamily \label{class_anvil_physics_ae52fe987a7c37617a8e7fe1d76638fc3} 
+Vector3 Anvil\+Physics::\+to\+RP3D (\begin{DoxyParamCaption}\item[{const glm::\+vec3 \&}]{v}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_anvil_physics_ac197c87ba1543a95f25e7eadfc0e4b2c}\index{AnvilPhysics@{AnvilPhysics}!Update@{Update}}
+\index{Update@{Update}!AnvilPhysics@{AnvilPhysics}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily \label{class_anvil_physics_ac197c87ba1543a95f25e7eadfc0e4b2c} 
+void Anvil\+Physics::\+\+Update (\begin{DoxyParamCaption}\item[{float}]{dt}{}\end{DoxyParamCaption})}
+
+
+
+Update the physics simulation. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \doxylink{_a_b_s_p___viewer_2_main_8cpp_a778e38aa889751afffa2dea6b803e67a}{dt}} & Delta time for physics update \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Anvil\+\_\+\+SDK/\+\doxymbox{\hyperlink{_anvil_physics_8h}{Anvil\+Physics.\+h}}\item 
+Anvil\+\_\+\+SDK/\+\doxymbox{\hyperlink{_anvil_physics_8cpp}{Anvil\+Physics.\+cpp}}\end{DoxyCompactItemize}

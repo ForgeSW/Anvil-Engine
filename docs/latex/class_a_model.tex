@@ -1,0 +1,89 @@
+\doxysection{AModel Class Reference}
+\hypertarget{class_a_model}{}\label{class_a_model}\index{AModel@{AModel}}
+
+
+{\ttfamily \+\#include $<$AModel.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_a_model_a6d21d2e557f578e18e33293f6e3efa27}{AModel}} ()=default
+\item 
+\doxymbox{\hyperlink{class_a_model_a4f406f9196c65d22041256597aad7892}{\texorpdfstring{$\sim$}{\string~}\+AModel}} ()
+\item 
+void \doxymbox{\hyperlink{class_a_model_a444fbdc0def4a456f15e0a9a7c59f7aa}{Draw}} ()
+\item 
+int \doxymbox{\hyperlink{class_a_model_a307c6cb22f72a5e045fe05d2fff750d6}{Load\+From\+File}} (const std::\+string \&path)
+\item 
+void \doxymbox{\hyperlink{class_a_model_afe1b4f3afecfb02ca4a00d86b10e6026}{Add\+Mesh}} (\doxymbox{\hyperlink{class_a_mesh}{AMesh}} \texorpdfstring{$\ast$}{*}mesh)
+\item 
+const std::\+vector$<$ \doxymbox{\hyperlink{class_a_mesh}{AMesh}} \texorpdfstring{$\ast$}{*} $>$ \& \doxymbox{\hyperlink{class_a_model_a7b5d8ab51df95bd800749803700be30d}{Get\+Meshes}} () const
+\item 
+\doxymbox{\hyperlink{class_a_mesh}{AMesh}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_a_model_abb0936bf8d489f9ef10614da90b0e3a9}{Get\+Mesh}} (size\+\_\+t index)
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_a_model_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_a_model_a6d21d2e557f578e18e33293f6e3efa27}\index{AModel@{AModel}!AModel@{AModel}}
+\index{AModel@{AModel}!AModel@{AModel}}
+\doxysubsubsection{\texorpdfstring{AModel()}{AModel()}}
+{\footnotesize\ttfamily \label{class_a_model_a6d21d2e557f578e18e33293f6e3efa27} 
+AModel::\+\+AModel (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\Hypertarget{class_a_model_a4f406f9196c65d22041256597aad7892}\index{AModel@{AModel}!````~AModel@{\texorpdfstring{$\sim$}{\string~}AModel}}
+\index{````~AModel@{\texorpdfstring{$\sim$}{\string~}AModel}!AModel@{AModel}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}AModel()}{\string~AModel()}}
+{\footnotesize\ttfamily \label{class_a_model_a4f406f9196c65d22041256597aad7892} 
+AModel::\+\texorpdfstring{$\sim$}{\string~}\+AModel (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_a_model_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_a_model_afe1b4f3afecfb02ca4a00d86b10e6026}\index{AModel@{AModel}!AddMesh@{AddMesh}}
+\index{AddMesh@{AddMesh}!AModel@{AModel}}
+\doxysubsubsection{\texorpdfstring{AddMesh()}{AddMesh()}}
+{\footnotesize\ttfamily \label{class_a_model_afe1b4f3afecfb02ca4a00d86b10e6026} 
+void AModel::\+\+Add\+Mesh (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_a_mesh}{AMesh}} \texorpdfstring{$\ast$}{*}}]{mesh}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_a_model_a444fbdc0def4a456f15e0a9a7c59f7aa}\index{AModel@{AModel}!Draw@{Draw}}
+\index{Draw@{Draw}!AModel@{AModel}}
+\doxysubsubsection{\texorpdfstring{Draw()}{Draw()}}
+{\footnotesize\ttfamily \label{class_a_model_a444fbdc0def4a456f15e0a9a7c59f7aa} 
+void AModel::\+\+Draw (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_a_model_abb0936bf8d489f9ef10614da90b0e3a9}\index{AModel@{AModel}!GetMesh@{GetMesh}}
+\index{GetMesh@{GetMesh}!AModel@{AModel}}
+\doxysubsubsection{\texorpdfstring{GetMesh()}{GetMesh()}}
+{\footnotesize\ttfamily \label{class_a_model_abb0936bf8d489f9ef10614da90b0e3a9} 
+\doxymbox{\hyperlink{class_a_mesh}{AMesh}} \texorpdfstring{$\ast$}{*} AModel::\+\+Get\+Mesh (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{index}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_a_model_a7b5d8ab51df95bd800749803700be30d}\index{AModel@{AModel}!GetMeshes@{GetMeshes}}
+\index{GetMeshes@{GetMeshes}!AModel@{AModel}}
+\doxysubsubsection{\texorpdfstring{GetMeshes()}{GetMeshes()}}
+{\footnotesize\ttfamily \label{class_a_model_a7b5d8ab51df95bd800749803700be30d} 
+const std::\+vector$<$ \doxymbox{\hyperlink{class_a_mesh}{AMesh}} \texorpdfstring{$\ast$}{*} $>$ \& AModel::\+\+Get\+Meshes (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_a_model_a307c6cb22f72a5e045fe05d2fff750d6}\index{AModel@{AModel}!LoadFromFile@{LoadFromFile}}
+\index{LoadFromFile@{LoadFromFile}!AModel@{AModel}}
+\doxysubsubsection{\texorpdfstring{LoadFromFile()}{LoadFromFile()}}
+{\footnotesize\ttfamily \label{class_a_model_a307c6cb22f72a5e045fe05d2fff750d6} 
+int AModel::\+\+Load\+From\+File (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{path}{}\end{DoxyParamCaption})}
+
+Load a 3D model from a file and add it to the model\textquotesingle{}s mesh collection 
+\begin{DoxyParams}{Parameters}
+{\em path} & The file path of the model to be loaded \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if loading was successful, 0 if loading failed 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Anvil\+\_\+\+SDK/\+\doxymbox{\hyperlink{_a_model_8h}{AModel.\+h}}\item 
+Anvil\+\_\+\+SDK/\+\doxymbox{\hyperlink{_a_model_8cpp}{AModel.\+cpp}}\end{DoxyCompactItemize}

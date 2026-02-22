@@ -1,0 +1,188 @@
+\doxysection{AEngine Class Reference}
+\hypertarget{class_a_engine}{}\label{class_a_engine}\index{AEngine@{AEngine}}
+
+
+The main engine class that manages the application lifecycle, rendering, entities, and game logic.  
+
+
+
+
+{\ttfamily \+\#include $<$AEngine.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_a_engine_a1589cd360614fd990dcdef605c3a667d}{AEngine}} ()
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{class_a_engine}{AEngine}. \end{DoxyCompactList}\item 
+virtual \doxymbox{\hyperlink{class_a_engine_a6590b844bab5e0dd146a4bce257c59d9}{\texorpdfstring{$\sim$}{\string~}\+AEngine}} ()
+\begin{DoxyCompactList}\small\item\em Virtual destructor for \doxylink{class_a_engine}{AEngine}. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_a_engine_aaecefcf1ab8466009d32eea45dad66dd}{Run}} ()
+\begin{DoxyCompactList}\small\item\em Main engine loop that runs the application. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_a_engine_a78994bb28fd811539ad322633a8235ee}{Load\+Map}} (const char \texorpdfstring{$\ast$}{*}map\+Name)
+\begin{DoxyCompactList}\small\item\em Loads a map by name. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_a_entity}{AEntity}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_a_engine_afe1043d400d4719a7bb678e8add1359c}{Create\+Entity}} (std::\+string name)
+\begin{DoxyCompactList}\small\item\em Creates a new entity with the specified name. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_a_engine_ae4a673b91d3ba29691f075953d1fa7e8}{Bind\+Action}} (std::\+string name, std::\+function$<$ void()$>$ action)
+\begin{DoxyCompactList}\small\item\em Binds an action to a trigger name. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_a_engine_a36fb641b095ed5c5544101de8d523220}{On\+Trigger}} (std::\+string name)
+\begin{DoxyCompactList}\small\item\em Executes the action associated with the trigger name. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_anvil_physics}{Anvil\+Physics}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_a_engine_a3638c607620f8ac797f35f66730d1401}{Get\+Physics}} ()
+\begin{DoxyCompactList}\small\item\em Gets the physics world instance. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \doxymbox{\hyperlink{class_a_engine}{AEngine}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_a_engine_a9af017202ad11db791652d770fd09455}{Get}} ()
+\begin{DoxyCompactList}\small\item\em Gets the singleton instance of the engine. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The main engine class that manages the application lifecycle, rendering, entities, and game logic. 
+
+\label{doc-constructors}
+\Hypertarget{class_a_engine_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_a_engine_a1589cd360614fd990dcdef605c3a667d}\index{AEngine@{AEngine}!AEngine@{AEngine}}
+\index{AEngine@{AEngine}!AEngine@{AEngine}}
+\doxysubsubsection{\texorpdfstring{AEngine()}{AEngine()}}
+{\footnotesize\ttfamily \label{class_a_engine_a1589cd360614fd990dcdef605c3a667d} 
+AEngine::\+\+AEngine (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{class_a_engine}{AEngine}. 
+
+Constructor for \doxylink{class_a_engine}{AEngine} class Initializes the engine components including window, Open\+GL context, physics world, shader, resource manager, and loads the game DLL \Hypertarget{class_a_engine_a6590b844bab5e0dd146a4bce257c59d9}\index{AEngine@{AEngine}!````~AEngine@{\texorpdfstring{$\sim$}{\string~}AEngine}}
+\index{````~AEngine@{\texorpdfstring{$\sim$}{\string~}AEngine}!AEngine@{AEngine}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}AEngine()}{\string~AEngine()}}
+{\footnotesize\ttfamily \label{class_a_engine_a6590b844bab5e0dd146a4bce257c59d9} 
+AEngine::\+\texorpdfstring{$\sim$}{\string~}\+AEngine (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Virtual destructor for \doxylink{class_a_engine}{AEngine}. 
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_a_engine_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_a_engine_ae4a673b91d3ba29691f075953d1fa7e8}\index{AEngine@{AEngine}!BindAction@{BindAction}}
+\index{BindAction@{BindAction}!AEngine@{AEngine}}
+\doxysubsubsection{\texorpdfstring{BindAction()}{BindAction()}}
+{\footnotesize\ttfamily \label{class_a_engine_ae4a673b91d3ba29691f075953d1fa7e8} 
+void AEngine::\+\+Bind\+Action (\begin{DoxyParamCaption}\item[{std::\+string}]{name}{, }\item[{std::\+function$<$ void()$>$}]{action}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Binds an action to a trigger name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The trigger name to bind to \\
+\hline
+{\em action} & The function to execute when the trigger is activated \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_a_engine_afe1043d400d4719a7bb678e8add1359c}\index{AEngine@{AEngine}!CreateEntity@{CreateEntity}}
+\index{CreateEntity@{CreateEntity}!AEngine@{AEngine}}
+\doxysubsubsection{\texorpdfstring{CreateEntity()}{CreateEntity()}}
+{\footnotesize\ttfamily \label{class_a_engine_afe1043d400d4719a7bb678e8add1359c} 
+\doxymbox{\hyperlink{class_a_entity}{AEntity}} \texorpdfstring{$\ast$}{*} AEngine::\+\+Create\+Entity (\begin{DoxyParamCaption}\item[{std::\+string}]{name}{}\end{DoxyParamCaption})}
+
+
+
+Creates a new entity with the specified name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name for the new entity \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the created entity
+\end{DoxyReturn}
+Creates a new entity and adds it to the engine\textquotesingle{}s entity list 
+\begin{DoxyParams}{Parameters}
+{\em name} & The name to assign to the new entity \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the newly created entity 
+\end{DoxyReturn}
+\Hypertarget{class_a_engine_a9af017202ad11db791652d770fd09455}\index{AEngine@{AEngine}!Get@{Get}}
+\index{Get@{Get}!AEngine@{AEngine}}
+\doxysubsubsection{\texorpdfstring{Get()}{Get()}}
+{\footnotesize\ttfamily \label{class_a_engine_a9af017202ad11db791652d770fd09455} 
+\doxymbox{\hyperlink{class_a_engine}{AEngine}} \texorpdfstring{$\ast$}{*} AEngine::\+\+Get (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Gets the singleton instance of the engine. 
+
+\begin{DoxyReturn}{Returns}
+Pointer to the engine instance 
+\end{DoxyReturn}
+\Hypertarget{class_a_engine_a3638c607620f8ac797f35f66730d1401}\index{AEngine@{AEngine}!GetPhysics@{GetPhysics}}
+\index{GetPhysics@{GetPhysics}!AEngine@{AEngine}}
+\doxysubsubsection{\texorpdfstring{GetPhysics()}{GetPhysics()}}
+{\footnotesize\ttfamily \label{class_a_engine_a3638c607620f8ac797f35f66730d1401} 
+\doxymbox{\hyperlink{class_anvil_physics}{Anvil\+Physics}} \texorpdfstring{$\ast$}{*} AEngine::\+\+Get\+Physics (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the physics world instance. 
+
+\begin{DoxyReturn}{Returns}
+Pointer to the physics world 
+\end{DoxyReturn}
+\Hypertarget{class_a_engine_a78994bb28fd811539ad322633a8235ee}\index{AEngine@{AEngine}!LoadMap@{LoadMap}}
+\index{LoadMap@{LoadMap}!AEngine@{AEngine}}
+\doxysubsubsection{\texorpdfstring{LoadMap()}{LoadMap()}}
+{\footnotesize\ttfamily \label{class_a_engine_a78994bb28fd811539ad322633a8235ee} 
+void AEngine::\+\+Load\+Map (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{map\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Loads a map by name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em map\+Name} & The name of the map to load\\
+\hline
+\end{DoxyParams}
+Loads a map file into the engine 
+\begin{DoxyParams}{Parameters}
+{\em map\+Name} & Name of the map file to load (without extension) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_a_engine_a36fb641b095ed5c5544101de8d523220}\index{AEngine@{AEngine}!OnTrigger@{OnTrigger}}
+\index{OnTrigger@{OnTrigger}!AEngine@{AEngine}}
+\doxysubsubsection{\texorpdfstring{OnTrigger()}{OnTrigger()}}
+{\footnotesize\ttfamily \label{class_a_engine_a36fb641b095ed5c5544101de8d523220} 
+void AEngine::\+\+On\+Trigger (\begin{DoxyParamCaption}\item[{std::\+string}]{name}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Executes the action associated with the trigger name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The trigger name to activate \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_a_engine_aaecefcf1ab8466009d32eea45dad66dd}\index{AEngine@{AEngine}!Run@{Run}}
+\index{Run@{Run}!AEngine@{AEngine}}
+\doxysubsubsection{\texorpdfstring{Run()}{Run()}}
+{\footnotesize\ttfamily \label{class_a_engine_aaecefcf1ab8466009d32eea45dad66dd} 
+void AEngine::\+\+Run (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Main engine loop that runs the application. 
+
+Main game loop for the engine Handles updating game state, physics, and rendering 
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Anvil\+\_\+\+SDK/\+\doxymbox{\hyperlink{_a_engine_8h}{AEngine.\+h}}\item 
+Anvil\+\_\+\+SDK/\+\doxymbox{\hyperlink{_a_engine_8cpp}{AEngine.\+cpp}}\end{DoxyCompactItemize}

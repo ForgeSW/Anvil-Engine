@@ -1,0 +1,100 @@
+\doxysection{Mesh\+Component Class Reference}
+\hypertarget{class_mesh_component}{}\label{class_mesh_component}\index{MeshComponent@{MeshComponent}}
+
+
+{\ttfamily \+\#include $<$Mesh\+Component.\+h$>$}
+
+Inheritance diagram for Mesh\+Component:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_mesh_component}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_mesh_component_afb39bb912e7443f36b7583cb191ca270}{Mesh\+Component}} (\doxymbox{\hyperlink{class_a_mesh}{AMesh}} \texorpdfstring{$\ast$}{*}mesh)
+\item 
+void \doxymbox{\hyperlink{class_mesh_component_a1abc0e0ff4db776335b96d4268294eaf}{On\+Init}} (\doxymbox{\hyperlink{class_a_entity}{AEntity}} \texorpdfstring{$\ast$}{*}owner) override
+\item 
+void \doxymbox{\hyperlink{class_mesh_component_a709c62bf54fc2954cab6b250cf773871}{On\+Update}} (float \doxymbox{\hyperlink{_a_b_s_p___viewer_2_main_8cpp_a778e38aa889751afffa2dea6b803e67a}{dt}}) override
+\item 
+void \doxymbox{\hyperlink{class_mesh_component_a04cb8134505888e116aea0d7ef82197d}{On\+Render}} (\doxymbox{\hyperlink{class_a_shader}{AShader}} \texorpdfstring{$\ast$}{*}shader) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_i_component}{IComponent}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \doxymbox{\hyperlink{class_i_component_a65d1d85605d3689b4b1ee985667245ac}{\texorpdfstring{$\sim$}{\string~}\+IComponent}} ()
+\begin{DoxyCompactList}\small\item\em Virtual destructor for the \doxylink{class_i_component}{IComponent} class. Ensures proper cleanup of derived class objects when deleted through a base class pointer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_i_component}{IComponent}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_a_entity}{AEntity}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_i_component_a1874da8596f16cb6693d2431fe710e38}{m\+\_\+owner}} = nullptr
+\begin{DoxyCompactList}\small\item\em Pointer to the entity that owns this component. This allows the component to access its parent entity and other components attached to it. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_mesh_component_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_mesh_component_afb39bb912e7443f36b7583cb191ca270}\index{MeshComponent@{MeshComponent}!MeshComponent@{MeshComponent}}
+\index{MeshComponent@{MeshComponent}!MeshComponent@{MeshComponent}}
+\doxysubsubsection{\texorpdfstring{MeshComponent()}{MeshComponent()}}
+{\footnotesize\ttfamily \label{class_mesh_component_afb39bb912e7443f36b7583cb191ca270} 
+Mesh\+Component::\+\+Mesh\+Component (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_a_mesh}{AMesh}} \texorpdfstring{$\ast$}{*}}]{mesh}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_mesh_component_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_mesh_component_a1abc0e0ff4db776335b96d4268294eaf}\index{MeshComponent@{MeshComponent}!OnInit@{OnInit}}
+\index{OnInit@{OnInit}!MeshComponent@{MeshComponent}}
+\doxysubsubsection{\texorpdfstring{OnInit()}{OnInit()}}
+{\footnotesize\ttfamily \label{class_mesh_component_a1abc0e0ff4db776335b96d4268294eaf} 
+void Mesh\+Component::\+\+On\+Init (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_a_entity}{AEntity}} \texorpdfstring{$\ast$}{*}}]{owner}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Initialize the entity component with its owner 
+\begin{DoxyParams}{Parameters}
+{\em owner} & Pointer to the \doxylink{class_a_entity}{AEntity} that owns this component \\
+\hline
+\end{DoxyParams}
+
+
+Implements \doxymbox{\hyperlink{class_i_component_a3fc15d76fc736471bfacd987b09d62f9}{IComponent}}.
+
+\Hypertarget{class_mesh_component_a04cb8134505888e116aea0d7ef82197d}\index{MeshComponent@{MeshComponent}!OnRender@{OnRender}}
+\index{OnRender@{OnRender}!MeshComponent@{MeshComponent}}
+\doxysubsubsection{\texorpdfstring{OnRender()}{OnRender()}}
+{\footnotesize\ttfamily \label{class_mesh_component_a04cb8134505888e116aea0d7ef82197d} 
+void Mesh\+Component::\+\+On\+Render (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_a_shader}{AShader}} \texorpdfstring{$\ast$}{*}}]{shader}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Renders the mesh component using the specified shader 
+\begin{DoxyParams}{Parameters}
+{\em shader} & The shader program to use for rendering \\
+\hline
+\end{DoxyParams}
+
+
+Implements \doxymbox{\hyperlink{class_i_component_af4daf51a689c9d9c782b39a67fd927ab}{IComponent}}.
+
+\Hypertarget{class_mesh_component_a709c62bf54fc2954cab6b250cf773871}\index{MeshComponent@{MeshComponent}!OnUpdate@{OnUpdate}}
+\index{OnUpdate@{OnUpdate}!MeshComponent@{MeshComponent}}
+\doxysubsubsection{\texorpdfstring{OnUpdate()}{OnUpdate()}}
+{\footnotesize\ttfamily \label{class_mesh_component_a709c62bf54fc2954cab6b250cf773871} 
+void Mesh\+Component::\+\+On\+Update (\begin{DoxyParamCaption}\item[{float}]{dt}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Called once per frame to update the game state 
+\begin{DoxyParams}{Parameters}
+{\em \doxylink{_a_b_s_p___viewer_2_main_8cpp_a778e38aa889751afffa2dea6b803e67a}{dt}} & The time elapsed since the last update in seconds \\
+\hline
+\end{DoxyParams}
+
+
+Implements \doxymbox{\hyperlink{class_i_component_a18fbb8d05d6e86eb7883b45096080193}{IComponent}}.
+
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+Anvil\+\_\+\+SDK/\+\doxymbox{\hyperlink{_mesh_component_8h}{Mesh\+Component.\+h}}\end{DoxyCompactItemize}
