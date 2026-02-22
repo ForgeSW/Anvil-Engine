@@ -1,6 +1,6 @@
 # Anvil Engine
 #### A lightweight 3D game engine made in C++
-![Anvil Engine](image.png)
+![Anvil Engine](Image.png)
 Anvil is a custom game engine built in C++ focusing on BSP (Binary space partition) or in this case ABSP (Anvil Binary Space Partition). It is designed for developers who prefer controlling everything from code instead of an editor
 
 ## Tech Stack
@@ -18,7 +18,7 @@ Anvil is built on top of the following technologies:
 
 ### Installation
 * Clone the ```https://github.com/microsoft/vcpkg.git``` repository to a path like ```C:\dev\vcpkg```
-* Open the terminal and run ```.\vcpkg\bootstrap-vcpkg.bat```
+* Open the terminal and run ```.\bootstrap-vcpkg.bat```
 * Run ```.\vcpkg install glad glm glfw reactphysics3d assimp stb_image```
 * Run ``` .\vcpkg integrate install```
 * Open the ```Anvil Engine.slnx``` solution file and hit CTRL+SHIFT+B
