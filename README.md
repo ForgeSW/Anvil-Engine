@@ -1,6 +1,6 @@
 # Anvil Engine
 #### A lightweight 3D game engine made in C++
-![Anvil Engine](image.png)
+![Anvil Engine](Image.png)
 Anvil is a custom game engine built in C++ focusing on BSP (Binary space partition) or in this case ABSP (Anvil Binary Space Partition). It is designed for developers who prefer controlling everything from code instead of an editor
 
 ## Tech Stack
