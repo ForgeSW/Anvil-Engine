@@ -9,6 +9,13 @@
 #include <unordered_map>
 #include <vector>
 
+enum class ECollisionQuality
+{
+    PERFOMANCE,   // Low collisions, fast and uses fewer solver iterations
+    BALANCED,     // Medium collisions, the default and best option for most games
+    HIGH_FIDELITY // High detailed collisions, unless you wanna burn your cpu don't use this much
+};
+
 namespace reactphysics3d
 {
 class PhysicsCommon;
@@ -27,17 +34,16 @@ class AEngine;
 // Simple body structure that the game uses
 struct ANVIL_API ABody
 {
-    void* rp3dBody; // Pointer to reactphysics3d::RigidBody    
+    void*                     rp3dBody; // Pointer to reactphysics3d::RigidBody
     reactphysics3d::Collider* collider;
-    glm::quat orientation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
-    glm::vec3 position; // Updated each frame from rp3d
-    glm::vec3 velocity; // Updated each frame from rp3d
-    glm::vec3 halfSize; // Half extents (set at creation)
-    
-    float     mass;     // Mass (set at creation)
-
-    bool      isStatic; // Static or dynamic
-    bool      onGround; // Computed in Update (via contact info)
+    glm::quat                 orientation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
+    glm::vec3                 position; // Updated each frame from rp3d
+    glm::vec3                 velocity; // Updated each frame from rp3d
+    glm::vec3                 halfSize; // Half extents (set at creation)
+    ECollisionQuality         quality;
+    float                     mass;     // Mass (set at creation)
+    bool                      isStatic; // Static or dynamic
+    bool                      onGround; // Computed in Update (via contact info)
 };
 
 struct ANVIL_API RaycastHit
@@ -45,6 +51,7 @@ struct ANVIL_API RaycastHit
     bool      hit;
     float     distance;
     glm::vec3 point;
+    glm::vec3 normal;
     AEntity*  entity;
 };
 
@@ -80,7 +87,7 @@ class ANVIL_API AnvilPhysics
      * @param dt Delta time for physics update
      */
     void       Update(float dt);
-    ABody*     CreateBody(glm::vec3 pos, glm::vec3 size, float mass, bool isStatic);
+    ABody*     CreateBody(glm::vec3 pos, glm::vec3 size, float mass, bool isStatic, ECollisionQuality quality = ECollisionQuality::BALANCED);
     void       SetWorldData(const std::vector<AVertex>& verts, const std::vector<AFace>& faces);
     RaycastHit CastRay(glm::vec3 origin, glm::vec3 direction, float maxDistance,
                        const std::vector<AEntity*>& entities);

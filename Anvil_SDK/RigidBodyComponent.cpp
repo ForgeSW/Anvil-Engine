@@ -13,14 +13,14 @@ void RigidBodyComponent::OnInit(AEntity* owner)
 
     
     // Create a physics body using the engine's physics system
-    m_body = AEngine::Get()->GetPhysics()->CreateBody(m_owner->position, m_size, m_mass, m_isStatic);
-        AEngine::Get()->GetPhysics()->CreateBody(m_owner->position, m_size, m_mass, m_isStatic);
+    m_body = AEngine::Get()->GetPhysics()->CreateBody(m_owner->position, m_size, m_mass, m_isStatic, m_quality);
 
-    if (m_body && m_body->rp3dBody)
-    {
+    if (!m_body || !m_body->rp3dBody)
+            return;
+    
         auto* rb = static_cast<rp3d::RigidBody*>(m_body->rp3dBody);
 		rb->setUserData(m_owner);
-    }
+    
 }
 
 /**

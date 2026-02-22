@@ -106,7 +106,8 @@ AnvilPhysics::AnvilPhysics()
     m_physicsCommon = new PhysicsCommon();
     // Create the physics world using the PhysicsCommon instance
     m_physicsWorld  = m_physicsCommon->createPhysicsWorld();
-
+    m_physicsWorld->setNbIterationsVelocitySolver(15), 
+    m_physicsWorld->setNbIterationsPositionSolver(8), 
     // We pass the map reference so the listener can find trigger names
     m_contactListener = new MyContactListener(this, m_triggerNames);
     // Set the event listener to handle physics-related events
@@ -143,7 +144,7 @@ AnvilPhysics::~AnvilPhysics()
     delete m_contactListener;
 }
 
-ABody* AnvilPhysics::CreateBody(glm::vec3 pos, glm::vec3 size, float mass, bool isStatic)
+ABody* AnvilPhysics::CreateBody(glm::vec3 pos, glm::vec3 size, float mass, bool isStatic, ECollisionQuality quality)
 {
     Vector3   halfExtents = toRP3D(size) * 0.5f;
     BoxShape* boxShape    = m_physicsCommon->createBoxShape(halfExtents);
@@ -243,22 +244,52 @@ void AnvilPhysics::SetWorldData(const std::vector<AVertex>& verts, const std::ve
 }
 void AnvilPhysics::Update(float dt)
 {
+    for (auto* aBody : m_bodies)
+    {
+        if (aBody->isStatic)
+            continue;
+
+        RigidBody* rb       = static_cast<RigidBody*>(aBody->rp3dBody);
+        glm::vec3  velocity = toGlm(rb->getLinearVelocity());
+        float      speed    = glm::length(velocity);
+
+        if (speed > 0.01f)
+        {
+            float      distance = speed * dt;
+            RaycastHit hit =
+                CastRay(aBody->position, glm::normalize(velocity), distance + 0.1f, {});
+
+            if (hit.hit)
+            {
+                // 1. Position: Put it at the wall
+                glm::vec3 safePos = hit.point + (hit.normal * 0.05f);
+                rb->setTransform(Transform(toRP3D(safePos), rb->getTransform().getOrientation()));
+
+                // This removes the part of the velocity that points INTO the wall
+                float dot = glm::dot(velocity, hit.normal);
+                if (dot < 0) // Only cancel velocity if moving TOWARD the wall
+                {
+                    glm::vec3 slideVel = velocity - (hit.normal * dot);
+                    rb->setLinearVelocity(toRP3D(slideVel));
+                }
+            }
+        }
+    }
+
     m_physicsWorld->update(dt);
 
     for (auto* aBody : m_bodies)
     {
-        RigidBody* rb   = static_cast<RigidBody*>(aBody->rp3dBody);
-        rp3d::Transform transform = rb->getTransform();
-        aBody->position = toGlm(transform.getPosition());
-        aBody->velocity = toGlm(rb->getLinearVelocity());
-        rp3d::Quaternion q = transform.getOrientation();
-        // toGlm doesn't handle quats, only vec3
+        RigidBody* rb        = static_cast<RigidBody*>(aBody->rp3dBody);
+        Transform  transform = rb->getTransform();
+
+        aBody->position    = toGlm(transform.getPosition());
+        aBody->velocity    = toGlm(rb->getLinearVelocity());
+        Quaternion q       = transform.getOrientation();
         aBody->orientation = glm::quat(q.w, q.x, q.y, q.z);
-        // Simple heuristic: if we aren't moving vertically, we might be grounded
-        aBody->onGround = IsGrounded(aBody);
+        aBody->onGround    = IsGrounded(aBody);
     }
 }
-
 // Helper Conversions
 Vector3 AnvilPhysics::toRP3D(const glm::vec3& v)
 {
@@ -339,6 +370,7 @@ RaycastHit AnvilPhysics::CastRay(glm::vec3 origin, glm::vec3 direction, float ma
     if (finalHit.hit)
     {
         finalHit.point    = callback.result.point;
+        finalHit.normal = callback.result.normal;
         finalHit.distance = maxDistance * callback.result.fraction;
 
         // We look at the body's UserData to see which Entity we hit

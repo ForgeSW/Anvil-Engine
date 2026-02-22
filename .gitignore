@@ -14,7 +14,8 @@ Anvil_SDK/x64/
 Anvil_Engine/x64/
 Anvil_Compile/x64/
 ABSP_Viewer/x64/
-
+*.vcxproj[0-9]
+~AutoRecover*
 *.absp
 MakeBackup.ps1
 Project_Snapshot.txt

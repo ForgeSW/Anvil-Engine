@@ -28,7 +28,7 @@ void CGame::OnInit(AEngine* engine)
     m_playerEntity->position = glm::vec3(0, 3.0f, 0);
 
     // Add RigidBody (Extents, Mass, Static)
-    m_playerRB = new RigidBodyComponent(glm::vec3(1, 2, 1), 75.0f, false);
+    m_playerRB = new RigidBodyComponent(glm::vec3(1, 2, 1), 75.0f, false, ECollisionQuality::HIGH_FIDELITY);
     m_playerEntity->AddComponent(m_playerRB);
 
     m_camera = new ACamera(glm::vec3(-3, 2, 0));
