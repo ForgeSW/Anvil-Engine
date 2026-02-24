@@ -60,7 +60,9 @@ void AEngine::LoadMap(const char* mapName)
         std::cout << "Engine Error: Could not find " << path << std::endl;
         return;
     }
-
+    for (GLuint tex : m_worldTextures)
+        glDeleteTextures(1, &tex);
+    m_worldTextures.clear();
     if (m_worldVAO)
     {
         glDeleteVertexArrays(1, &m_worldVAO);
@@ -90,11 +92,42 @@ void AEngine::LoadMap(const char* mapName)
     if (h.numPlanes > 0)
     {
         std::vector<APlane> mapPlanes(h.numPlanes);
-        is.read((char*)mapPlanes.data(), h.numPlanes * sizeof(APlane));
+        is.read((char*) mapPlanes.data(), h.numPlanes * sizeof(APlane));
 
         m_physicsWorld->SetWorldPlanes(mapPlanes);
     }
+    is.seekg(sizeof(ABSPHeader) + (h.numVertices * sizeof(AVertex)) + (h.numFaces * sizeof(AFace)) +
+                 (h.numEntities * sizeof(ABspEntity)) + (h.numPlanes * sizeof(APlane)) +
+                 (h.numBrushes * sizeof(ABSPBrush)),
+             std::ios::beg);
+    if (h.numTextures > 0)
+    {
+        std::vector<ATextureEntry> entries(h.numTextures);
+        is.read((char*) entries.data(), h.numTextures * sizeof(ATextureEntry));
+
+        for (const auto& te : entries)
+        {
+            std::vector<uint8_t> pixelData(te.dataSize);
+            is.read((char*) pixelData.data(), te.dataSize);
+
+            GLuint texID;
+            glGenTextures(1, &texID);
+            glBindTexture(GL_TEXTURE_2D, texID);
+
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, te.width, te.height, 0, GL_RGBA,
+                         GL_UNSIGNED_BYTE, pixelData.data());
+            glGenerateMipmap(GL_TEXTURE_2D);
+
+            m_worldTextures.push_back(texID);
+        }
+    }
     is.close();
+    
 
     std::vector<uint32_t> indices;
     for (const auto& f : m_worldFaces)
@@ -205,13 +238,26 @@ void AEngine::Run()
             // Render World
             if (m_worldVAO)
             {
-                // World is always at origin
-                glUniformMatrix4fv(glGetUniformLocation(m_mainShader->GetID(), "model"), 1,
-                                   GL_FALSE, glm::value_ptr(glm::mat4(1.0f)));
-
+                m_mainShader->Use();
                 glBindVertexArray(m_worldVAO);
+
+                uint32_t indexOffset = 0;
+                for (const auto& f : m_worldFaces)
+                {
+                    uint32_t indicesForFace = (f.numVertices - 2) * 3;
+                    if (f.textureID < m_worldTextures.size())
+                    {
+                        glBindTexture(GL_TEXTURE_2D, m_worldTextures[f.textureID]);
+                    }
+                    else
+                    {
+                        glBindTexture(GL_TEXTURE_2D, 0); // Or a white texture
+                    }
+                    glDrawElements(GL_TRIANGLES, indicesForFace, GL_UNSIGNED_INT,
+                                   (void*) (indexOffset * sizeof(uint32_t)));
+                    indexOffset += indicesForFace;
+                }
                 // Draw the entire world in one single call
-                glDrawElements(GL_TRIANGLES, m_worldIndexCount, GL_UNSIGNED_INT, 0);
                 glBindVertexArray(0);
             }
 

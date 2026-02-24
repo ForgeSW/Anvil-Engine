@@ -5,7 +5,6 @@
 #include <MeshComponent.h>
 #include <RigidBodyComponent.h>
 #include <iostream>
-#include <reactphysics3d/reactphysics3d.h>
 
 // Configuration constants
 constexpr float SPEED = 12.0f;
@@ -28,7 +27,7 @@ void CGame::OnInit(AEngine* engine)
     m_playerEntity->position = glm::vec3(0, 3.0f, 0);
 
     // Add RigidBody (Extents, Mass, Static)
-    m_playerRB = new RigidBodyComponent(glm::vec3(1, 2, 1), 75.0f, false, ECollisionQuality::HIGH_FIDELITY);
+    m_playerRB = new RigidBodyComponent(glm::vec3(1, 2, 1), 75.0f, false);
     m_playerEntity->AddComponent(m_playerRB);
 
     m_camera = new ACamera(glm::vec3(-3, 2, 0));
@@ -38,7 +37,7 @@ void CGame::OnInit(AEngine* engine)
         m_crate = engine->CreateEntity("PhysicsCrate");
         m_crate->position = glm::vec3(0, 5.0f, 0);
         m_crate->AddComponent(new MeshComponent(modelMesh));
-        m_crate->AddComponent(new RigidBodyComponent(glm::vec3(1, 1, 1), 60.0f, false));
+        m_crate->AddComponent(new RigidBodyComponent(glm::vec3(1, 1, 1), 400.0f, false, ECollisionQuality::HIGH_FIDELITY, modelMesh));
         m_crate->GetComponent<RigidBodyComponent>()->SetBouciness(0.01f);
     }
 
@@ -104,9 +103,9 @@ void CGame::OnUpdate(float dt)
         currentVel.y = 10.0f;
     }
 
-    // Apply back to the physics engine
-    auto* rb = static_cast<rp3d::RigidBody*>(m_playerRB->m_body->rp3dBody);
-    rb->setLinearVelocity(rp3d::Vector3(currentVel.x, currentVel.y, currentVel.z));
+    // Apply back to the physics engine using Bullet
+    btRigidBody* rb = static_cast<btRigidBody*>(m_playerRB->m_body->bulletBody);
+    rb->setLinearVelocity(AnvilPhysics::toBullet(currentVel));
 
     // The player position is automatically updated by the RigidBodyComponent's OnUpdate
     m_camera->Position = m_playerEntity->position + glm::vec3(0, 1.7f, 0);

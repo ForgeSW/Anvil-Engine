@@ -7,7 +7,7 @@ Anvil is a custom game engine built in C++ focusing on BSP (Binary space partiti
 Anvil is built on top of the following technologies:
 * Rendering: Glad and GLFW
 * Math: GLM (OpenGL mathematics)
-* Physics: ReactPhysics3d
+* Physics: BulletPhysics
 * Assets: Assimp (models) stb_image (textures)
 
 ## Getting Started
@@ -19,7 +19,7 @@ Anvil is built on top of the following technologies:
 ### Installation
 * Clone the ```https://github.com/microsoft/vcpkg.git``` repository to a path like ```C:\dev\vcpkg```
 * Open the terminal and run ```.\bootstrap-vcpkg.bat```
-* Run ```.\vcpkg install glad glm glfw reactphysics3d assimp stb_image```
+* Run ```.\vcpkg install glad glm glfw bullet3 assimp stb_image```
 * Run ``` .\vcpkg integrate install```
 * Open the ```Anvil Engine.slnx``` solution file and hit CTRL+SHIFT+B
 * Go to the SampleModels folder and copy the files to the build directory

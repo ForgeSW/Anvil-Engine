@@ -126,7 +126,6 @@ void AMeshLoader::ExportToAnvMesh(const std::string& input, const std::string& o
     std::vector<uint32_t> allIndices;
     std::string           textureFileName = "";
 
-    // 1. EXTRACT TEXTURE (Embedded or External)
     if (scene->HasMaterials())
     {
         aiMaterial* mat = scene->mMaterials[0];
@@ -164,7 +163,6 @@ void AMeshLoader::ExportToAnvMesh(const std::string& input, const std::string& o
         }
     }
 
-    // 2. PROCESS ALL MESHES (Fixes the "4 verts" crime)
     for (unsigned int m = 0; m < scene->mNumMeshes; m++)
     {
         aiMesh*  mesh       = scene->mMeshes[m];
@@ -173,8 +171,14 @@ void AMeshLoader::ExportToAnvMesh(const std::string& input, const std::string& o
         for (uint32_t i = 0; i < mesh->mNumVertices; i++)
         {
             MVertex v;
-            v.pos    = {mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z};
-            v.normal = {mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z};
+            // Unsure about this part
+            glm::vec3 originalPos = {mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z};
+            glm::vec3 originalNorm = {mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z};
+            glm::vec3 convertedPos = {originalPos.x, originalPos.z, -originalPos.y};
+			glm::vec3 convertedNorm = {originalNorm.x, originalNorm.z, -originalNorm.y};
+			v.pos = convertedPos;
+			v.normal = convertedNorm;
+
 
             if (mesh->mTextureCoords[0])
                 v.uv = {mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y};
@@ -192,7 +196,6 @@ void AMeshLoader::ExportToAnvMesh(const std::string& input, const std::string& o
         }
     }
 
-    // 3. WRITE TO ANVMESH
     std::ofstream os(output, std::ios::binary);
     AMeshHeader   header;
     header.numVertices = (uint32_t) allVertices.size();

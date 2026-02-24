@@ -21,7 +21,7 @@ AMesh::AMesh(std::vector<MVertex> verts, std::vector<uint32_t> indices, uint32_t
 {
     m_textureID = texID;
     indexCount  = (uint32_t) indices.size();
-
+    m_vertices  = verts;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
     glGenBuffers(1, &EBO);

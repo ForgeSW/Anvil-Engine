@@ -1,8 +1,3 @@
-/**
- * @file AnvilBSPFormat.h
- * @brief Defines the structure for the ABSP (Anvil Binary Space Partition) format.
- * @author ForgeSoftWare
- */
 #pragma once
 #include "AMath.h"
 #include <vector>
@@ -24,12 +19,13 @@ struct ABspEntity
 struct ABSPHeader
 {
     char     magic[4]; // "ABSP"
-    uint32_t version;  // 1
+    uint32_t version;  // 2
     uint32_t numVertices;
     uint32_t numFaces;
     uint32_t numEntities;
     uint32_t numPlanes;
     uint32_t numBrushes;
+    uint32_t numTextures;
 };
 
 struct AVertex
@@ -49,4 +45,12 @@ struct APlane
 {
     glm::vec3 normal;
     float     distance;
+};
+
+struct ATextureEntry {
+    char name[64]; // texture name from the .map file , like "float/wood1" or sum like that
+	uint32_t width;
+	uint32_t height;
+	uint32_t format; // GL_RGB or GL_RGBA
+    uint32_t dataSize;
 };

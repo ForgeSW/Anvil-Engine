@@ -1,117 +1,41 @@
 ﻿#include "AnvilPhysics.h"
 #include "AEngine.h"
 #include <iostream>
-#include <reactphysics3d/reactphysics3d.h>
-using namespace reactphysics3d;
+#include <print>
+#include <set>
+#include <LinearMath/btVector3.h>
+#include <BulletCollision/CollisionShapes/btShapeHull.h>
+#include <BulletCollision/CollisionDispatch/btGhostObject.h>
 
-class AnvilRaycastCallback : public RaycastCallback
+struct ATriggerVolume
 {
-  public:
-    struct
-    {
-        bool            hit = false;
-        glm::vec3       point;
-        glm::vec3       normal;
-        float           fraction = 1.0f;
-        Collider* collider = nullptr;
-    } result;
-
-/**
- * Handles notification of a ray hit event
- * @param info Contains detailed information about the raycast hit
- * @return The hit fraction of the raycast
- */
-    virtual decimal notifyRaycastHit(const RaycastInfo& info) override
-    {
-        result.hit      = true;                                    // Set hit status to true
-        result.point    = glm::vec3(info.worldPoint.x, info.worldPoint.y, info.worldPoint.z); // Store the hit point coordinates
-        result.normal   = glm::vec3(info.worldNormal.x, info.worldNormal.y, info.worldNormal.z); // Store the surface normal at hit point
-        result.fraction = info.hitFraction;                        // Store the hit fraction (distance along ray)
-        result.collider = info.collider;                           // Store the collider that was hit
-        return info.hitFraction;                                   // Return the hit fraction
-    }
+    btGhostObject* ghost;
+    std::string    name;
+    std::set<const btCollisionObject*> lastOverlap;
 };
-class MyContactListener : public EventListener
+btVector3 AnvilPhysics::toBullet(const glm::vec3& v)
 {
-  public:
-/**
- * Constructor for MyContactListener
- * @param physics Pointer to AnvilPhysics object
- * @param names Reference to unordered_map mapping RigidBody pointers to their names
- */
-    MyContactListener(AnvilPhysics* physics, std::unordered_map<RigidBody*, std::string>& names)
-        : m_physics(physics), m_triggerNames(names) // Initialize member variables with provided parameters
-    {
-    }
+    return btVector3(v.x, v.y, v.z);
+}
 
-    /**
-     * Handles contact events between colliders in the physics simulation
-     * This method is called whenever contact between colliders occurs
-     * @param callbackData Contains information about the contact pairs
-     */
-    virtual void onContact(const CallbackData& callbackData) override
-    {
-        // Iterate through all contact pairs in the callback data
-        for (uint p = 0; p < callbackData.getNbContactPairs(); p++)
-        {
-            // Get the current contact pair
-            ContactPair pair = callbackData.getContactPair(p);
-
-            // Only trigger on the "Start" event (entry)
-            // This ensures we only process the initial contact, not ongoing contacts
-            if (pair.getEventType() == ContactPair::EventType::ContactStart)
-            {
-                // Get the colliders involved in the contact
-                Collider* c1 = pair.getCollider1();
-                Collider* c2 = pair.getCollider2();
-
-                // Check if the first collider is a trigger and handle it if true
-                if (c1->getIsTrigger())
-                    handleTrigger(c1->getBody());
-                // Check if the second collider is a trigger and handle it if true
-                if (c2->getIsTrigger())
-                    handleTrigger(c2->getBody());
-            }
-        }
-    }
-
-  private:
-    AnvilPhysics*                                m_physics;
-    std::unordered_map<RigidBody*, std::string>& m_triggerNames;
-
-/**
- * Handles a trigger event for a given physics body
- * @param body Pointer to the physics body that triggered the event
- */
-    void handleTrigger(Body* body)
-    {
-    // Convert the generic Body pointer to a RigidBody pointer
-        RigidBody* rb = static_cast<RigidBody*>(body);
-    // Check if the rigid body is in the trigger names map
-        if (m_triggerNames.count(rb))
-        {
-        // If found, trigger the corresponding event in the physics system
-            m_physics->OnTrigger(m_triggerNames[rb]);
-        }
-    }
-};
+glm::vec3 AnvilPhysics::toGlm(const btVector3& v)
+{
+    return glm::vec3(v.x(), v.y(), v.z());
+}
 
 /**
  * Constructor for AnvilPhysics class
- * Initializes the physics engine and sets up the world with contact listener
+ * Initializes the physics engine
  */
 AnvilPhysics::AnvilPhysics()
 {
-    // Create a new PhysicsCommon instance for physics engine initialization
-    m_physicsCommon = new PhysicsCommon();
-    // Create the physics world using the PhysicsCommon instance
-    m_physicsWorld  = m_physicsCommon->createPhysicsWorld();
-    m_physicsWorld->setNbIterationsVelocitySolver(15), 
-    m_physicsWorld->setNbIterationsPositionSolver(8), 
-    // We pass the map reference so the listener can find trigger names
-    m_contactListener = new MyContactListener(this, m_triggerNames);
-    // Set the event listener to handle physics-related events
-    m_physicsWorld->setEventListener(m_contactListener);
+    m_collisionConfiguration = new btDefaultCollisionConfiguration();
+    m_dispatcher             = new btCollisionDispatcher(m_collisionConfiguration);
+    m_broadphase             = new btDbvtBroadphase();
+    m_solver                 = new btSequentialImpulseConstraintSolver();
+    m_dynamicsWorld = new btDiscreteDynamicsWorld(m_dispatcher, m_broadphase, m_solver, m_collisionConfiguration);
+    // 25 units is better than -9.81f
+    m_dynamicsWorld->setGravity(btVector3(0, -25, 0));
 }
 
 /**
@@ -124,52 +48,108 @@ AnvilPhysics::~AnvilPhysics()
     // Iterate through all bodies and clean them up
     for (auto* body : m_bodies)
     {
-        // Check if the body has a corresponding ReactPhysics3D rigid body
-        if (body->rp3dBody)
-            // Destroy the ReactPhysics3D rigid body
-            m_physicsWorld->destroyRigidBody(static_cast<RigidBody*>(body->rp3dBody));
+        // Check if the body has a corresponding bullet rigid body
+        if (body->bulletBody)
+        {
+            btRigidBody* rb = static_cast<btRigidBody*>(body->bulletBody);
+            m_dynamicsWorld->removeRigidBody(rb);
+            delete rb->getMotionState();
+            delete rb;
+        }
         // Delete the body object
         delete body;
     }
-
-    // Clean up the world body if it exists
     if (m_worldBody)
-        m_physicsWorld->destroyRigidBody(m_worldBody);
-    // Clean up the triangle mesh if it exists
-    if (m_triangleMesh)
-        m_physicsCommon->destroyTriangleMesh(m_triangleMesh);
+    {
+        m_dynamicsWorld->removeRigidBody(m_worldBody);
+        delete m_worldBody->getMotionState();
+        delete m_worldBody;
+    }
+    delete m_meshShape;
+    delete m_triangleMesh;
 
-    // Concave shapes and world are cleaned up by Common/World
-    delete m_physicsCommon;
-    delete m_contactListener;
+    for (auto* t : m_triggers)
+    {
+        m_dynamicsWorld->removeCollisionObject(t->ghost);
+        delete t->ghost;
+        delete t;
+    }
+    delete m_dynamicsWorld;
+    delete m_solver;
+    delete m_broadphase;
+    delete m_dispatcher;
+    delete m_collisionConfiguration;
 }
 
-ABody* AnvilPhysics::CreateBody(glm::vec3 pos, glm::vec3 size, float mass, bool isStatic, ECollisionQuality quality)
+ABody* AnvilPhysics::CreateBody(glm::vec3 pos, glm::vec3 size, float mass, bool isStatic, ECollisionQuality quality, AMesh* mesh)
 {
-    Vector3   halfExtents = toRP3D(size) * 0.5f;
-    BoxShape* boxShape    = m_physicsCommon->createBoxShape(halfExtents);
+    btVector3   halfExtents = toBullet(size) * 0.5f;
+    btCollisionShape* shape       = nullptr;
+    switch (quality) {
+    case ECollisionQuality::PERFOMANCE:
+    {
+        btBoxShape* boxShape = new btBoxShape(halfExtents);
+        boxShape->setMargin(0.04f);
+        shape = boxShape;
+        break;
+    
+    }
+		case ECollisionQuality::BALANCED:
+        {
+            btBoxShape* boxShape = new btBoxShape(halfExtents);
+            boxShape->setMargin(0.01f);
+			shape = boxShape;
+            break;
+        }
+		case ECollisionQuality::HIGH_FIDELITY:
+            if (mesh)
+            {
+                const std::vector<MVertex>& verts = mesh->GetVertices();
+                if (verts.size() >= 4)
+                {
+                    btConvexHullShape* hull = new btConvexHullShape();
+                    for (const auto& v : verts)
+                        hull->addPoint(toBullet(v.pos));
+                    hull->setMargin(0.01f);                
+                    shape=hull;
+                }
+                else
+                {
+                btBoxShape* boxShape = new btBoxShape(halfExtents);
+				boxShape->setMargin(0.01f);
+				shape = boxShape;
+                }
+            }
+            else
+            {
+                btBoxShape* boxShape = new btBoxShape(halfExtents);
+				boxShape->setMargin(0.01f);
+				shape = boxShape;
+            }
+            break;
+            
+	}
 
-    Transform  transform(toRP3D(pos), Quaternion::identity());
-    RigidBody* body = m_physicsWorld->createRigidBody(transform);
+    btTransform startTransform;
+	startTransform.setIdentity();
+    startTransform.setOrigin(toBullet(pos));
+
+    btScalar btMass = isStatic ? 0 : mass;
+    btVector3 localInertia(0, 0, 0);
+    if (!isStatic)
+        shape->calculateLocalInertia(btMass, localInertia);
+
+    btDefaultMotionState* motionState = new btDefaultMotionState(startTransform);
+    btRigidBody::btRigidBodyConstructionInfo rbInfo(btMass, motionState, shape, localInertia);
+    btRigidBody* body = new btRigidBody(rbInfo);
 
     if (isStatic)
-    {
-        body->setType(BodyType::STATIC);
-    }
-    else
-    {
-        body->setType(BodyType::DYNAMIC);
-        body->setMass(mass);
-        body->setAngularLockAxisFactor(Vector3(0, 0, 0));
-    }
+        body->setCollisionFlags(body->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
 
-    Collider* collider = body->addCollider(boxShape, Transform::identity());
-    Material& mat      = collider->getMaterial();
-    mat.setBounciness(0.5f);
-    mat.setFrictionCoefficient(0.5f);
+    m_dynamicsWorld->addRigidBody(body);
 
     ABody* aBody       = new ABody;
-    aBody->rp3dBody    = body;
+    aBody->bulletBody    = body;
     aBody->position    = pos;
     aBody->velocity    = glm::vec3(0);
     aBody->halfSize    = size * 0.5f;
@@ -177,9 +157,10 @@ ABody* AnvilPhysics::CreateBody(glm::vec3 pos, glm::vec3 size, float mass, bool 
     aBody->orientation = glm::quat(1.0f, 0, 0, 0);
     aBody->isStatic    = isStatic;
     aBody->onGround    = false;
-    aBody->collider    = collider;
+    aBody->collider    = shape;
+    aBody->quality      = quality;
 
-    body->setUserData(aBody);
+    body->setUserPointer(aBody);
     m_bodies.push_back(aBody);
     return aBody;
 }
@@ -191,8 +172,8 @@ ABody* AnvilPhysics::CreateBody(glm::vec3 pos, glm::vec3 size, float mass, bool 
  */
 void AnvilPhysics::SetWorldData(const std::vector<AVertex>& verts, const std::vector<AFace>& faces)
 {
-    // 1. Flatten data into the class-member vectors (m_vbo, m_ibo)
-    // IMPORTANT: Use your header members here so the memory stays alive!
+    // Build triangle mesh
+    m_triangleMesh = new btTriangleMesh();
     m_vbo.clear();  // Clear existing vertex buffer data
     m_ibo.clear();  // Clear existing index buffer data
 
@@ -211,110 +192,87 @@ void AnvilPhysics::SetWorldData(const std::vector<AVertex>& verts, const std::ve
         // Generate triangles using fan triangulation
         for (uint32_t i = 1; i < f.numVertices - 1; i++)
         {
-
+            int i0 = f.firstVertex;
+            int i1 = f.firstVertex + i;
+            int i2 = f.firstVertex + i + 1;
             // Add triangle vertices to IBO
-            m_ibo.push_back(f.firstVertex);      // First vertex of the face
-            m_ibo.push_back(f.firstVertex + i);
-            m_ibo.push_back(f.firstVertex + i + 1);
-        }
+            m_ibo.push_back(i0);      // First vertex of the face
+            m_ibo.push_back(i1);
+            m_ibo.push_back(i2);
+            const btVector3 v0(m_vbo[i0*3], m_vbo[i0*3+1], m_vbo[i0*3+2]);
+            const btVector3 v1(m_vbo[i1*3], m_vbo[i1*3+1], m_vbo[i1*3+2]);
+            const btVector3 v2(m_vbo[i2*3], m_vbo[i2*3+1], m_vbo[i2*3+2]);
+            m_triangleMesh->addTriangle(v0, v1, v2);
+       }
     }
 
-    // 2. Create the Triangle Array wrapper
-    TriangleVertexArray* triangleArray =
-        new TriangleVertexArray((uint32) verts.size(),     // nbVertices
-                                m_vbo.data(),              // verticesStart
-                                3 * sizeof(float),         // verticesStride
-                                (uint32) m_ibo.size() / 3, // nbTriangles
-                                m_ibo.data(),              // indexesStart
-                                3 * sizeof(int),           // indexesStride
-                                TriangleVertexArray::VertexDataType::VERTEX_FLOAT_TYPE,
-                                TriangleVertexArray::IndexDataType::INDEX_INTEGER_TYPE);
+    m_meshShape = new btBvhTriangleMeshShape(m_triangleMesh, true);
+    btTransform startTransform;
+    startTransform.setIdentity();
+    btDefaultMotionState* motionState = new btDefaultMotionState(startTransform);
+	btRigidBody::btRigidBodyConstructionInfo rbInfo(0, motionState, m_meshShape, btVector3(0,0,0));
+    m_worldBody = new btRigidBody(rbInfo);
+    m_worldBody->setCollisionFlags(m_worldBody->getCollisionFlags() |
+                                   btCollisionObject::CF_STATIC_OBJECT);
+    m_dynamicsWorld->addRigidBody(m_worldBody);
 
-    // 3. Create the mesh by passing the array to the factory (Fixes E0165 & E0135)
-    // Note: RP3D takes a collection of arrays, so we pass triangleArray by address
-    std::vector<Message> messages;
-    m_triangleMesh = m_physicsCommon->createTriangleMesh(*triangleArray, messages);
-    // 4. Create the shape and static body
-    m_meshShape = m_physicsCommon->createConcaveMeshShape(m_triangleMesh);
-    m_worldBody = m_physicsWorld->createRigidBody(Transform::identity());
-    m_worldBody->setType(BodyType::STATIC);
-    m_worldBody->addCollider(m_meshShape, Transform::identity());
-
-    std::cout << "[Anvil] World Physics Mesh Baked." << std::endl;
+    std::cout << "[Anvil] World Physics Mesh Baked." << std::endl; // not baked lmao
 }
 void AnvilPhysics::Update(float dt)
 {
+    m_dynamicsWorld->stepSimulation(dt, 10);
     for (auto* aBody : m_bodies)
     {
-        if (aBody->isStatic)
+        btRigidBody* rb = static_cast<btRigidBody*>(aBody->bulletBody);
+        if (!rb)
             continue;
+        btTransform trans;
+        if (rb->getMotionState())
+            rb->getMotionState()->getWorldTransform(trans);
+        else
+            trans = rb->getWorldTransform();
 
-        RigidBody* rb       = static_cast<RigidBody*>(aBody->rp3dBody);
-        glm::vec3  velocity = toGlm(rb->getLinearVelocity());
-        float      speed    = glm::length(velocity);
+        aBody->position    = toGlm(trans.getOrigin());
+        aBody->orientation = glm::quat(trans.getRotation().w(), trans.getRotation().x(),
+                                       trans.getRotation().y(), trans.getRotation().z());
+        aBody->velocity    = toGlm(rb->getLinearVelocity());
+        aBody->onGround    = IsGrounded(aBody);
+    }
+    for (auto* t : m_triggers)
+    {
+        btGhostObject*                     ghost = t->ghost;
+        std::set<const btCollisionObject*> currentOverlap;
 
-        if (speed > 0.01f)
+        int numOverlap = ghost->getNumOverlappingObjects();
+        for (int i = 0; i < numOverlap; i++)
         {
-            float      distance = speed * dt;
-            RaycastHit hit =
-                CastRay(aBody->position, glm::normalize(velocity), distance + 0.1f, {});
 
-            if (hit.hit)
+            const btCollisionObject* obj = ghost->getOverlappingObject(i);
+            currentOverlap.insert(obj);
+
+            if (t->lastOverlap.find(obj) == t->lastOverlap.end())
             {
-                // 1. Position: Put it at the wall
-                glm::vec3 safePos = hit.point + (hit.normal * 0.05f);
-                rb->setTransform(Transform(toRP3D(safePos), rb->getTransform().getOrientation()));
-
-                // This removes the part of the velocity that points INTO the wall
-                float dot = glm::dot(velocity, hit.normal);
-                if (dot < 0) // Only cancel velocity if moving TOWARD the wall
+                if (obj->getUserPointer())
                 {
-                    glm::vec3 slideVel = velocity - (hit.normal * dot);
-                    rb->setLinearVelocity(toRP3D(slideVel));
+                    OnTrigger(t->name);
                 }
             }
         }
-    }
-
-    m_physicsWorld->update(dt);
-
-    for (auto* aBody : m_bodies)
-    {
-        RigidBody* rb        = static_cast<RigidBody*>(aBody->rp3dBody);
-        Transform  transform = rb->getTransform();
-
-        aBody->position    = toGlm(transform.getPosition());
-        aBody->velocity    = toGlm(rb->getLinearVelocity());
-        Quaternion q       = transform.getOrientation();
-        aBody->orientation = glm::quat(q.w, q.x, q.y, q.z);
-        aBody->onGround    = IsGrounded(aBody);
+        t->lastOverlap = currentOverlap;
     }
 }
-// Helper Conversions
-Vector3 AnvilPhysics::toRP3D(const glm::vec3& v)
-{
-    return Vector3(v.x, v.y, v.z);
-}
-glm::vec3 AnvilPhysics::toGlm(const Vector3& v)
-{
-    return glm::vec3(v.x, v.y, v.z);
-}
+
 void AnvilPhysics::OnTrigger(const std::string& name)
 {
     AEngine::Get()->OnTrigger(name);
 }
 void AnvilPhysics::SetBodyMaterial(ABody* body, float bounciness, float friction)
 {
-    if (!body || !body->rp3dBody)
+    if (!body || !body->bulletBody)
         return;
-    RigidBody* rb = static_cast<RigidBody*>(body->rp3dBody);
-    if (rb->getNbColliders() > 0)
-    {
-        Collider* collider = rb->getCollider(0);
-        Material& material = collider->getMaterial();
-        material.setBounciness(bounciness);
-        material.setFrictionCoefficient(friction);
-    }
+    btRigidBody* rb = static_cast<btRigidBody*>(body->bulletBody);
+    rb->setRestitution(bounciness);
+    rb->setFriction(friction);
     
 }
 /**
@@ -324,6 +282,9 @@ void AnvilPhysics::SetBodyMaterial(ABody* body, float bounciness, float friction
  */
 bool AnvilPhysics::IsGrounded(ABody* body)
 {
+    // Safety first
+    if (!body)
+        return false;
     // Set the starting position for the ray cast to the body's current position
     glm::vec3 start = body->position;
     // Define the direction of the ray (straight downward)
@@ -338,49 +299,55 @@ bool AnvilPhysics::IsGrounded(ABody* body)
 }
 void AnvilPhysics::AddTrigger(glm::vec3 pos, glm::vec3 size, std::string name)
 {
-    rp3d::Vector3   halfExtents = toRP3D(size) * 0.5f;
-    rp3d::BoxShape* boxShape    = m_physicsCommon->createBoxShape(halfExtents);
+    btGhostObject* ghost = new btGhostObject();
+    btBoxShape*    boxShape = new btBoxShape(toBullet(size * 0.5f));
+    ghost->setCollisionShape(boxShape);
+    ghost->setCollisionFlags(ghost->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+    
+    btTransform startTransform;
+	startTransform.setIdentity();
+	startTransform.setOrigin(toBullet(pos));
+    ghost->setWorldTransform(startTransform);
 
-    rp3d::Transform transform(toRP3D(pos), rp3d::Quaternion::identity());
+    m_dynamicsWorld->addCollisionObject(ghost);
 
-    rp3d::RigidBody* body = m_physicsWorld->createRigidBody(transform);
-    body->setType(rp3d::BodyType::STATIC);
-
-    rp3d::Collider* collider = body->addCollider(boxShape, rp3d::Transform::identity());
-    collider->setIsTrigger(true);
-
-    m_triggerNames[body] = name;
+    ATriggerVolume* trigger = new ATriggerVolume;
+	trigger->ghost          = ghost;
+	trigger->name           = name;
+	m_triggers.push_back(trigger);
 
     std::cout << "[Anvil] Trigger '" << name << "' registered at " << pos.x << ", " << pos.y << ", "
               << pos.z << std::endl;
 }
+
 RaycastHit AnvilPhysics::CastRay(glm::vec3 origin, glm::vec3 direction, float maxDistance,
                                  const std::vector<AEntity*>& entities)
 {
-    glm::vec3            target = origin + (direction * maxDistance);
-    rp3d::Ray            ray(toRP3D(origin), toRP3D(target));
-    AnvilRaycastCallback callback;
+    btVector3 from = toBullet(origin);
+    btVector3 to   = toBullet(origin + direction * maxDistance);
 
-    // Perform the raycast in the world
-    m_physicsWorld->raycast(ray, &callback);
+    btCollisionWorld::ClosestRayResultCallback callback(from, to);
 
-    RaycastHit finalHit;
-    finalHit.hit = callback.result.hit;
+    m_dynamicsWorld->rayTest(from, to, callback);
 
-    if (finalHit.hit)
+    RaycastHit hit;
+    hit.hit = callback.hasHit();
+
+    if (hit.hit)
     {
-        finalHit.point    = callback.result.point;
-        finalHit.normal = callback.result.normal;
-        finalHit.distance = maxDistance * callback.result.fraction;
+        hit.point    = toGlm(callback.m_hitPointWorld);
+        hit.normal   = toGlm(callback.m_hitNormalWorld);
+        hit.distance = maxDistance * callback.m_closestHitFraction;
 
-        // We look at the body's UserData to see which Entity we hit
-        if (callback.result.collider)
+        if (callback.m_collisionObject && callback.m_collisionObject->getUserPointer())
         {
-            auto* baseBody  = callback.result.collider->getBody();
-            auto* rp3dBody  = static_cast<rp3d::RigidBody*>(baseBody);
-            finalHit.entity = (AEntity*) rp3dBody->getUserData();
+            ABody* aBody = static_cast<ABody*>(callback.m_collisionObject->getUserPointer());
         }
     }
+    else
+    {
+        hit.distance = maxDistance;
+    }
 
-    return finalHit;
+    return hit;
 }

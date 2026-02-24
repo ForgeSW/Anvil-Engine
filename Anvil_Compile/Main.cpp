@@ -1,3 +1,4 @@
+#define STB_IMAGE_IMPLEMENTATION
 #define _CRT_SECURE_NO_WARNINGS
 #include "AnvilBSPFormat.h"
 #include "AMeshLoader.h"
@@ -7,7 +8,10 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include <map>
 #include <filesystem>
+#include <stb_image.h>
+
 constexpr float SIZE = 0.1f;
 namespace fs = std::filesystem;
 
@@ -34,6 +38,17 @@ void ClipWinding(std::vector<glm::vec3>& pts, APlane& plane) {
     }
     pts = newPts;
 }
+struct TempPlane {
+    APlane plane;
+    uint32_t texIdx;
+};
+struct EmbeddedTex {
+    std::string name;
+    uint32_t width;
+    uint32_t height;
+    uint32_t format; // 3 = RGB, 4 = RGBA
+	std::vector<uint8_t> data;
+};
 
 // Big boy
 // Add support for texturing
@@ -51,7 +66,9 @@ void CompileMap(const char* inputPath) {
     std::vector<ABspEntity> entities;
     std::vector<APlane> all_planes;
     std::vector<ABSPBrush> all_brushes;
-    std::vector<APlane> brushPlanes;
+    std::vector<TempPlane> brushPlanes;
+    std::vector<EmbeddedTex> textures;
+    std::map<std::string, uint32_t> texNameToIndex;
     glm::vec3 entMin(1e9), entMax(-1e9);
 
     while (file >> token) {
@@ -68,10 +85,36 @@ void CompileMap(const char* inputPath) {
             std::string texName;
             file >> texName;
 
+            if (texNameToIndex.find(texName) == texNameToIndex.end()) {
+                uint32_t newIdx = (uint32_t)textures.size();
+                texNameToIndex[texName] = newIdx;
+                std::string imgPath = "textures/"+texName + ".png";
+                int w, h, channels;
+                uint8_t* pixels = stbi_load(imgPath.c_str(), &w, &h, &channels, 4);
+                EmbeddedTex tex;
+                tex.name = texName;
+                if (pixels) {
+                    tex.width = w;
+                    tex.height = h;
+                    tex.format = 4;
+                    tex.data.assign(pixels, pixels + (w * h * 4));
+					stbi_image_free(pixels);
+                }
+                else {
+                    std::cout << "Warning: Could not load texture " << texName << std::endl;
+                    tex.width = 2;
+					tex.height = 2;
+					tex.format = 4;
+                    // don't mind reading this lmao, it's magenta black checkerboard
+                    tex.data = { 255,0,255,255, 0,0,0,255, 0,0,0,255, 255,0,255,255 };
+                }
+                textures.push_back(tex);
+            }
+            uint32_t currentTexIdx = texNameToIndex[texName];
             // OpenGL and GLM only supports right-handed coordinate system
             // so, XYZ-> XZY
             glm::vec3 p1{ x1, z1, -y1 }, p2{ x2, z2, -y2 }, p3{ x3, z3, -y3 };
-            brushPlanes.push_back(PlaneFromPoints(p1, p2, p3));
+            brushPlanes.push_back({ PlaneFromPoints(p1, p2, p3) , currentTexIdx});
 
             entMin = glm::min(entMin, glm::min(p1, glm::min(p2, p3)));
             entMax = glm::max(entMax, glm::max(p1, glm::max(p2, p3)));
@@ -85,12 +128,14 @@ void CompileMap(const char* inputPath) {
                 b.numPlanes = (uint32_t)brushPlanes.size();
                 all_brushes.push_back(b);
                 for (auto& p : brushPlanes) {
-                    p.distance *= SIZE;
-					all_planes.push_back(p);
+                    p.plane.distance *= SIZE;
+					all_planes.push_back(p.plane);
                 }
 
                 for (size_t i = 0; i < brushPlanes.size(); i++) {
-                    APlane& p = brushPlanes[i];
+                    APlane& p = brushPlanes[i].plane;
+                    uint32_t faceTexIdx = brushPlanes[i].texIdx;
+
                     glm::vec3 up = (std::abs(p.normal.y) > 0.99f) ? glm::vec3(1, 0, 0) : glm::vec3(0, 1, 0);
                     glm::vec3 r = glm::normalize(glm::cross(p.normal, up));
                     up = glm::cross(r, p.normal);
@@ -103,14 +148,13 @@ void CompileMap(const char* inputPath) {
                     };
 
                     for (size_t j = 0; j < brushPlanes.size(); j++) {
-                        if (i != j) ClipWinding(w, brushPlanes[j]);
+                        if (i != j) ClipWinding(w, brushPlanes[j].plane);
                     }
 
                     if (w.size() >= 3) {
-                        all_f.push_back({ (uint32_t)all_v.size(), (uint32_t)w.size(), 0 });
+                        all_f.push_back({ (uint32_t)all_v.size(), (uint32_t)w.size(), faceTexIdx });
                         for (auto& vPos : w) {
-                            glm::vec2 uv = (std::abs(p.normal.y) > 0.5f) ? glm::vec2(vPos.x, vPos.z) : glm::vec2(vPos.x, vPos.y);
-                            // Applying 0.03f scale for engine units
+                            glm::vec2 uv = (std::abs(p.normal.y) > 0.5f) ? glm::vec2(vPos.x, vPos.z) : glm::vec2(vPos.x, vPos.y);                            // Applying 0.01f scale for engine units
                             all_v.push_back({ vPos * SIZE, uv * 0.01f, p.normal });
                         }
                     }
@@ -130,16 +174,27 @@ void CompileMap(const char* inputPath) {
             entMax = glm::vec3(-1e9);
         }
     }
-
     std::ofstream out("world.absp", std::ios::binary);
-    ABSPHeader h = { {'A','B','S','P'}, 1, (uint32_t)all_v.size(), (uint32_t)all_f.size(), (uint32_t)entities.size(), (uint32_t)all_planes.size(), (uint32_t)all_brushes.size() };
+    ABSPHeader h = { {'A','B','S','P'}, 2, (uint32_t)all_v.size(), (uint32_t)all_f.size(), (uint32_t)entities.size(), (uint32_t)all_planes.size(), (uint32_t)all_brushes.size() };
     out.write((char*)&h, sizeof(h));
     out.write((char*)all_v.data(), all_v.size() * sizeof(AVertex));
     out.write((char*)all_f.data(), all_f.size() * sizeof(AFace));
     out.write((char*)entities.data(), entities.size() * sizeof(ABspEntity));
     out.write((char*)all_planes.data(), all_planes.size() * sizeof(APlane));
     out.write((char*)all_brushes.data(), all_brushes.size() * sizeof(ABSPBrush));
-
+    for (const auto& tex : textures) {
+        ATextureEntry te;
+        memset(te.name, 0, 64); // super safe
+        strncpy(te.name, tex.name.c_str(), 63);
+        te.width = tex.width;
+        te.height = tex.height;
+        te.format = tex.format;
+        te.dataSize = (uint32_t)tex.data.size();
+        out.write((char*)&te, sizeof(te));
+    }
+    for (const auto& tex : textures) {
+        out.write((char*)tex.data.data(), tex.data.size());
+    }
     std::cout << "[Anvil Compiler] Success: world.absp baked with " << all_brushes.size() << " brushes." << std::endl;
 }
 

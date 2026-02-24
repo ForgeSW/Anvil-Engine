@@ -20,10 +20,15 @@ class ANVIL_API AMesh
   public:
     AMesh(std::vector<MVertex> verts, std::vector<uint32_t> indices, uint32_t texID = 0);
     ~AMesh();
-    void Draw();
+    void                        Draw();
+    const std::vector<MVertex>& GetVertices() const
+    {
+        return m_vertices;
+    }
 
   private:
-    uint32_t VAO, VBO, EBO;
-    uint32_t indexCount;
-    uint32_t m_textureID;
+    std::vector<MVertex> m_vertices;
+    uint32_t             VAO, VBO, EBO;
+    uint32_t             indexCount;
+    uint32_t             m_textureID;
 };

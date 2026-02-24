@@ -1,6 +1,6 @@
 #include "RigidBodyComponent.h"
 #include "AEngine.h"
-#include <reactphysics3d/reactphysics3d.h>
+#include <btBulletDynamicsCommon.h>
 
 /**
  * Initialize the RigidBodyComponent
@@ -13,13 +13,13 @@ void RigidBodyComponent::OnInit(AEntity* owner)
 
     
     // Create a physics body using the engine's physics system
-    m_body = AEngine::Get()->GetPhysics()->CreateBody(m_owner->position, m_size, m_mass, m_isStatic, m_quality);
+    m_body = AEngine::Get()->GetPhysics()->CreateBody(m_owner->position, m_size, m_mass, m_isStatic, m_quality, m_mesh);
 
-    if (!m_body || !m_body->rp3dBody)
+    if (!m_body || !m_body->bulletBody)
             return;
     
-        auto* rb = static_cast<rp3d::RigidBody*>(m_body->rp3dBody);
-		rb->setUserData(m_owner);
+        auto* rb = static_cast<btRigidBody*>(m_body->bulletBody);
+		rb->setUserPointer(m_owner);
     
 }
 
@@ -47,11 +47,11 @@ void RigidBodyComponent::ApplyPush(glm::vec3 force)
     // Check if the rigid body exists
     if (m_body)
     {
-        // Cast the body to rp3d::RigidBody type
-        auto* rb = static_cast<rp3d::RigidBody*>(m_body->rp3dBody);
+        // Cast the body to btRigidBody type
+        auto* rb = static_cast<btRigidBody*>(m_body->bulletBody);
         // Apply the force at the center of mass of the rigid body
         // Convert the force vector from AnvilPhysics format to rp3d format before applying
-        rb->applyWorldForceAtCenterOfMass(AnvilPhysics::toRP3D(force));
+        rb->applyCentralForce(AnvilPhysics::toBullet(force));
     }
 }
 
@@ -65,12 +65,10 @@ void RigidBodyComponent::ApplyTorque(glm::vec3 torque)
 	if (m_body)
 	{
 		// Cast the generic physics body to RP3D rigid body
-		auto* rb = static_cast<rp3d::RigidBody*>(m_body->rp3dBody);
-        // Ensure the body is awake (not sleeping)
-        rb->setIsSleeping(false);
+		auto* rb = static_cast<btRigidBody*>(m_body->bulletBody);
         // Apply the torque in world coordinates
         // Convert the torque vector from AnvilPhysics to RP3D format before applying
-        rb->applyWorldTorque(AnvilPhysics::toRP3D(torque));
+        rb->applyTorque(AnvilPhysics::toBullet(torque));
 	}
 }
 
